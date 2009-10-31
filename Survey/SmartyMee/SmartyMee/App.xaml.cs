@@ -5,6 +5,8 @@ using System.Data;
 using System.Linq;
 using System.Windows;
 
+using SmartyMee.Kernel.Log;
+
 namespace SmartyMee
 {
     /// <summary>
@@ -12,5 +14,6 @@ namespace SmartyMee
     /// </summary>
     public partial class App : Application
     {
+        public static Logger Log = new Kernel.Log.Logger();
     }
 }
