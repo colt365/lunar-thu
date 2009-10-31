@@ -12,6 +12,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using SmartyMee.Kernel.Message;
+
 namespace SmartyMee
 {
     /// <summary>
@@ -22,6 +24,14 @@ namespace SmartyMee
         public Window1()
         {
             InitializeComponent();
+        }
+
+
+
+        public void RunTesters()
+        {
+            MessageTester messageTester = new MessageTester();
+            messageTester.Run();
         }
     }
 }
