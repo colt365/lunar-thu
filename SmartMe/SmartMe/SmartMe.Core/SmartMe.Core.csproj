@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{899F499A-87A1-4958-A3E1-F435887DA95F}</ProjectGuid>
+    <ProjectGuid>{591D485B-85C8-40E2-9515-4438D338DE33}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SmartMe.Input</RootNamespace>
-    <AssemblyName>SmartMe.Input</AssemblyName>
+    <RootNamespace>SmartMe.Core</RootNamespace>
+    <AssemblyName>SmartMe.Core</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -35,9 +35,6 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Speech">
-      <RequiredTargetFramework>3.0</RequiredTargetFramework>
-    </Reference>
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -55,8 +52,9 @@
     <Content Include="Readme.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Grab\" />
-    <Folder Include="Speech\" />
+    <Folder Include="Communication\" />
+    <Folder Include="Data\" />
+    <Folder Include="Pipeline\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
