@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>21539ba2-6b46-4307-a3bc-579b908b69fc</ProjectGuid>
+    <ProjectGuid>{198302D6-A42D-4EE4-9B7D-79F66B191636}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SmartMe.Web</RootNamespace>
