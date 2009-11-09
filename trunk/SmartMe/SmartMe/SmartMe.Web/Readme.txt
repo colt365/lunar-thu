@@ -1,4 +1,14 @@
-Readme.txt
+/////////////////////////////////////////
+// Readme.txt
+//         ver 1.0
+// 
+// Created:  Tian LIN 09-11-8 
+// Owned:    Ye JIANG
+// 
+// Modification History: (Name, Time, Description)
+//    xx  xx  xx
+//
+/////////////////////////////////////////
 
 =========================
 SmartMe.Web is integration for web resources on the basis of :

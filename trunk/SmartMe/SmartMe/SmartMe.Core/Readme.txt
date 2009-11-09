@@ -1,4 +1,14 @@
-Readme.txt
+/////////////////////////////////////////
+// Readme.txt
+//         ver 1.0
+// 
+// Created:  Tian LIN 09-11-8 
+// Owned:    Chenglong MA
+// 
+// Modification History: (Name, Time, Description)
+//    xx  xx  xx
+//
+/////////////////////////////////////////
 
 =========================
 SmartMe.Core is a project implementing:
