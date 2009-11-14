@@ -28,8 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.stringBox = new System.Windows.Forms.TextBox();
             this.positionBox = new System.Windows.Forms.TextBox();
+            this.anotherBox = new System.Windows.Forms.TextBox();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // stringBox
@@ -46,11 +50,34 @@
             this.positionBox.Size = new System.Drawing.Size(100, 21);
             this.positionBox.TabIndex = 1;
             // 
+            // anotherBox
+            // 
+            this.anotherBox.Location = new System.Drawing.Point(191, 44);
+            this.anotherBox.Name = "anotherBox";
+            this.anotherBox.Size = new System.Drawing.Size(100, 21);
+            this.anotherBox.TabIndex = 2;
+            // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 5000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(46, 168);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(235, 21);
+            this.textBox1.TabIndex = 3;
+            this.textBox1.Text = "we are here to test the fetcher!";
+            // 
             // TestForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(418, 369);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.anotherBox);
             this.Controls.Add(this.positionBox);
             this.Controls.Add(this.stringBox);
             this.Name = "TestForm";
@@ -65,5 +92,8 @@
 
         private System.Windows.Forms.TextBox stringBox;
         private System.Windows.Forms.TextBox positionBox;
+        private System.Windows.Forms.TextBox anotherBox;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }

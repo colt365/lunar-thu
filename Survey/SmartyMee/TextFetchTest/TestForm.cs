@@ -25,9 +25,16 @@ namespace TextFetchTest
         //接口的实现
         int IXDictGrabSink.QueryWord(string WordString, int lCursorX, int lCursorY, string SentenceString, ref int lLoc, ref int lStart)
         {
-            this.stringBox.Text = SentenceString;//鼠标所在语句
-            this.positionBox.Text = SentenceString.Substring(lLoc, 1);//鼠标所在字符
+            this.stringBox.Text = WordString;//鼠标所在语句
+            this.positionBox.Text = SentenceString;
+            //this.positionBox.Text = SentenceString.Substring(lLoc, 1);//鼠标所在字符
+            Console.WriteLine(WordString);
             return 1;
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            NHWFetcher.fetch(anotherBox, Cursor.Position);
         }
     }
 }
