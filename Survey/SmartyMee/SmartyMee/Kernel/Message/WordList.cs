@@ -7,5 +7,6 @@ namespace SmartyMee.Kernel.Message
 {
     public class WordList : MessageContainer<string>
     {
+        public WordList() {}
     }
 }
