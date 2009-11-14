@@ -13,7 +13,7 @@ namespace SmartyMee.Kernel.Message
         {
             WordList wordList = s as WordList;
             string str = string.Format("{0}:{1}", wordList.Count, wordList.Peek());
-            App.Log.WriteLine(str);
+            App.Log.Message(str);
         }
     }
 }

@@ -26,12 +26,17 @@ namespace SmartyMee
             InitializeComponent();
         }
 
-
-
         public void RunTesters()
         {
             MessageTester messageTester = new MessageTester();
             messageTester.Run();
+            
+        }
+
+        private void ButtonTest_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+        	// TODO: Add event handler implementation here.
+			RunTesters();
         }
     }
 }
