@@ -31,14 +31,17 @@ namespace SmartMe.Web
         /// <summary>
         /// 搜索返回的结果
         /// </summary>
-        private List<SearchEngineResult> _results = new List<SearchEngineResult>();
+        private QueryResult _result;
 
         /// <summary>
-        /// 当前的搜索
+        /// 处理并显示搜索结果的处理函数
         /// </summary>
-        private InputQuery _currentQuery;
+        private IQueryResultHandler _handler;
 
-        private HandleDeprecateQueryOption _deprecateQueryOption = HandleDeprecateQueryOption.Drop;
+        /// <summary>
+        /// 是否取消过期的查询
+        /// </summary>
+        private HandleDeprecateQueryOption _deprecateQueryOption = HandleDeprecateQueryOption.Reserve;
         #endregion
 
         #region constructor
@@ -46,13 +49,19 @@ namespace SmartMe.Web
         /// 构造一个WebResourceManager，如果pipeline = null，抛出ArgumentNullException
         /// </summary>
         /// <param name="pipeline">流水线，不能是null</param>
-        public WebResourceManager(Pipeline pipeline)
+        /// <param name="handler">处理搜索结果并显示的模块，不能是null</param>
+        public WebResourceManager(Pipeline pipeline, IQueryResultHandler handler)
         {            
             if (pipeline == null)
             {
                 throw new ArgumentNullException("pipeline");
             }
+            if (handler == null)
+            {
+                throw new ArgumentNullException("handler");
+            }
             _pipeline = pipeline;
+            _handler = handler;
         }
         #endregion
 
@@ -62,17 +71,18 @@ namespace SmartMe.Web
             #region fields
             private ISearchEngine _searchEngine;
             private InputQuery _inputQuery;
-            private Pipeline _pipeline;
+            private WebResourceManager _parent;
             private Thread _thread;
             #endregion
 
             #region constructor
-            public SearchAndReturnPipe(ISearchEngine engine, InputQuery query, Pipeline pipeline)
+            public SearchAndReturnPipe(WebResourceManager parent,
+                ISearchEngine engine, InputQuery query, Pipeline pipeline)
             {
                 // Assert(engine!= null && query != null)
+                _parent = parent;
                 _searchEngine = engine;
                 _inputQuery = query;
-                _pipeline = pipeline;
                 _thread = new Thread(new ThreadStart(SearchAndReturn));
                 _thread.Start();
             }
@@ -91,7 +101,7 @@ namespace SmartMe.Web
             private void SearchAndReturn()
             {
                 SearchEngineResult result = _searchEngine.Search(_inputQuery);
-                _pipeline.OnQueryResultItemReady(result);
+                _parent.OnSearchResultDone(result, _inputQuery);
             }
             #endregion
         }
@@ -113,6 +123,18 @@ namespace SmartMe.Web
 
         #region methods
 
+        private void OnSearchResultDone(SearchEngineResult result, InputQuery query)
+        {
+            if (query == _result.Query)
+            {
+                lock (_result)
+                {
+                    _result.Items.Add(result);
+                }
+                _handler.OnResultUpdate(_result);
+            }
+        }
+
         private void HandleDeprecateMessage(InputQuery message)
         {
             if (_deprecateQueryOption == HandleDeprecateQueryOption.Drop)
@@ -127,18 +149,24 @@ namespace SmartMe.Web
             if (message.Type == MessageType.InputQuery)
             {
                 InputQuery query = (InputQuery)message;
-                if (_currentQuery == query)
+                if (_result != null && _result.Query == query)
                 {
                     return;
                 }
                 // Kill current queries
-                HandleDeprecateMessage(_currentQuery);
+                if (_result != null)
+                {
+                    HandleDeprecateMessage(_result.Query);
+                }
 
-                // Generate new queries
-                _currentQuery = query;                
+                // Notice the handler
+                _result = new QueryResult(query);
+                _handler.OnResultNew(_result);
+
+                // Generate new queries               
                 foreach (ISearchEngine engine in _searchEngineList)
                 {
-                    SearchAndReturnPipe pipe = new SearchAndReturnPipe(engine, query, _pipeline);
+                    SearchAndReturnPipe pipe = new SearchAndReturnPipe(this, engine, query, _pipeline);
                 }
             }
         }

@@ -65,20 +65,6 @@ namespace SmartMe.Core.Pipeline
             _queryResultItemPipes.AddRange(newPipes);
         }
 
-        public void OnQueryResultNew(QueryResult result)
-        {
-            List<Pipe> newPipes = _queryResultSubscriberManager.NotifyAll(result);
-            // Assert(newPipes != null)
-            _queryResultPipes.AddRange(newPipes);
-        }
-
-        public void OnQueryResultUpdate(QueryResult result)
-        {
-            List<Pipe> newPipes = _queryResultSubscriberManager.NotifyAll(result);
-            // Assert(newPipes != null)
-            _queryResultPipes.AddRange(newPipes);
-        }
-
         public void OnInputTextCanceled(InputQuery text)
         {
             foreach (Pipe pipe in _inputTextPipes)

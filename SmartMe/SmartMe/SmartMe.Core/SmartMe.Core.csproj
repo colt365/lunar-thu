@@ -59,7 +59,7 @@
     <Compile Include="Data\IXMLObject.cs" />
     <Compile Include="Pipeline\Pipeline.cs" />
     <Compile Include="Pipeline\SubscriberManager.cs" />
-    <Compile Include="Data\InputText.cs" />
+    <Compile Include="Data\InputQuery.cs" />
     <Compile Include="Pipeline\Pipe.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
