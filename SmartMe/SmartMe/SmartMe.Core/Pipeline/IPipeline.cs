@@ -16,25 +16,25 @@ namespace SmartMe.Core.Pipeline
         /// 准备好了输入数据
         /// </summary>
         /// <param name="text"></param>
-        void onInputTextReady(InputText text);
+        void OnInputTextReady(InputText text);
 
         /// <summary>
         /// 准备好了查询结果
         /// </summary>
         /// <param name="text"></param>
-        void onQueryResultReady(QueryResult result);
+        void OnQueryResultReady(QueryResult result);
 
         /// <summary>
         /// 取消了输入数据
         /// </summary>
         /// <param name="text"></param>
-        void onInputTextCanceled(InputText text);
+        void OnInputTextCanceled(InputText text);
 
         /// <summary>
         /// 取消了查询结果
         /// </summary>
         /// <param name="result"></param>
-        void onQueryResultReade(QueryResult result);
+        void OnQueryResultReade(QueryResult result);
         #endregion
 
 
