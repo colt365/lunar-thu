@@ -18,7 +18,7 @@ namespace SmartMe.Web.Search
         /// </summary>
         /// <param name="query">搜索的文本</param>
         /// <returns>返回结果</returns>
-        public SearchEngineResult Search(InputQuery query);
+        SearchEngineResult Search(InputQuery query);
     }
 
 }

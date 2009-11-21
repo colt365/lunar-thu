@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using SmartMe.Web.Test;
 
 namespace SmartMe.Web
 {
@@ -9,6 +10,7 @@ namespace SmartMe.Web
     {
         static void Main(string[] args)
         {
+            WebResourceManagerTester.Test();
         }
     }
 }

@@ -11,9 +11,10 @@ namespace SmartMe.Input
         #region methods
         #region IInputQueryProcessor Members
 
-        InputQuery GetQuery(string rawText)
+        public InputQuery GetQuery(string rawText)
         {
-            
+            InputQuery query = new InputQuery(rawText);
+            return query;
         }
 
         #endregion

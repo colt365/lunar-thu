@@ -19,6 +19,12 @@ namespace SmartMe.Core.Pipeline
         void OnInputTextReady(InputQuery text);
 
         /// <summary>
+        /// 准备好了新的查询项
+        /// </summary>
+        /// <param name="item"></param>
+        void OnQueryResultItemReady(IQueryResultItem item);
+
+        /// <summary>
         /// 准备好了新的查询结果
         /// </summary>
         /// <param name="text"></param>
@@ -28,7 +34,7 @@ namespace SmartMe.Core.Pipeline
         /// 更新了查询结果
         /// </summary>
         /// <param name="text"></param>
-        void OnQueryResultNew(QueryResult result);
+        void OnQueryResultUpdate(QueryResult result);
 
         /// <summary>
         /// 取消了输入数据
