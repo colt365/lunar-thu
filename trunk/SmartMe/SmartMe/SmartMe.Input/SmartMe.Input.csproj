@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IInputQueryProcessor.cs" />
+    <Compile Include="InputQueryProcessor.cs" />
     <Compile Include="ITextFetcher.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
