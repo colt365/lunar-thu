@@ -56,7 +56,7 @@ namespace SmartMe.Web.Parse
 						break;
 				}
 			}
-            throw new NotImplementedException();
+			return searchResult;
 		}
 
 		private void HandleMetaEncoding(HTMLparser oP, HTMLchunk oChunk, ref bool bEncodingSet)
@@ -82,23 +82,7 @@ namespace SmartMe.Web.Parse
 				{
 					switch (oChunk.cParamChars[i])
 					{
-						/*
-					case (byte)' ':
-						if (oChunk.sValues[i].Length == 0)
-						{
-
-						}
-						else
-						{
-							if ((state == 4 || state== 6  || state ==8) && oChunk.sParams[i] == "href")
-								Console.WriteLine(" {0}={1}", oChunk.sParams[i], oChunk.sValues[i]);
-							if (oChunk.sValues[i] == "g" && oChunk.sParams[i] == "class" && state == 0)
-							{
-								state = 3;
-							}
-						}
-						break;
-					*/
+						
 						default:
 							if (oChunk.sValues[i] == "g" && oChunk.sParams[i] == "class" && state == 2)
 							{
