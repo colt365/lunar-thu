@@ -12,7 +12,8 @@ namespace SmartMe.Web.Parse
 	{
 
 		#region IParser Members
-
+		SearchEngineResult searchResult;
+		SearchEngineResult.ResultItem item;
 		public SearchEngineResult Parse(string html, Encoding encoding)
 		{
 			HTMLparser oP = HtmlParserFactory.GetInstance();
@@ -72,20 +73,98 @@ namespace SmartMe.Web.Parse
 
 		private void HandleParam(HTMLchunk oChunk, ref int state)
 		{
+			if (oChunk.iParams > 0)
+			{
+				for (int i = 0; i < oChunk.iParams; i++)
+				{
+					switch (oChunk.cParamChars[i])
+					{
 
+						default:
+							if (oChunk.sValues[i] == "f" && oChunk.sParams[i] == "class" && state == 2)
+							{
+								state = 3;
+								if (item.Url != null && item.Url != "")
+								{
+									searchResult.Results.Add(item);
+									item = new SearchEngineResult.ResultItem();
+								}
+							}
+							else if (oChunk.sParams[i] == "href")
+							{
+								if (state == 4)
+								{
+									item.Url = oChunk.sValues[i];
+								}
+								else if (state == 6)
+								{
+									item.CacheUrl = oChunk.sValues[i];
+								}
+								else if (state == 8)
+								{
+									if (item.SimilarUrl == null || item.SimilarUrl == "")
+										item.SimilarUrl = oChunk.sValues[i];
+									else
+									{
+										item.CacheUrl = item.SimilarUrl;
+										item.SimilarUrl = oChunk.sValues[i];
+									}
+								}
+							}
+							break;
+					}
+				}
+
+			}
 		}
 
 		private void HandleOpenTag(HTMLchunk oChunk, ref int state)
 		{
-
+			if (oChunk.sTag == "tr")
+			{
+				state = 1;
+			}
+			else if (oChunk.sTag == "td" && state > 0)
+			{
+				state = 2;
+			}
+			else if (oChunk.sTag == "a")
+			{
+				if (state == 3 || state == 5 || state == 7)
+					state += 1;
+				else if (state == 9)
+				{
+					state = 8;
+				}
+			}
 		}
 		private void HandleCloseTag(HTMLchunk oChunk, ref int state)
 		{
+			if (oChunk.sTag == "tr")
+			{
+				state = 0;
+			}
+			else if (oChunk.sTag == "td")
+			{
+				state = 1;
+			}
+			else if (oChunk.sTag == "a")
+			{
+				if (state == 4 || state == 6 || state == 8)
+					state += 1;
 
+			}
 		}
 		private void HandleText(HTMLchunk oChunk, ref int state)
 		{
-
+			if (state == 4)
+			{
+				item.Title += oChunk.oHTML;
+			}
+			else if (state == 5)
+			{
+				item.Description += oChunk.oHTML;
+			}
 		}
 		#endregion
 	}
