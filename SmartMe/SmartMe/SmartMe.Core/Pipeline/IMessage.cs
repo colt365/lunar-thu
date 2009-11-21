@@ -5,11 +5,21 @@ using System.Text;
 
 namespace SmartMe.Core.Pipeline
 {
+    public enum MessageType
+    {
+        InputQuery,
+        QueryResult
+    }
+
     /// <summary>
     /// 传递的消息
     /// </summary>
     public interface IMessage
     {
+        #region properties
+        MessageType Type { get; }
+        #endregion
+
         #region methods
         /// <summary>
         /// 转换消息的内容文本
