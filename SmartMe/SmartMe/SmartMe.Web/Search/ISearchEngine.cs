@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using SmartMe.Core.Data;
+using Majestic12;
+
 
 namespace SmartMe.Web.Search
 {
@@ -18,4 +20,5 @@ namespace SmartMe.Web.Search
         /// <returns>返回结果</returns>
         public SearchEngineResult Search(InputQuery query);
     }
+
 }
