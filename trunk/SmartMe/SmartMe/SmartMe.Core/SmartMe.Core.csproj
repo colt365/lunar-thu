@@ -31,7 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="Microsoft.VisualStudio.TeamSystem.Data.UnitTesting, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -45,6 +48,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\QueryResult.cs" />
+    <Compile Include="Pipeline\IMessage.cs" />
+    <Compile Include="Pipeline\IPipeline.cs" />
+    <Compile Include="Pipeline\ISubScriberManager.cs" />
+    <Compile Include="Pipeline\ISubScriber.cs" />
+    <Compile Include="Data\IXMLSerializable.cs" />
+    <Compile Include="Data\IXMLObject.cs" />
+    <Compile Include="Pipeline\Pipeline.cs" />
+    <Compile Include="Pipeline\SubscriberManager.cs" />
+    <Compile Include="Data\InputText.cs" />
+    <Compile Include="Pipeline\Pipe.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -53,8 +67,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Communication\" />
-    <Folder Include="Data\" />
-    <Folder Include="Pipeline\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
