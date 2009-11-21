@@ -123,6 +123,31 @@ namespace SmartMe.Web
 
         #region methods
 
+        public bool AddSearchEngine(ISearchEngine searchEngine)
+        {
+            if (searchEngine == null)
+            {
+                return false;
+            }
+            _searchEngineList.Add(searchEngine);
+            return true;
+        }
+
+        public bool RemoveSearchEngine(ISearchEngine searchEngine)
+        {
+            return _searchEngineList.Remove(searchEngine);
+        }
+
+        public bool RemoveSearchEngineAt(int position)
+        {
+            if (position < 0 || position >= _searchEngineList.Count)
+            {
+                return false;
+            }
+            _searchEngineList.RemoveAt(position);
+            return true;
+        }
+
         private void OnSearchResultDone(SearchEngineResult result, InputQuery query)
         {
             if (query == _result.Query)
