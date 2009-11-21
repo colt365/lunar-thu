@@ -122,6 +122,24 @@
   <ItemGroup>
     <Resource Include="Readme.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SmartMe.Core\SmartMe.Core.csproj">
+      <Project>{591D485B-85C8-40E2-9515-4438D338DE33}</Project>
+      <Name>SmartMe.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SmartMe.Input\SmartMe.Input.csproj">
+      <Project>{899F499A-87A1-4958-A3E1-F435887DA95F}</Project>
+      <Name>SmartMe.Input</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SmartMe.Web\SmartMe.Web.csproj">
+      <Project>{198302D6-A42D-4EE4-9B7D-79F66B191636}</Project>
+      <Name>SmartMe.Web</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SmartMe\SmartMe.csproj">
+      <Project>{A6F28E48-2294-4670-A6D2-F561CFA1447E}</Project>
+      <Name>SmartMe</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
