@@ -13,12 +13,12 @@ namespace SmartMe.Core.Data
 	{
 		#region fields
 		
-		string title;
-		string url;
-		string description;
-		string cacheUrl;
-		string similarUrl;
-		string source;
+		string _title;
+		string _url;
+		string _description;
+		string _cacheUrl;
+		string _similarUrl;
+		string _source;
 		#endregion
 	}
 
