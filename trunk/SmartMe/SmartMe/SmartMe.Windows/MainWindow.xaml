@@ -4,6 +4,7 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	mc:Ignorable="d" xmlns:ic="clr-namespace:Microsoft.Expression.Interactivity.Core;assembly=Microsoft.Expression.Interactions"
 	xmlns:SampleData="clr-namespace:Expression.Blend.SampleData.SampleDataSource"
+	xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
 	x:Class="SmartMe.Windows.MainWindow"
 	x:Name="Window"
 	Title="MainWindow"
@@ -23,10 +24,6 @@
 			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="GrabButton" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
 				<SplineDoubleKeyFrame KeyTime="00:00:00" Value="419"/>
 				<SplineDoubleKeyFrame KeyTime="00:00:00.6000000" Value="184"/>
-			</DoubleAnimationUsingKeyFrames>
-			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="GrabButton" Storyboard.TargetProperty="(FrameworkElement.Width)">
-				<SplineDoubleKeyFrame KeyTime="00:00:00" Value="40"/>
-				<SplineDoubleKeyFrame KeyTime="00:00:00.6000000" Value="150"/>
 			</DoubleAnimationUsingKeyFrames>
 			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="GrabSuggestionTextBlock" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
 				<SplineDoubleKeyFrame KeyTime="00:00:00.6000000" Value="-12.5"/>
@@ -59,6 +56,38 @@
 				<SplineDoubleKeyFrame KeyTime="00:00:00.8000000" Value="1"/>
 			</DoubleAnimationUsingKeyFrames>
 		</Storyboard>
+		<DataTemplate x:Key="ItemTemplate">
+			<StackPanel>
+				<TextBlock Text="{Binding Content}"/>
+				<TextBlock Text="{Binding Time}"/>
+				<TextBlock Text="{Binding Title}"/>
+				<TextBlock Text="{Binding Uri}"/>
+			</StackPanel>
+		</DataTemplate>
+		<DataTemplate x:Key="ItemTemplate1">
+			<StackPanel>
+				<TextBlock Text="{Binding Content}"/>
+				<TextBlock Text="{Binding Time}"/>
+				<TextBlock Text="{Binding Title}"/>
+				<TextBlock Text="{Binding Uri}"/>
+			</StackPanel>
+		</DataTemplate>
+		<DataTemplate x:Key="ItemTemplate2">
+			<StackPanel>
+				<TextBlock Text="{Binding Content}"/>
+				<TextBlock Text="{Binding Time}"/>
+				<TextBlock Text="{Binding Title}"/>
+				<TextBlock Text="{Binding Uri}"/>
+			</StackPanel>
+		</DataTemplate>
+		<DataTemplate x:Key="ItemTemplate3">
+			<StackPanel>
+				<TextBlock Text="{Binding Content}"/>
+				<TextBlock Text="{Binding Time}"/>
+				<TextBlock Text="{Binding Title}"/>
+				<TextBlock Text="{Binding Uri}"/>
+			</StackPanel>
+		</DataTemplate>
 	</Window.Resources>
 	<Window.Triggers>
 		<EventTrigger RoutedEvent="FrameworkElement.Loaded">
@@ -69,7 +98,7 @@
 		</EventTrigger>
 	</Window.Triggers>
 
-	<Grid x:Name="LayoutRoot" Background="Black" DataContext="{Binding Source={StaticResource SampleDataSource}}">
+	<Grid x:Name="LayoutRoot" Background="Black" DataContext="{Binding Source={StaticResource SampleDataSource}}" d:DataContext="{Binding Source={StaticResource SampleDataSource}}">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="0.472*"/>
 			<RowDefinition Height="0*"/>
@@ -77,10 +106,10 @@
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="0*"/>
-			<ColumnDefinition Width="0.111*"/>
-			<ColumnDefinition Width="0.889*"/>
+			<ColumnDefinition Width="0*"/>
+			<ColumnDefinition/>
 		</Grid.ColumnDefinitions>
-		<Button x:Name="GrabButton" Margin="-50.275,8,0,0" VerticalAlignment="Top" Height="24" Content="Grab Screen" ClickMode="Press" Click="GrabButton_Click" Grid.Column="2" HorizontalAlignment="Left" Width="277" Foreground="Black" RenderTransformOrigin="0.5,0.5">
+		<Button x:Name="GrabButton" Margin="8,8,240,0" VerticalAlignment="Top" Height="24" Content="Grab Screen" ClickMode="Press" Click="GrabButton_Click" Grid.Column="2" Foreground="Black" RenderTransformOrigin="0.5,0.5">
 			<Button.BindingGroup>
 				<BindingGroup/>
 			</Button.BindingGroup>
@@ -93,8 +122,8 @@
 				</TransformGroup>
 			</Button.RenderTransform>
 		</Button>
-		<TextBlock x:Name="InputTextBlock" Margin="8,42,7.403,0" TextWrapping="Wrap" Foreground="White" Grid.Column="1" VerticalAlignment="Top" Height="25"><Run Text="Input:"/><LineBreak/><Run Text=""/></TextBlock>
-		<ScrollViewer x:Name="ScrollViewer" Margin="8,71,8,15.973" Grid.Column="1" Grid.ColumnSpan="2">
+		<TextBlock x:Name="InputTextBlock" Margin="8,42,0,0" TextWrapping="Wrap" Foreground="White" Grid.Column="2" VerticalAlignment="Top" Height="25" HorizontalAlignment="Left" Width="42.872"><Run Text="Input:"/><LineBreak/><Run Text=""/></TextBlock>
+		<ScrollViewer x:Name="ScrollViewer" Margin="8,71,8,15.973" Grid.Column="2">
 			<TextBox x:Name="ResultTextBox" TextWrapping="Wrap" Background="#FFFEFEFE" SpellCheck.IsEnabled="True" FontSize="10.667" RenderTransformOrigin="0.5,0.5">
 				<TextBox.RenderTransform>
 					<TransformGroup>
@@ -106,7 +135,7 @@
 				</TextBox.RenderTransform>
 			</TextBox>
 		</ScrollViewer>
-		<TextBlock x:Name="GrabSuggestionTextBlock" Margin="93.725,42,101,0" VerticalAlignment="Top" Height="25" Grid.Column="2" Foreground="#FF825757" TextWrapping="Wrap" d:LayoutOverrides="HorizontalAlignment, GridBox" RenderTransformOrigin="0.5,0.5"><TextBlock.RenderTransform>
+		<TextBlock x:Name="GrabSuggestionTextBlock" Margin="152,42,101,0" VerticalAlignment="Top" Height="25" Grid.Column="2" Foreground="#FF825757" TextWrapping="Wrap" d:LayoutOverrides="HorizontalAlignment, GridBox" RenderTransformOrigin="0.5,0.5"><TextBlock.RenderTransform>
 				<TransformGroup>
 					<ScaleTransform/>
 					<SkewTransform/>
@@ -114,19 +143,7 @@
 					<TranslateTransform/>
 				</TransformGroup>
 			</TextBlock.RenderTransform><Run Text="["/><Run Text="Or you can also drag word to the window"/><Run Text="]"/></TextBlock>
-		<ListView x:Name="OutputListView" Margin="-26.275,44.779,29,8" Grid.Column="2" Grid.Row="2" IsSynchronizedWithCurrentItem="False" ItemsSource="{Binding Collection, Mode=OneWay}">
-			<ListView.View>
-				<GridView>
-					<GridView.ColumnHeaderContextMenu>
-						<ContextMenu>
-							<ContextMenu.BindingGroup>
-								<BindingGroup/>
-							</ContextMenu.BindingGroup>
-						</ContextMenu>
-					</GridView.ColumnHeaderContextMenu>
-				</GridView>
-			</ListView.View>
-		</ListView>
-		<TextBlock x:Name="OutputTextBlock" Margin="8,15.779,-29.725,0" VerticalAlignment="Top" Height="15.973" Grid.Column="1" Grid.Row="2" Foreground="White" TextWrapping="Wrap" d:LayoutOverrides="HorizontalAlignment"><Run Text="Output"/><Run Text=":"/></TextBlock>
+		<TextBlock x:Name="OutputTextBlock" Margin="8,15.779,437,0" VerticalAlignment="Top" Height="15.973" Grid.Column="2" Grid.Row="2" Foreground="White" TextWrapping="Wrap"><Run Text="Output"/><Run Text=":"/></TextBlock>
+		<ListBox x:Name="OutputListBox" Margin="8,35.752,8,33" Background="White" BorderBrush="Black" Foreground="Black" IsSynchronizedWithCurrentItem="True" Grid.Column="2" Grid.Row="2" ItemTemplate="{DynamicResource ItemTemplate3}" ItemsSource="{Binding Collection}"/>
 	</Grid>
 </Window>
