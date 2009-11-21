@@ -18,12 +18,6 @@ namespace SmartMe.Core.Data
 		#endregion		
 
         #region methods
-        #region IMessage Members
-        string IMessage.ToString()
-        {
-            throw new NotImplementedException();
-        }
-        #endregion
         #endregion
 
         #region IMessage Members
