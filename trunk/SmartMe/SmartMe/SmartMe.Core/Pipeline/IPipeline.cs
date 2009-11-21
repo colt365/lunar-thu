@@ -16,7 +16,7 @@ namespace SmartMe.Core.Pipeline
         /// 准备好了输入数据
         /// </summary>
         /// <param name="text"></param>
-        void OnInputTextReady(InputText text);
+        void OnInputTextReady(InputQuery text);
 
         /// <summary>
         /// 准备好了查询结果
@@ -28,7 +28,7 @@ namespace SmartMe.Core.Pipeline
         /// 取消了输入数据
         /// </summary>
         /// <param name="text"></param>
-        void OnInputTextCanceled(InputText text);
+        void OnInputTextCanceled(InputQuery text);
 
         /// <summary>
         /// 取消了查询结果

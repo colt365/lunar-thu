@@ -49,7 +49,7 @@ namespace SmartMe.Core.Pipeline
         #endregion
 
         #region methods
-        public void OnInputTextReady(InputText text)
+        public void OnInputTextReady(InputQuery text)
         {
             List<Pipe> newPipes = _inputTextSubscriberManager.NotifyAll(text);
             // Assert(newPipes != null)
@@ -63,7 +63,7 @@ namespace SmartMe.Core.Pipeline
             _queryResultPipes.AddRange(newPipes);
         }
 
-        public void OnInputTextCanceled(InputText text)
+        public void OnInputTextCanceled(InputQuery text)
         {
             foreach (Pipe pipe in _inputTextPipes)
             {

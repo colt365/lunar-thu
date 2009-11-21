@@ -10,7 +10,7 @@ namespace SmartMe.Core.Data
     /// <summary>
     /// 供查询的文本
     /// </summary>
-    public class InputText : IMessage
+    public class InputQuery : IMessage
     {
         #region fields
         /// <summary>
@@ -41,7 +41,7 @@ namespace SmartMe.Core.Data
         /// 输入的文字的构造函数
         /// </summary>
         /// <param name="text">输入的文字</param>
-        public InputText(String text)
+        public InputQuery(String text)
         {
             if (text == null)
             {
