@@ -11,6 +11,11 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+using SmartMe.Core;
+using SmartMe.Core.Pipeline;
+using SmartMe.Core.Data;
+using SmartMe.Web;
+
 namespace SmartMe.Windows
 {
 	/// <summary>
@@ -31,7 +36,10 @@ namespace SmartMe.Windows
             get { return _bindingString; }
             set { _bindingString = value; }
         }
-		
+
+        WebResourceManager _webResourceManager = null;
+        Pipeline _pipeline = null;
+        IQueryResultHandler _resultHandler = null;
         #endregion
 
         public MainWindow()
@@ -39,7 +47,17 @@ namespace SmartMe.Windows
 			this.InitializeComponent();
 
 			// Insert code required on object creation below this point.
+            CreateListeners();
 		}
+        private void CreateListeners()
+        {
+            _pipeline = new Pipeline();
+            _resultHandler = new QueryResultHandler();
+
+            _webResourceManager = new WebResourceManager(_pipeline, _resultHandler);
+            _pipeline.InputTextSubscriberManager.AddSubscriber(_webResourceManager);
+            
+        }
         
 		private void GrabButton_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
@@ -75,11 +93,15 @@ namespace SmartMe.Windows
             sb.AppendLine("e.OriginalSource.GetType:" + e.OriginalSource.GetType());
             sb.AppendLine("e.OriginalSource.ToString:" + e.OriginalSource.ToString());
             sb.AppendLine("-- convert e.Data : --");
-			ResultTextBox.Text = sb.ToString();
+            ResultTextBox.Text = sb.ToString();
 			sb = new StringBuilder();
+
             if (e.Data.GetDataPresent("Text", true))
             {
                 sb.AppendLine("Text:" + e.Data.GetData("Text", true));
+                InputQuery query = new InputQuery((string)e.Data.ToString());
+                query.QueryType = InputQueryType.Text;
+                _pipeline.OnInputTextReady(query);
             }
 			if (e.Data.GetDataPresent("text/html", true))
             {
@@ -163,5 +185,30 @@ namespace SmartMe.Windows
 			ResultTextBox.IsEnabled = false;
 			ResultTextBox.Text = "ResultTextBox.IsEnabled: false";
 		}
+
+
+        class QueryResultHandler : IQueryResultHandler
+        {
+            #region IQueryResultHandler 成员
+
+            public void OnResultNew(QueryResult result)
+            {
+                MessageBox.Show("OnResultNew");
+                //throw new NotImplementedException();
+            }
+
+            public void OnResultUpdate(QueryResult result)
+            {
+                MessageBox.Show("OnResultUpdate");
+                //throw new NotImplementedException();
+            }
+
+            public void OnResultDeprecated(QueryResult result)
+            {
+                MessageBox.Show("OnResultDeprecated");
+                //throw new NotImplementedException();
+            }
+            #endregion
+        }
 	}
 }

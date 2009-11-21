@@ -4,7 +4,6 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	mc:Ignorable="d" xmlns:ic="clr-namespace:Microsoft.Expression.Interactivity.Core;assembly=Microsoft.Expression.Interactions"
 	xmlns:SampleData="clr-namespace:Expression.Blend.SampleData.SampleDataSource"
-	xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
 	x:Class="SmartMe.Windows.MainWindow"
 	x:Name="Window"
 	Title="MainWindow"
