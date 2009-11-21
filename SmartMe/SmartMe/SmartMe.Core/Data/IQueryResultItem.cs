@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using SmartMe.Core.Pipeline;
 
 namespace SmartMe.Core.Data
 {
@@ -10,10 +11,10 @@ namespace SmartMe.Core.Data
         SearchEngineResult
     }
 
-    public interface IQueryResultItem
+    public interface IQueryResultItem : IMessage
     {
         #region properties
-        public QueryResultItemType Type { get; }
+        QueryResultItemType ResultType { get; }
         #endregion
     }
 }

@@ -11,6 +11,7 @@ namespace SmartMe.Core.Pipeline
     public enum MessageType
     {
         InputQuery,
+        QueryResultItem,
         QueryResult
     }
 

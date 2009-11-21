@@ -13,8 +13,10 @@ namespace SmartMe.Core.Pipeline
     {
         #region fields
         private ISubScriberManager _inputTextSubscriberManager = new SubscriberManager();
+        private ISubScriberManager _queryResultItemSubscriberManager = new SubscriberManager();
         private ISubScriberManager _queryResultSubscriberManager = new SubscriberManager();
         private List<Pipe> _inputTextPipes = new List<Pipe>();
+        private List<Pipe> _queryResultItemPipes = new List<Pipe>();
         private List<Pipe> _queryResultPipes = new List<Pipe>();
         #endregion
 
@@ -39,11 +41,11 @@ namespace SmartMe.Core.Pipeline
         /// <summary>
         /// 订阅了搜索结果的集合
         /// </summary>
-        public ISubScriberManager QueryResultSubscriberManager
+        public ISubScriberManager QueryResultItemSubscriberManager
         {
             get
             {
-                return _queryResultSubscriberManager;
+                return _queryResultItemSubscriberManager;
             }
         }
         #endregion
@@ -54,6 +56,13 @@ namespace SmartMe.Core.Pipeline
             List<Pipe> newPipes = _inputTextSubscriberManager.NotifyAll(text);
             // Assert(newPipes != null)
             _inputTextPipes.AddRange(newPipes);
+        }
+
+        public void OnQueryResultItemReady(IQueryResultItem item)
+        {
+            List<Pipe> newPipes = _queryResultItemSubscriberManager.NotifyAll(item);
+            // Assert(newPipes != null)
+            _queryResultItemPipes.AddRange(newPipes);
         }
 
         public void OnQueryResultNew(QueryResult result)
