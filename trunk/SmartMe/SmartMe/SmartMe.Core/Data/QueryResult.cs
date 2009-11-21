@@ -30,7 +30,7 @@ namespace SmartMe.Core.Data
 
 		#region fields
 		string _query;
-		List<ResultItem> _items;
+		List<QueryResultItem> _items;
 		#endregion 
 	
 		
