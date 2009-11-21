@@ -7,6 +7,15 @@ using SmartMe.Core.Pipeline;
 
 namespace SmartMe.Core.Data
 {
+    public enum InputQueryType
+    {
+        Unknown,
+        FileName,
+        HttpUri,
+        FtpUri,
+        Text,
+    }
+    
     /// <summary>
     /// 供查询的文本
     /// </summary>
@@ -19,43 +28,14 @@ namespace SmartMe.Core.Data
         private string _text;
 
         /// <summary>
-        /// 
+        /// 输入文本类型
         /// </summary>
-        private InputType _type = InputType.Unknown;
+        private InputQueryType _type = InputQueryType.Unknown;
 
-        public InputType Type
-        {
-            get { return _type; }
-            set { _type = value; }
-        }
-        #endregion
-
-        #region nested
-        public enum InputType
-        {
-            Unknown,
-            FileName,
-            HttpUri,
-            FtpUri,
-            Text,
-        }
-        #endregion
-
-        #region properties
         /// <summary>
-        /// 输入的文字
+        /// 消息类型
         /// </summary>
-        public string Text
-        {
-            get
-            {
-                return _text;
-            }
-            set
-            {
-                _text = value;
-            }
-        }
+        private const MessageType _messageType = MessageType.InputQuery;
         #endregion
 
         #region constructor
@@ -72,6 +52,43 @@ namespace SmartMe.Core.Data
             else
             {
                 _text = text;
+            }
+        }
+        #endregion
+
+        #region properties
+        public InputQueryType QueryType
+        {
+            get
+            {
+                return _type;
+            }
+            set
+            {
+                _type = value;
+            }
+        }
+
+        public MessageType Type
+        {
+            get
+            {
+                return _messageType;
+            }
+        }
+
+        /// <summary>
+        /// 输入的文字
+        /// </summary>
+        public string Text
+        {
+            get
+            {
+                return _text;
+            }
+            set
+            {
+                _text = value;
             }
         }
         #endregion
