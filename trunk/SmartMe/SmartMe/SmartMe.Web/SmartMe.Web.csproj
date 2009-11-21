@@ -31,10 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="HTMLparserLibDotNet20, Version=3.1.4.37526, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\htmlparser_v314 - 副本\HTMLparserMain\bin\Debug\HTMLparserLibDotNet20.dll</HintPath>
-    </Reference>
+    <Reference Include="HTMLparserLibDotNet20, Version=3.1.4.37526, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -53,13 +50,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Crawl\Crawler.cs" />
+    <Compile Include="Parse\BaiduParser.cs" />
+    <Compile Include="Parse\GoogleParser.cs" />
+    <Compile Include="Parse\HtmlParserFactory.cs" />
+    <Compile Include="Parse\IParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Search\ISearchEngine.cs" />
+    <Compile Include="Search\SearchEngine.cs" />
     <Compile Include="Test\WebResourceManagerTest.cs" />
     <Compile Include="WebResourceManager.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Lib\HTMLparserLibDotNet20.dll" />
     <Content Include="Readme.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -67,9 +71,6 @@
       <Project>{591D485B-85C8-40E2-9515-4438D338DE33}</Project>
       <Name>SmartMe.Core</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Crawl\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
