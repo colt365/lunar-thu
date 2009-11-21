@@ -6,7 +6,7 @@
 	x:Class="SmartMe.Windows.MainWindow"
 	x:Name="Window"
 	Title="MainWindow"
-	Width="531" Height="409" Topmost="True" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" AllowDrop="True" Drop="Window_Drop" DragLeave="Window_DragLeave" DragEnter="Window_DragEnter">
+	Width="531" Height="537" Topmost="True" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" AllowDrop="True" Drop="Window_Drop" DragLeave="Window_DragLeave" DragEnter="Window_DragEnter">
 	<Window.Resources>
 		<Storyboard x:Key="LoadingStoryboard">
 			<ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="GrabButton" Storyboard.TargetProperty="(UIElement.Visibility)">
@@ -25,23 +25,23 @@
 				<SplineDoubleKeyFrame KeyTime="00:00:00" Value="40"/>
 				<SplineDoubleKeyFrame KeyTime="00:00:00.6000000" Value="150"/>
 			</DoubleAnimationUsingKeyFrames>
-			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="textBlock" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
+			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="GrabSuggestionTextBlock" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
 				<SplineDoubleKeyFrame KeyTime="00:00:00.6000000" Value="-12.5"/>
 			</DoubleAnimationUsingKeyFrames>
-			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="textBlock" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)">
+			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="GrabSuggestionTextBlock" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)">
 				<SplineDoubleKeyFrame KeyTime="00:00:00.6000000" Value="-2"/>
 			</DoubleAnimationUsingKeyFrames>
-			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="ResultTextBlock" Storyboard.TargetProperty="(UIElement.Opacity)">
+			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="InputTextBlock" Storyboard.TargetProperty="(UIElement.Opacity)">
 				<SplineDoubleKeyFrame KeyTime="00:00:00" Value="0"/>
 				<SplineDoubleKeyFrame KeyTime="00:00:00.9000000" Value="0"/>
 				<SplineDoubleKeyFrame KeyTime="00:00:01.2000000" Value="1"/>
 			</DoubleAnimationUsingKeyFrames>
-			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="scrollViewer" Storyboard.TargetProperty="(UIElement.Opacity)">
+			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="ScrollViewer" Storyboard.TargetProperty="(UIElement.Opacity)">
 				<SplineDoubleKeyFrame KeyTime="00:00:00" Value="0"/>
 				<SplineDoubleKeyFrame KeyTime="00:00:01.2000000" Value="0"/>
 				<SplineDoubleKeyFrame KeyTime="00:00:01.6000000" Value="1"/>
 			</DoubleAnimationUsingKeyFrames>
-			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="textBlock" Storyboard.TargetProperty="(UIElement.Opacity)">
+			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="GrabSuggestionTextBlock" Storyboard.TargetProperty="(UIElement.Opacity)">
 				<SplineDoubleKeyFrame KeyTime="00:00:00" Value="0"/>
 				<SplineDoubleKeyFrame KeyTime="00:00:00.6000000" Value="0"/>
 				<SplineDoubleKeyFrame KeyTime="00:00:00.9000000" Value="1"/>
@@ -67,6 +67,11 @@
 	</Window.Triggers>
 
 	<Grid x:Name="LayoutRoot" Background="Black">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="0.472*"/>
+			<RowDefinition Height="0*"/>
+			<RowDefinition Height="0.528*"/>
+		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="0*"/>
 			<ColumnDefinition Width="0.111*"/>
@@ -85,8 +90,8 @@
 				</TransformGroup>
 			</Button.RenderTransform>
 		</Button>
-		<TextBlock x:Name="ResultTextBlock" Margin="8,42,7.403,0" Text="Result:" TextWrapping="Wrap" Foreground="White" Grid.Column="1" VerticalAlignment="Top" Height="25"/>
-		<ScrollViewer x:Name="scrollViewer" Margin="8,71,8,8" Grid.Column="1" Grid.ColumnSpan="2">
+		<TextBlock x:Name="InputTextBlock" Margin="8,42,7.403,0" TextWrapping="Wrap" Foreground="White" Grid.Column="1" VerticalAlignment="Top" Height="25"><Run Text="Input:"/><LineBreak/><Run Text=""/></TextBlock>
+		<ScrollViewer x:Name="ScrollViewer" Margin="8,71,8,15.973" Grid.Column="1" Grid.ColumnSpan="2">
 			<TextBox x:Name="ResultTextBox" TextWrapping="Wrap" Background="#FFFEFEFE" SpellCheck.IsEnabled="True" FontSize="10.667" RenderTransformOrigin="0.5,0.5">
 				<TextBox.RenderTransform>
 					<TransformGroup>
@@ -98,7 +103,7 @@
 				</TextBox.RenderTransform>
 			</TextBox>
 		</ScrollViewer>
-		<TextBlock x:Name="textBlock" Margin="93.725,42,101,0" VerticalAlignment="Top" Height="25" Grid.Column="2" Foreground="#FF825757" TextWrapping="Wrap" d:LayoutOverrides="HorizontalAlignment, GridBox" RenderTransformOrigin="0.5,0.5"><TextBlock.RenderTransform>
+		<TextBlock x:Name="GrabSuggestionTextBlock" Margin="93.725,42,101,0" VerticalAlignment="Top" Height="25" Grid.Column="2" Foreground="#FF825757" TextWrapping="Wrap" d:LayoutOverrides="HorizontalAlignment, GridBox" RenderTransformOrigin="0.5,0.5"><TextBlock.RenderTransform>
 				<TransformGroup>
 					<ScaleTransform/>
 					<SkewTransform/>
@@ -106,5 +111,13 @@
 					<TranslateTransform/>
 				</TransformGroup>
 			</TextBlock.RenderTransform><Run Text="["/><Run Text="Or you can also drag word to the window"/><Run Text="]"/></TextBlock>
+		<ListView x:Name="OutputListView" Margin="-26.275,44.779,29,8" Grid.Column="2" Grid.Row="2">
+			<ListView.View>
+				<GridView>
+					<GridViewColumn/>
+				</GridView>
+			</ListView.View>
+		</ListView>
+		<TextBlock x:Name="OutputTextBlock" Margin="8,15.779,-29.725,0" VerticalAlignment="Top" Height="15.973" Grid.Column="1" Grid.Row="2" Foreground="White" TextWrapping="Wrap" d:LayoutOverrides="HorizontalAlignment"><Run Text="Output"/><Run Text=":"/></TextBlock>
 	</Grid>
 </Window>
