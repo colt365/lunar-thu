@@ -16,14 +16,36 @@ namespace SmartMe.Core.Data
         /// <summary>
         /// 输入的文字
         /// </summary>
-        private String _text;
+        private string _text;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private InputType _type = InputType.Unknown;
+
+        public InputType Type
+        {
+            get { return _type; }
+            set { _type = value; }
+        }
+        #endregion
+
+        #region nested
+        public enum InputType
+        {
+            Unknown,
+            FileName,
+            HttpUri,
+            FtpUri,
+            Text,
+        }
         #endregion
 
         #region properties
         /// <summary>
         /// 输入的文字
         /// </summary>
-        public String Text
+        public string Text
         {
             get
             {

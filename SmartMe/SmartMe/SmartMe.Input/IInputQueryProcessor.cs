@@ -6,17 +6,15 @@ using SmartMe.Core.Data;
 
 namespace SmartMe.Input
 {
-    /// <summary>
-    /// 查询文本获得器
-    /// </summary>
-    public interface ITextFetcher
+    public interface IInputQueryProcessor
     {
         #region methods
         /// <summary>
-        /// 得到输入的文字
+        /// 获得输入的分类
         /// </summary>
-        /// <returns> 输入的文字 </returns>
-        InputQuery FetchText();        
+        /// <param name="rawText">输入的文本</param>
+        /// <returns>分类好的查询结果</returns>
+        InputQuery GetQuery(string rawText);
         #endregion
     }
 }
