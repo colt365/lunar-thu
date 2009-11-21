@@ -17,8 +17,24 @@ namespace SmartMe.Windows
 	/// Interaction logic for MainWindow.xaml
 	/// </summary>
 	public partial class MainWindow : Window
-	{
-		public MainWindow()
+    {
+        #region fields
+        private List<string> _searchResults;
+        public List<string> SearchResults
+        {
+            get { return _searchResults; }
+            set { _searchResults = value; }
+        }
+		private string _bindingString;
+        public string BindingString
+        {
+            get { return _bindingString; }
+            set { _bindingString = value; }
+        }
+		
+        #endregion
+
+        public MainWindow()
 		{
 			this.InitializeComponent();
 

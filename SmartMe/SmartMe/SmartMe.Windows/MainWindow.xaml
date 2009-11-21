@@ -3,11 +3,14 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	mc:Ignorable="d" xmlns:ic="clr-namespace:Microsoft.Expression.Interactivity.Core;assembly=Microsoft.Expression.Interactions"
+	xmlns:SampleData="clr-namespace:Expression.Blend.SampleData.SampleDataSource"
 	x:Class="SmartMe.Windows.MainWindow"
 	x:Name="Window"
 	Title="MainWindow"
 	Width="531" Height="537" Topmost="True" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" AllowDrop="True" Drop="Window_Drop" DragLeave="Window_DragLeave" DragEnter="Window_DragEnter">
 	<Window.Resources>
+		<SampleData:SampleDataSource x:Key="SampleDataSource" d:IsDataSource="True"/>
+		<AlternationConverter x:Key="AlternationConverter"/>
 		<Storyboard x:Key="LoadingStoryboard">
 			<ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="GrabButton" Storyboard.TargetProperty="(UIElement.Visibility)">
 				<DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Visible}"/>
@@ -66,7 +69,7 @@
 		</EventTrigger>
 	</Window.Triggers>
 
-	<Grid x:Name="LayoutRoot" Background="Black">
+	<Grid x:Name="LayoutRoot" Background="Black" DataContext="{Binding Source={StaticResource SampleDataSource}}">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="0.472*"/>
 			<RowDefinition Height="0*"/>
@@ -111,10 +114,16 @@
 					<TranslateTransform/>
 				</TransformGroup>
 			</TextBlock.RenderTransform><Run Text="["/><Run Text="Or you can also drag word to the window"/><Run Text="]"/></TextBlock>
-		<ListView x:Name="OutputListView" Margin="-26.275,44.779,29,8" Grid.Column="2" Grid.Row="2">
+		<ListView x:Name="OutputListView" Margin="-26.275,44.779,29,8" Grid.Column="2" Grid.Row="2" IsSynchronizedWithCurrentItem="False" ItemsSource="{Binding Collection, Mode=OneWay}">
 			<ListView.View>
 				<GridView>
-					<GridViewColumn/>
+					<GridView.ColumnHeaderContextMenu>
+						<ContextMenu>
+							<ContextMenu.BindingGroup>
+								<BindingGroup/>
+							</ContextMenu.BindingGroup>
+						</ContextMenu>
+					</GridView.ColumnHeaderContextMenu>
 				</GridView>
 			</ListView.View>
 		</ListView>
