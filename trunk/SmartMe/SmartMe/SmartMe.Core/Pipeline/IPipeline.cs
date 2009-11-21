@@ -25,18 +25,6 @@ namespace SmartMe.Core.Pipeline
         void OnQueryResultItemReady(IQueryResultItem item);
 
         /// <summary>
-        /// 准备好了新的查询结果
-        /// </summary>
-        /// <param name="text"></param>
-        void OnQueryResultNew(QueryResult result);
-
-        /// <summary>
-        /// 更新了查询结果
-        /// </summary>
-        /// <param name="text"></param>
-        void OnQueryResultUpdate(QueryResult result);
-
-        /// <summary>
         /// 取消了输入数据
         /// </summary>
         /// <param name="text"></param>

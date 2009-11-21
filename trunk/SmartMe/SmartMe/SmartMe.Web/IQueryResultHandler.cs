@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using SmartMe.Core.Data;
 
-namespace SmartMe.Output
+namespace SmartMe.Web
 {
     public interface IQueryResultHandler
     {

@@ -16,7 +16,7 @@ namespace SmartMe.Web.Test
         {
             Pipeline pipeline = new Pipeline();
             pipeline.QueryResultItemSubscriberManager.AddSubscriber(new ResultItemSubscriber(500));
-            WebResourceManager manager = new WebResourceManager(pipeline);
+            WebResourceManager manager = new WebResourceManager(pipeline, new QueryResultHandler());
             InputQuery query = new InputQuery("LinTian");
             Console.WriteLine(query.Text);
             manager.SearchEngineList.Add(new SearchEngine(2000));
@@ -49,6 +49,28 @@ namespace SmartMe.Web.Test
                 _count++;
                 Thread.Sleep(_waitTime);
                 return result;
+            }
+
+            #endregion
+        }
+
+        public class QueryResultHandler : IQueryResultHandler
+        {
+            #region IQueryResultHandler Members
+
+            public void OnResultNew(QueryResult result)
+            {
+                Console.WriteLine("New Result!");
+            }
+
+            public void OnResultUpdate(QueryResult result)
+            {
+                Console.WriteLine(result.ToString() + "\nUpdate Result!");
+            }
+
+            public void OnResultDeprecated(QueryResult result)
+            {
+                Console.WriteLine("Deprecate Result!");
             }
 
             #endregion

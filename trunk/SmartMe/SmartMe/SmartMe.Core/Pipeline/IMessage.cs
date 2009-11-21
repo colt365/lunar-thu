@@ -25,11 +25,6 @@ namespace SmartMe.Core.Pipeline
         #endregion
 
         #region methods
-        /// <summary>
-        /// 转换消息的内容文本
-        /// </summary>
-        /// <returns>内容文本</returns>
-        String ToString();
         #endregion
     }
 }
