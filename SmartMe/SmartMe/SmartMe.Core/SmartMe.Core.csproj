@@ -48,7 +48,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\IQueryResultItem.cs" />
     <Compile Include="Data\QueryResult.cs" />
+    <Compile Include="Data\SearchEngineResult.cs" />
     <Compile Include="Pipeline\IMessage.cs" />
     <Compile Include="Pipeline\IPipeline.cs" />
     <Compile Include="Pipeline\ISubScriberManager.cs" />
