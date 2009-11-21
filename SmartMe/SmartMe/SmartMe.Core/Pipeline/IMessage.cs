@@ -5,6 +5,9 @@ using System.Text;
 
 namespace SmartMe.Core.Pipeline
 {
+    /// <summary>
+    /// 消息的类型
+    /// </summary>
     public enum MessageType
     {
         InputQuery,
