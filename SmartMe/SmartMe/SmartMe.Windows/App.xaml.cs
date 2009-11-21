@@ -12,5 +12,18 @@ namespace SmartMe.Windows
     /// </summary>
     public partial class App : Application
     {
+        private static SmartMe.Log.Logger _logger = null;
+        public static SmartMe.Log.Logger Logger
+        {
+            get
+            {
+                if (_logger == null)
+                {
+                    _logger = new SmartMe.Log.Logger();
+                }
+                return _logger;
+            }
+            private set { _logger = value; }
+        }
     }
 }
