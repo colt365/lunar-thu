@@ -13,10 +13,14 @@ namespace SmartMe.Web.Parse
 
 		#region IParser Members
 
+		SearchEngineResult searchResult;
+		SearchEngineResult.ResultItem item;
+
 		public SearchEngineResult Parse(string html, Encoding encoding)
 		{
 			HTMLparser oP = HtmlParserFactory.GetInstance();
-			SearchEngineResult searchResult = new SearchEngineResult();
+			searchResult = new SearchEngineResult();
+			item = new SearchEngineResult.ResultItem();
 			oP.SetEncoding(encoding);
 			HTMLchunk oChunk = null;
 			bool first = false;
@@ -72,7 +76,65 @@ namespace SmartMe.Web.Parse
 
 		private void HandleParam(HTMLchunk oChunk, ref int state)
 		{
+			if (oChunk.iParams > 0)
+			{
+				for (int i = 0; i < oChunk.iParams; i++)
+				{
+					switch (oChunk.cParamChars[i])
+					{
+						/*
+					case (byte)' ':
+						if (oChunk.sValues[i].Length == 0)
+						{
 
+						}
+						else
+						{
+							if ((state == 4 || state== 6  || state ==8) && oChunk.sParams[i] == "href")
+								Console.WriteLine(" {0}={1}", oChunk.sParams[i], oChunk.sValues[i]);
+							if (oChunk.sValues[i] == "g" && oChunk.sParams[i] == "class" && state == 0)
+							{
+								state = 3;
+							}
+						}
+						break;
+					*/
+						default:
+							if (oChunk.sValues[i] == "g" && oChunk.sParams[i] == "class" && state == 2)
+							{
+								state = 3;
+								if (item.Url!=null && item.Url!="")
+								{
+									searchResult.Results.Add(item);
+									item = new SearchEngineResult.ResultItem();
+								}
+							}
+							else if (oChunk.sParams[i] == "href")
+							{
+								if (state == 4)
+								{
+									item.Url = oChunk.sValues[i];
+								}
+								else if (state == 6)
+								{
+									item.CacheUrl = oChunk.sValues[i];
+								}
+								else if (state == 8)
+								{
+									if (item.SimilarUrl == null || item.SimilarUrl == "")
+										item.SimilarUrl = oChunk.sValues[i];
+									else
+									{
+										item.CacheUrl = item.SimilarUrl;
+										item.SimilarUrl = oChunk.sValues[i];
+									}
+								}
+							}
+							break;
+					}
+				}
+
+			}
 		}
 
 		private void HandleOpenTag(HTMLchunk oChunk, ref int state)
@@ -81,7 +143,7 @@ namespace SmartMe.Web.Parse
 			{
 				state = 1;
 			}
-			else if (oChunk.sTag == "li" && state == 1)
+			else if (oChunk.sTag == "li" && state > 0 )
 			{
 				state = 2;
 			}
@@ -89,6 +151,10 @@ namespace SmartMe.Web.Parse
 			{
 				if (state == 3 || state == 5 || state == 7)
 					state += 1;
+				else if (state == 9)
+				{
+					state = 8;
+				}
 			}
 
 		}
@@ -106,7 +172,14 @@ namespace SmartMe.Web.Parse
 		}
 		private void HandleText(HTMLchunk oChunk, ref int state)
 		{
-
+			if (state == 4)
+			{
+				item.Title += oChunk.oHTML;
+			}
+			else if (state == 5)
+			{
+				item.Description += oChunk.oHTML;
+			}
 		}
 		#endregion
 	}
