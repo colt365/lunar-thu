@@ -7,7 +7,7 @@ using System.Web;
 
 namespace SmartMe.Web.Search
 {
-	class BaiduSearchEngine: ISearchEngine
+	public class BaiduSearchEngine: ISearchEngine
 	{
 		#region ISearchEngine Members
 
