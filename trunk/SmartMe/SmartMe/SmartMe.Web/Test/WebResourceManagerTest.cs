@@ -21,6 +21,8 @@ namespace SmartMe.Web.Test
             Console.WriteLine(query.Text);
             manager.SearchEngineList.Add(new SearchEngine(2000));
             manager.SearchEngineList.Add(new SearchEngine(1000));
+            //manager.SearchEngineList.Add(new GoogleSearchEngine());
+            //manager.SearchEngineList.Add(new BaiduSearchEngine());
             manager.Handle(query);
             Thread.Sleep(5000);
         }
