@@ -14,7 +14,7 @@ namespace SmartMe.Web.Crawl
 		public static string Crawl(string query,Encoding encoding)
 		{
 			HttpWebRequest request = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(query);
-			request.Timeout = 200000;
+			request.Timeout = 30000;
 			request.UserAgent = "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; .NET CLR 2.0.50727; .NET CLR 3.0.04506.648; .NET CLR 3.5.21022)";
 
 			WebResponse response = null;
