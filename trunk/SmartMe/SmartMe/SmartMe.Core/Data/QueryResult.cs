@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using System.Collections;
+using System.Collections.ObjectModel;
 using SmartMe.Core.Pipeline;
 
 namespace SmartMe.Core.Data
@@ -14,7 +15,7 @@ namespace SmartMe.Core.Data
     {
 		#region fields
         InputQuery _query;
-        List<IQueryResultItem> _items = new List<IQueryResultItem>();
+        ObservableCollection<SearchEngineResult> _items = new ObservableCollection<SearchEngineResult>();
 		#endregion
         
         #region constructor
@@ -31,7 +32,7 @@ namespace SmartMe.Core.Data
             set { _query = value; }
         }
 
-        public List<IQueryResultItem> Items
+        public ObservableCollection<SearchEngineResult> Items
         {
             get { return _items; }
         }
