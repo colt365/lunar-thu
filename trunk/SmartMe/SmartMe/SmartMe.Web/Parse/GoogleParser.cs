@@ -18,12 +18,14 @@ namespace SmartMe.Web.Parse
 
 		public SearchEngineResult Parse(string html, Encoding encoding)
 		{
+			
 			HTMLparser oP = HtmlParserFactory.GetInstance();
 			searchResult = new SearchEngineResult();
 			item = new SearchEngineResult.ResultItem();
+			oP.Init(encoding.GetBytes(html));
 			oP.SetEncoding(encoding);
 			HTMLchunk oChunk = null;
-			bool first = false;
+
 			int state = 0;
 			bool bEncodingSet = false;
 			while ((oChunk = oP.ParseNext()) != null)
