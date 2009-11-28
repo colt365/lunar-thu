@@ -45,14 +45,18 @@ namespace SmartMe.Core.Data
         /// <param name="text">输入的文字</param>
         public InputQuery(String text)
         {
-            if (text == null)
-            {
-                _text = "";
-            }
-            else
-            {
-                _text = text;
-            }
+            Text = text;
+        }
+
+        /// <summary>
+        /// 输入查询的构造函数
+        /// </summary>
+        /// <param name="text">查询文本</param>
+        /// <param name="type">查询类型</param>
+        public InputQuery(String text, InputQueryType type)
+        {
+            Text = text;
+            QueryType = type;
         }
         #endregion
 
@@ -88,7 +92,14 @@ namespace SmartMe.Core.Data
             }
             set
             {
-                _text = value;
+                if (value == null)
+                {
+                    _text = "";
+                }
+                else
+                {
+                    _text = value;
+                }
             }
         }
         #endregion
