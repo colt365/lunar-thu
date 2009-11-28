@@ -53,7 +53,7 @@ namespace SmartMe.Web.Parse
 					break;
 				}
 			}
-			throw new NotImplementedException();
+			return searchResult;
 		}
 
 		private void HandleMetaEncoding(HTMLparser oP, HTMLchunk oChunk, ref bool bEncodingSet)
