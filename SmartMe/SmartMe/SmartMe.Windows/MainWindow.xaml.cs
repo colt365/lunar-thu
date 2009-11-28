@@ -196,22 +196,22 @@ namespace SmartMe.Windows
 
             public void OnResultNew(QueryResult result)
             {
-                MessageBox.Show("OnResultNew" + result.ToString());
+                MessageBox.Show("OnResultNew\n" + result.ToString());
             }
 
             public void OnResultUpdate(QueryResult result)
             {
-                MessageBox.Show("OnResultUpdate" + result.ToString());
+                MessageBox.Show("OnResultUpdate\n" + result.ToString());
             }
 
             public void OnResultDeprecated(QueryResult result)
             {
-                MessageBox.Show("OnResultDeprecated" + result.ToString());
+                MessageBox.Show("OnResultDeprecated\n" + result.ToString());
             }
 
             public void OnResultCompleted(QueryResult result)
             {
-                MessageBox.Show("OnResultCompleted" + result.ToString());
+                MessageBox.Show("OnResultCompleted\n" + result.ToString());
             }
             #endregion
         }
