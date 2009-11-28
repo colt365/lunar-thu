@@ -21,6 +21,10 @@ namespace SmartMe.Web.Search
 			string url = "http://www.google.cn/search?q=" + HttpUtility.UrlEncode(query.Text, Encoding.UTF8);
 
 			string html=SmartMe.Web.Crawl.Crawler.Crawl(url,Encoding.UTF8);
+			if(html==null)
+			{
+				return null;
+			}
 			SmartMe.Web.Parse.GoogleParser parser= new SmartMe.Web.Parse.GoogleParser();
 			return parser.Parse(html,Encoding.UTF8);
 		}

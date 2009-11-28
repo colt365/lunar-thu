@@ -17,14 +17,44 @@ namespace SmartMe.Web.Crawl
 			request.Timeout = 200000;
 			request.UserAgent = "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; .NET CLR 2.0.50727; .NET CLR 3.0.04506.648; .NET CLR 3.5.21022)";
 
-			WebResponse response = request.GetResponse();
-			Stream resStream = response.GetResponseStream();
-			StreamReader sr = new System.IO.StreamReader(resStream, encoding);
-			string result= sr.ReadToEnd();
+			WebResponse response = null;
+			Stream resStream =null;
+			StreamReader sr = null;
+			string result = null;
+			
+			try
+			{
+				response = request.GetResponse();
+				resStream = response.GetResponseStream();
+				sr = new System.IO.StreamReader(resStream, encoding);
+				result =sr.ReadToEnd();
+			}
+			catch (System.Exception e)
+			{
+				
+				result = null;
+			}
+			finally
+			{
+				if (sr != null)
+				{
+					sr.Close();
+				}
+				if(resStream!=null)
+				{
+					resStream.Close();
+				}
+				if(response!=null)
+				{
+					response.Close();
+				}
+				
+			}
+	
+			
+			
 
-			sr.Close();
-			resStream.Close();
-			response.Close();
+			
 
 			return result;
 
