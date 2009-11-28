@@ -53,7 +53,7 @@ namespace SmartMe.Windows
         private void CreateListeners()
         {
             _pipeline = new Pipeline();
-            _resultHandler = new QueryResultHandler();
+            _resultHandler = new QueryResultHandler(this.OutputListBox);
 
             _webResourceManager = new WebResourceManager(_pipeline, _resultHandler);
             _pipeline.InputTextSubscriberManager.AddSubscriber(_webResourceManager);
@@ -102,8 +102,10 @@ namespace SmartMe.Windows
             if (e.Data.GetDataPresent("Text", true))
             {
                 sb.AppendLine("Text:" + e.Data.GetData("Text", true));
-                InputQuery query = new InputQuery(e.Data.GetData("Text", true).ToString());
+                string text = e.Data.GetData("Text", true).ToString();
+                InputQuery query = new InputQuery(text);
                 query.QueryType = InputQueryType.Text;
+                InputTextBox.Text = "Query:" + text;
                 _pipeline.OnInputTextReady(query);
             }
 			if (e.Data.GetDataPresent("text/html", true))
@@ -173,6 +175,7 @@ namespace SmartMe.Windows
                 sb.AppendLine("FileContents:" + e.Data.GetData(Type.GetType("FileContents", false, true)));
             }
 			*/
+            
             ResultTextBox.Text += sb.ToString();
 		}
 
@@ -192,26 +195,50 @@ namespace SmartMe.Windows
 
         class QueryResultHandler : IQueryResultHandler
         {
-            #region IQueryResultHandler 成员
+            private ListBox _outputListBox = null;
+            public QueryResultHandler(ListBox outputListBox)
+            {
+                _outputListBox = outputListBox;
+            }
 
+            #region IQueryResultHandler 成员
             public void OnResultNew(QueryResult result)
             {
-                MessageBox.Show("OnResultNew\n" + result.ToString());
+                _outputListBox.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(
+                    delegate()
+                    {
+                        _outputListBox.Items.Clear();
+                    })
+                );
             }
 
             public void OnResultUpdate(QueryResult result)
             {
-                MessageBox.Show("OnResultUpdate\n" + result.ToString());
+                _outputListBox.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(
+                    delegate()
+                    {
+                        _outputListBox.Items.Clear();
+                        foreach (SearchEngineResult searchItem in result.Items)
+                        {
+                            foreach (SearchEngineResult.ResultItem resultItem in searchItem.Results)
+                            {
+                                _outputListBox.Items.Add(new ListBoxItem() { Content = resultItem.ToString() });
+                            }
+                        }
+                        _outputListBox.InvalidateArrange();
+                        _outputListBox.UpdateLayout();
+                    })
+                );
             }
 
             public void OnResultDeprecated(QueryResult result)
             {
-                MessageBox.Show("OnResultDeprecated\n" + result.ToString());
+                MessageBox.Show("OnResultDeprecated" + result.ToString());
             }
 
             public void OnResultCompleted(QueryResult result)
             {
-                MessageBox.Show("OnResultCompleted\n" + result.ToString());
+                MessageBox.Show("OnResultCompleted" + result.ToString());
             }
             #endregion
         }
