@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{198302D6-A42D-4EE4-9B7D-79F66B191636}</ProjectGuid>
     <OutputType>Exe</OutputType>
@@ -61,6 +61,8 @@
     <Compile Include="Search\BaiduSearchEngine.cs" />
     <Compile Include="Search\GoogleSearchEngine.cs" />
     <Compile Include="Search\ISearchEngine.cs" />
+    <Compile Include="Test\BaiduSearchEngineTest.cs" />
+    <Compile Include="Test\GoogleSearchEngineTest.cs" />
     <Compile Include="Test\WebResourceManagerTest.cs" />
     <Compile Include="WebResourceManager.cs" />
   </ItemGroup>
