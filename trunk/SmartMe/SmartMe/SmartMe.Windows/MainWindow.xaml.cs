@@ -197,19 +197,16 @@ namespace SmartMe.Windows
             public void OnResultNew(QueryResult result)
             {
                 MessageBox.Show("OnResultNew" + result.ToString());
-                //throw new NotImplementedException();
             }
 
             public void OnResultUpdate(QueryResult result)
             {
                 MessageBox.Show("OnResultUpdate" + result.ToString());
-                //throw new NotImplementedException();
             }
 
             public void OnResultDeprecated(QueryResult result)
             {
                 MessageBox.Show("OnResultDeprecated" + result.ToString());
-                //throw new NotImplementedException();
             }
 
             public void OnResultCompleted(QueryResult result)

@@ -155,11 +155,12 @@ namespace SmartMe.Web
                 lock (_result)
                 {
                     _result.Items.Add(result);
-                }
-                _handler.OnResultUpdate(_result);
-                if (_result.Items.Count == _searchEngineList.Count)
-                {
-                    _handler.OnResultCompleted(_result);
+                    _handler.OnResultUpdate(_result);
+                    if (_result.Items.Count == _searchEngineList.Count)
+                    {
+                        _handler.OnResultCompleted(_result);
+                    }
+
                 }
             }
         }
