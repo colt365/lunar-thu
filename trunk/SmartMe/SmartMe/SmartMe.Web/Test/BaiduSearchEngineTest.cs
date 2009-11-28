@@ -13,7 +13,7 @@ namespace SmartMe.Web.Test
         public static void Test()
         {
             ISearchEngine engine = new BaiduSearchEngine();
-            InputQuery query = new InputQuery("SB");
+            InputQuery query = new InputQuery("旅游");
             query.QueryType = InputQueryType.Text;
             IQueryResultItem item = engine.Search(query);
             Console.WriteLine(item);
