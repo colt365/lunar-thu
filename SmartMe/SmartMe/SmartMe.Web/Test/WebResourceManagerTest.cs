@@ -73,6 +73,11 @@ namespace SmartMe.Web.Test
                 Console.WriteLine("Deprecate Result!");
             }
 
+            public void OnResultCompleted(QueryResult result)
+            {
+                Console.WriteLine("Complete Result!");
+            }
+
             #endregion
         }
 

@@ -10,6 +10,7 @@ namespace SmartMe.Web
     {
         void OnResultNew(QueryResult result);
         void OnResultUpdate(QueryResult result);
-        void OnResultDeprecated(QueryResult result);
+        void OnResultCompleted(QueryResult result);
+        void OnResultDeprecated(QueryResult result);        
     }
 }

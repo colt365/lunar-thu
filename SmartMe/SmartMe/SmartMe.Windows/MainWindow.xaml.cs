@@ -15,6 +15,7 @@ using SmartMe.Core;
 using SmartMe.Core.Pipeline;
 using SmartMe.Core.Data;
 using SmartMe.Web;
+using SmartMe.Web.Search;
 
 namespace SmartMe.Windows
 {
@@ -56,7 +57,9 @@ namespace SmartMe.Windows
 
             _webResourceManager = new WebResourceManager(_pipeline, _resultHandler);
             _pipeline.InputTextSubscriberManager.AddSubscriber(_webResourceManager);
-            
+
+            _webResourceManager.AddSearchEngine(new GoogleSearchEngine());
+            _webResourceManager.AddSearchEngine(new BaiduSearchEngine());
         }
         
 		private void GrabButton_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -99,7 +102,7 @@ namespace SmartMe.Windows
             if (e.Data.GetDataPresent("Text", true))
             {
                 sb.AppendLine("Text:" + e.Data.GetData("Text", true));
-                InputQuery query = new InputQuery((string)e.Data.ToString());
+                InputQuery query = new InputQuery(e.Data.GetData("Text", true).ToString());
                 query.QueryType = InputQueryType.Text;
                 _pipeline.OnInputTextReady(query);
             }
@@ -193,20 +196,25 @@ namespace SmartMe.Windows
 
             public void OnResultNew(QueryResult result)
             {
-                MessageBox.Show("OnResultNew");
+                MessageBox.Show("OnResultNew" + result.ToString());
                 //throw new NotImplementedException();
             }
 
             public void OnResultUpdate(QueryResult result)
             {
-                MessageBox.Show("OnResultUpdate");
+                MessageBox.Show("OnResultUpdate" + result.ToString());
                 //throw new NotImplementedException();
             }
 
             public void OnResultDeprecated(QueryResult result)
             {
-                MessageBox.Show("OnResultDeprecated");
+                MessageBox.Show("OnResultDeprecated" + result.ToString());
                 //throw new NotImplementedException();
+            }
+
+            public void OnResultCompleted(QueryResult result)
+            {
+                MessageBox.Show("OnResultCompleted" + result.ToString());
             }
             #endregion
         }

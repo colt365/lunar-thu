@@ -42,7 +42,7 @@ namespace SmartMe.Core.Data
         public override string ToString()
         {
             StringBuilder stringBuilder = new StringBuilder(_query.ToString());
-            stringBuilder.Append("\n");
+            stringBuilder.Append("\n" + Items.Count);
             foreach (IQueryResultItem item in _items)
             {
                 stringBuilder.Append("\n").Append(item.ToString());
