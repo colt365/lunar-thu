@@ -7,7 +7,7 @@ using System.Web;
 
 namespace SmartMe.Web.Search
 {
-	class GoogleSearchEngine: ISearchEngine
+	public class GoogleSearchEngine: ISearchEngine
 	{
 		#region ISearchEngine Members
 		
