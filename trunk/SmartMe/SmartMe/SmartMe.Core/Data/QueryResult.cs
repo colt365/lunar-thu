@@ -45,7 +45,7 @@ namespace SmartMe.Core.Data
             stringBuilder.Append("\n" + Items.Count);
             foreach (IQueryResultItem item in _items)
             {
-                stringBuilder.Append("\n").Append(item.ToString());
+                stringBuilder.Append("\n").Append(item);
             }
             return stringBuilder.ToString();
         }
