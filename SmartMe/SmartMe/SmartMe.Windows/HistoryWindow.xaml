@@ -1,0 +1,67 @@
+﻿<Window
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:ic="clr-namespace:Microsoft.Expression.Interactivity.Core;assembly=Microsoft.Expression.Interactions" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	x:Class="SmartMe.Windows.HistoryWindow"
+	x:Name="Window"
+	Title="HistoryWindow"
+	Width="640" Height="480" mc:Ignorable="d">
+
+	<Window.Resources>
+		<Storyboard x:Key="FileMenuMouseOverStoryboard">
+			<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="FileMenuItem" Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)">
+				<SplineColorKeyFrame KeyTime="00:00:00" Value="Black"/>
+				<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="White"/>
+			</ColorAnimationUsingKeyFrames>
+			<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="FileMenuItem" Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
+				<SplineColorKeyFrame KeyTime="00:00:00" Value="Transparent"/>
+				<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="#FF535353"/>
+			</ColorAnimationUsingKeyFrames>
+		</Storyboard>
+		<Storyboard x:Key="ViewMenuItemMouseOverStoryboard">
+			<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="ViewMenuItem" Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
+				<SplineColorKeyFrame KeyTime="00:00:00" Value="Transparent"/>
+				<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="#FF535353"/>
+			</ColorAnimationUsingKeyFrames>
+			<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="ViewMenuItem" Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)">
+				<SplineColorKeyFrame KeyTime="00:00:00" Value="Black"/>
+				<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="White"/>
+			</ColorAnimationUsingKeyFrames>
+		</Storyboard>
+	</Window.Resources>
+	<Window.Triggers>
+		<EventTrigger RoutedEvent="Mouse.MouseMove" SourceName="FileMenuItem">
+			<BeginStoryboard x:Name="FileMenuMouseOverStoryboard_BeginStoryboard" Storyboard="{StaticResource FileMenuMouseOverStoryboard}"/>
+		</EventTrigger>
+		<EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="FileMenuItem">
+			<RemoveStoryboard BeginStoryboardName="FileMenuMouseOverStoryboard_BeginStoryboard"/>
+		</EventTrigger>
+		<EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="ViewMenuItem">
+			<BeginStoryboard x:Name="ViewMenuItemMouseOverStoryboard_BeginStoryboard" Storyboard="{StaticResource ViewMenuItemMouseOverStoryboard}"/>
+		</EventTrigger>
+		<EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="ViewMenuItem">
+			<RemoveStoryboard BeginStoryboardName="ViewMenuItemMouseOverStoryboard_BeginStoryboard"/>
+		</EventTrigger>
+	</Window.Triggers>
+	<UniformGrid x:Name="LayoutRoot" Rows="2">
+		<VisualStateManager.CustomVisualStateManager>
+			<ic:ExtendedVisualStateManager/>
+		</VisualStateManager.CustomVisualStateManager>
+		<VisualStateManager.VisualStateGroups>
+			<VisualStateGroup x:Name="VisualStateGroup"/>
+		</VisualStateManager.VisualStateGroups>
+		<Menu x:Name="Menu" VerticalAlignment="Top" Height="24" Foreground="Black">
+			<MenuItem x:Name="FileMenuItem" Background="Transparent" BorderThickness="1" Header="文件">
+				<MenuItem x:Name="SaveMenuItem" Width="128" Height="24" Header="保存"/>
+			</MenuItem>
+			<MenuItem x:Name="ViewMenuItem" Header="编辑" BorderThickness="1">
+				<MenuItem.Background>
+					<SolidColorBrush/>
+				</MenuItem.Background>
+			</MenuItem>
+		</Menu>
+		<Grid x:Name="Grid" Margin="0,-197,0,-23" d:LayoutOverrides="Width" Background="White">
+			<TreeView HorizontalAlignment="Left" VerticalAlignment="Top" Width="624" Height="441"/>
+		</Grid>
+	</UniformGrid>
+</Window>
