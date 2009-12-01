@@ -1,0 +1,19 @@
+﻿<Window
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	x:Class="SmartMe.Windows.MiniWindow"
+	x:Name="Window"
+	Title="MiniWindow" ResizeMode="CanResizeWithGrip" WindowStartupLocation="Manual" Padding="0" mc:Ignorable="d" WindowStyle="None" AllowsTransparency="True" Opacity="0.7" Width="200" Height="200" MouseLeave="Window_MouseLeave" MouseMove="Window_MouseMove" MouseLeftButtonDown="Window_MouseLeftButtonDown" MouseLeftButtonUp="Window_MouseLeftButtonUp" MinWidth="200" MinHeight="200" Grid.IsSharedSizeScope="True" ScrollViewer.CanContentScroll="True" Margin="0" Topmost="True" AllowDrop="True" BorderThickness="0" MaxWidth="600" MaxHeight="600" Background="Black">
+	<Window.Triggers>
+		<EventTrigger RoutedEvent="FrameworkElement.Loaded" SourceName="Window"/>
+	</Window.Triggers>
+
+	<Grid x:Name="LayoutRoot" HorizontalAlignment="Left" VerticalAlignment="Top">
+		<TabPanel Margin="8,18,-187.957,0" VerticalAlignment="Top" SnapsToDevicePixels="True" d:LayoutOverrides="GridBox" Height="166" Background="#FFE4E4E4">
+			<Expander VerticalAlignment="Center" Foreground="#FF060303" Header="Expander" HorizontalAlignment="Center">
+				<Grid Background="White"/>
+			</Expander>
+		</TabPanel>
+	</Grid>
+</Window>
