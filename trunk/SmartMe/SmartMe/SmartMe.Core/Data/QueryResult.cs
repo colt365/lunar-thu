@@ -14,8 +14,8 @@ namespace SmartMe.Core.Data
     public class QueryResult : IMessage
     {
 		#region fields
-        InputQuery _query;
-        ObservableCollection<SearchEngineResult> _items = new ObservableCollection<SearchEngineResult>();
+        private InputQuery _query;
+        private List<SearchEngineResult> _items = new List<SearchEngineResult>();
 		#endregion
         
         #region constructor
@@ -32,7 +32,7 @@ namespace SmartMe.Core.Data
             set { _query = value; }
         }
 
-        public ObservableCollection<SearchEngineResult> Items
+        public List<SearchEngineResult> Items
         {
             get { return _items; }
         }
@@ -60,6 +60,7 @@ namespace SmartMe.Core.Data
             }
         }
         #endregion
+
         #endregion
     }
 }

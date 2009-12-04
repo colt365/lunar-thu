@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SmartMe.Core.Communication
+namespace SmartMe.Core.Data
 {
     /// <summary>
     /// 可以被XML序列化的对象

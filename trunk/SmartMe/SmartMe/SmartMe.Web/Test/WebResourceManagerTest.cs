@@ -40,9 +40,9 @@ namespace SmartMe.Web.Test
             public SearchEngineResult Search(InputQuery query)
             {
                 SearchEngineResult result = new SearchEngineResult();
+                result.SearchEngine = SearchEngineType.Other;
                 SearchEngineResult.ResultItem item1 = new SearchEngineResult.ResultItem();
                 item1.Title = "INFO";
-                item1.Source = "TSINGUA";
                 item1.CacheUrl = "http://aaa.www.com/";
                 item1.Description = query + " " + _count + " Done.";
                 item1.SimilarUrl = "http://similar.www.com/";
