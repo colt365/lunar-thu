@@ -21,8 +21,9 @@ namespace SmartMe.Web.Parse
 			
 			HTMLparser oP = HtmlParserFactory.GetInstance();
 			searchResult = new SearchEngineResult();
+            searchResult.SearchEngine = SearchEngineType.Google;
 			item = new SearchEngineResult.ResultItem();
-			item.Source = "Google";
+			//item.Source = "Google";
 			oP.Init(encoding.GetBytes(html));
 			oP.SetEncoding(encoding);
 			HTMLchunk oChunk = null;
@@ -94,7 +95,7 @@ namespace SmartMe.Web.Parse
 								{
 									searchResult.Results.Add(item);
 									item = new SearchEngineResult.ResultItem();
-									item.Source = "Google";
+									//item.Source = "Google";
 								}
 							}
 							else if (oChunk.sParams[i] == "href")

@@ -18,8 +18,9 @@ namespace SmartMe.Web.Parse
 		{
 			HTMLparser oP = HtmlParserFactory.GetInstance();
 			searchResult = new SearchEngineResult();
+            searchResult.SearchEngine = SearchEngineType.Baidu;
 			item = new SearchEngineResult.ResultItem();
-			item.Source = "Baidu";
+			//item.Source = "Baidu";
 			oP.Init(encoding.GetBytes(html));
 			oP.SetEncoding(encoding);
 			HTMLchunk oChunk = null;
@@ -91,7 +92,7 @@ namespace SmartMe.Web.Parse
 								{
 									searchResult.Results.Add(item);
 									item = new SearchEngineResult.ResultItem();
-									item.Source = "Baidu";
+									//item.Source = "Baidu";
 								}
 							}
 							else if (oChunk.sParams[i] == "href")

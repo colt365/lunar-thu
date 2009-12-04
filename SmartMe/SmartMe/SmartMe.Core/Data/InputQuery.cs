@@ -109,6 +109,28 @@ namespace SmartMe.Core.Data
         {
             return Text;
         }
+
+        public override bool Equals(object obj)
+        {
+            InputQuery anotherQuery = obj as InputQuery;
+            if (anotherQuery == null)
+            {
+                return false;
+            }
+            if (this.QueryType == anotherQuery.QueryType && this.Text == anotherQuery.Text)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return (int)this.QueryType + this.Text.GetHashCode() * 5;
+        }
         #endregion
     }
 }

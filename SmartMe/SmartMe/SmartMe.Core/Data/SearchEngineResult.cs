@@ -6,27 +6,39 @@ using SmartMe.Core.Pipeline;
 
 namespace SmartMe.Core.Data
 {
+    /// <summary>
+    /// 搜索引擎类型
+    /// </summary>
+    public enum SearchEngineType
+    {
+        Google,
+        Baidu,
+        Sougou,
+        Wikipedia,
+        Other
+    }
+
     public class SearchEngineResult : IQueryResultItem
     {
         #region fields
         private List<ResultItem> _results = new List<ResultItem>();
+
+        private SearchEngineType _searchEngine;
         #endregion
 
         #region nested
         public class ResultItem
         {
             #region fields
-            string _title;            
+            private string _title;            
 
-            string _url;
+            private string _url;
 
-            string _description;
+            private string _description;
 
-            string _cacheUrl;
+            private string _cacheUrl;
 
-            string _similarUrl;
-
-            string _source;
+            private string _similarUrl;
             #endregion
 
             #region properties
@@ -59,12 +71,6 @@ namespace SmartMe.Core.Data
                 get { return _similarUrl; }
                 set { _similarUrl = value; }
             }
-
-            public string Source
-            {
-                get { return _source; }
-                set { _source = value; }
-            }
             #endregion
 
             #region methods
@@ -74,8 +80,7 @@ namespace SmartMe.Core.Data
                        "Url:" + _url + "\n" +
                        "Description:" + _description + "\n" +
                        "CacheUrl:" + _cacheUrl + "\n" +
-                       "SimilarUrl:" + _similarUrl + "\n" +
-                       "Source:" + _source;
+                       "SimilarUrl:" + _similarUrl;
             }
             #endregion
         }
@@ -95,6 +100,18 @@ namespace SmartMe.Core.Data
             get
             {
                 return MessageType.QueryResultItem;
+            }
+        }
+
+        public SearchEngineType SearchEngine
+        {
+            get
+            {
+                return _searchEngine;
+            }
+            set
+            {
+                _searchEngine = value;
             }
         }
 
