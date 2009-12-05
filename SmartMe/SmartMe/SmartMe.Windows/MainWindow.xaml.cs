@@ -10,12 +10,16 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Diagnostics;
+using System.ComponentModel;
+using System.Threading;
 
 using SmartMe.Core;
 using SmartMe.Core.Pipeline;
 using SmartMe.Core.Data;
 using SmartMe.Web;
 using SmartMe.Web.Search;
+
 
 namespace SmartMe.Windows
 {
@@ -40,7 +44,7 @@ namespace SmartMe.Windows
 
         WebResourceManager _webResourceManager = null;
         Pipeline _pipeline = null;
-        IQueryResultHandler _resultHandler = null;
+        QueryResultHandler _resultHandler = null;
         #endregion
 
         public MainWindow()
@@ -53,7 +57,7 @@ namespace SmartMe.Windows
         private void CreateListeners()
         {
             _pipeline = new Pipeline();
-            _resultHandler = new QueryResultHandler(this.OutputListBox);
+            _resultHandler = new QueryResultHandler(this, this.OutputListBox);
 
             _webResourceManager = new WebResourceManager(_pipeline, _resultHandler);
             _pipeline.InputTextSubscriberManager.AddSubscriber(_webResourceManager);
@@ -82,8 +86,134 @@ namespace SmartMe.Windows
             screenWindow.Close();
 		}
 
+        #region Functional
+        private void DoQuery(string text, InputQueryType queryType)
+        {
+            
+            switch (queryType)
+            {
+                case InputQueryType.Text:
+                {
+                    InputQuery query = new InputQuery(text);
+                    query.QueryType = InputQueryType.Text;
+                    this.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(
+                        delegate()
+                        {
+                            _pipeline.OnInputTextReady(query);
+                        })
+                    );
 
-		private void Window_Drop(object sender, System.Windows.DragEventArgs e)
+                    break;
+                }
+                case InputQueryType.FtpUri:
+                case InputQueryType.HttpUri:
+                {
+                    DoOpenWebBrowser(text);
+                    break;
+                }
+                case InputQueryType.FileName:
+                {
+                    break;
+                }
+            }
+        }
+
+        private void DoShellCall(object o)
+        {
+            System.Diagnostics.ProcessStartInfo info = (System.Diagnostics.ProcessStartInfo)o;
+            System.Diagnostics.Process process = null;
+            try
+            {
+                //
+                //启动外部程序
+                //
+                process = System.Diagnostics.Process.Start(info);
+            }
+            catch (ArgumentNullException e)
+            {
+                // MessageBox.Show(string.Format("错误：{0}", e.Message));
+                return;
+            }
+            catch (Win32Exception e)
+            {
+                // MessageBox.Show(string.Format("错误：{0}", e.Message));
+                return;
+            }
+            catch (ObjectDisposedException e)
+            {
+                // MessageBox.Show(string.Format("错误：{0}", e.Message));
+                return;
+            }
+            catch (InvalidOperationException e)
+            {
+                // MessageBox.Show(string.Format("错误：{0}", e.Message));
+                return;
+            }
+            catch (Exception e)
+            {
+                return;
+            }
+        }
+
+        private void DoOpenWebBrowser(string defaultPage)
+        {
+            System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo();
+
+            UriBuilder uriBuilder = new UriBuilder(defaultPage);
+            /*
+            bool ignoreCase = true;
+            System.Globalization.CultureInfo culture = System.Globalization.CultureInfo.CurrentUICulture;
+            if (!defaultPage.StartsWith("http://", ignoreCase, culture))
+            {
+                string url = defaultPage.TrimStart(new char[] { ' ' });
+                defaultPage = "http://" + defaultPage;
+            }
+            */
+            //MessageBox.Show("Uri:" + uriBuilder.Uri.ToString());
+            info.UseShellExecute = true;
+            
+            //设置外部程序名 www.baidu.com
+            info.FileName = uriBuilder.Uri.ToString();
+
+            //设置外部程序的启动参数（命令行参数) 
+            info.Arguments = "";
+
+            //MessageBox.Show(info.FileName + " " + info.Arguments);
+
+            //设置外部程序工作目录为  C:\
+            info.WorkingDirectory = ".";
+
+            this.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(
+                    delegate()
+                    {
+                        this.DoShellCall(info);
+                    })
+            );
+            
+
+            ////打印出外部程序的开始执行时间
+            //Console.WriteLine("外部程序的开始执行时间：{0}",  Proc.StartTime);
+
+            ////等待3秒钟
+            //Proc.WaitForExit(3000);
+
+            ////如果这个外部程序没有结束运行则对其强行终止
+            //if(Proc.HasExited  ==  false)
+            //{
+            //    Console.WriteLine("由主程序强行终止外部程序的运行！");
+            //    Proc.Kill();
+            //}
+            //else
+            //{
+            //    Console.WriteLine("由外部程序正常退出！");
+            //}
+            //Console.WriteLine("外部程序的结束运行时间：{0}",  Proc.ExitTime);
+            //Console.WriteLine("外部程序在结束运行时的返回值：{0}",  Proc.ExitCode);
+        }
+        #endregion Functional
+
+        #region 鼠标拖拽
+        private void Window_Drop(object sender, System.Windows.DragEventArgs e)
 		{
 			// TODO: Add event handler implementation here.
             StringBuilder sb = new StringBuilder();
@@ -103,10 +233,9 @@ namespace SmartMe.Windows
             {
                 sb.AppendLine("Text:" + e.Data.GetData("Text", true));
                 string text = e.Data.GetData("Text", true).ToString();
-                InputQuery query = new InputQuery(text);
-                query.QueryType = InputQueryType.Text;
-                InputTextBox.Text = "Query:" + text;
-                _pipeline.OnInputTextReady(query);
+                InputTextBox.Text = text;
+                DoQuery(InputTextBox.Text, InputQueryType.Text);
+				InputTextBox.IsEnabled = true;
             }
 			if (e.Data.GetDataPresent("text/html", true))
             {
@@ -179,50 +308,137 @@ namespace SmartMe.Windows
             ResultTextBox.Text += sb.ToString();
 		}
 
+        private void Window_DragEnter(object sender, System.Windows.DragEventArgs e)
+        {
+            // TODO: Add event handler implementation here.
+            ResultTextBox.IsEnabled = false;
+            ResultTextBox.Text = "Window_DragEnter: ResultTextBox.IsEnabled: false";
+
+            InputTextBox.IsEnabled = false;
+        }
+        private void Window_DragOver(object sender, System.Windows.DragEventArgs e)
+        {
+            ResultTextBox.IsEnabled = false;
+            ResultTextBox.Text = "Window_DragOver: ResultTextBox.IsEnabled: false";
+
+            InputTextBox.IsEnabled = false;
+        }
+
 		private void Window_DragLeave(object sender, System.Windows.DragEventArgs e)
 		{
 			// TODO: Add event handler implementation here.
 			ResultTextBox.IsEnabled = true;
+            InputTextBox.IsEnabled = true;
 		}
 
-		private void Window_DragEnter(object sender, System.Windows.DragEventArgs e)
+		
+        #endregion 鼠标拖拽
+
+        #region 搜索栏
+		private void InputTextBox_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+			if (e.Key == Key.Return)
+			{
+				string text = InputTextBox.Text;
+				text = text.Trim(new char[] {' ', '\t', '\r', '\n'});
+				DoQuery(text, InputQueryType.Text);
+			}
+        	// MessageBox.Show("[" + e.Key + "]"); // TODO: Add event handler implementation here.
+        }
+		
+        private void InputTextBox_LostKeyboardFocus(object sender, System.Windows.Input.KeyboardFocusChangedEventArgs e)
 		{
-			// TODO: Add event handler implementation here.
-			ResultTextBox.IsEnabled = false;
-			ResultTextBox.Text = "ResultTextBox.IsEnabled: false";
+			if (InputTextBox.Text == "")
+			{
+				InputTextBox.Text = "搜索栏";
+				InputTextBox.Opacity = 0.5;
+			}
 		}
 
+		private void InputTextBox_GotKeyboardFocus(object sender, System.Windows.Input.KeyboardFocusChangedEventArgs e)
+		{
+			if (InputTextBox.Text == "搜索栏")
+			{
+				InputTextBox.Text = "";
+			}
+			InputTextBox.Opacity = 1.0;
+        }
+        #endregion 搜索栏
 
+        #region 结果栏
+        private void OutputListBox_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            int index = OutputListBox.SelectedIndex;
+            string uri = _resultHandler.GetUri(index);
+            // MessageBox.Show("" + uri);
+            if (uri != null)
+            {
+                DoOpenWebBrowser(uri);
+            }
+        }
+        #endregion 结果栏
+
+        #region QueryResultHandler
         class QueryResultHandler : IQueryResultHandler
         {
-            private ListBox _outputListBox = null;
-            public QueryResultHandler(ListBox outputListBox)
+            private List<SearchEngineResult.ResultItem> _resultList = new List<SearchEngineResult.ResultItem>();
+
+            private QueryResult _currentQueryResult = null;
+            public SmartMe.Core.Data.QueryResult CurrentQueryResult
             {
+                get { return _currentQueryResult; }
+                set { _currentQueryResult = value; }
+            }
+
+            private MainWindow _parent;
+            private ListBox _outputListBox = null;
+
+            public QueryResultHandler(MainWindow parent, ListBox outputListBox)
+            {
+                _parent = parent;
                 _outputListBox = outputListBox;
             }
 
-            #region IQueryResultHandler 成员
             public void OnResultNew(QueryResult result)
             {
+                _currentQueryResult = result;
+                
                 _outputListBox.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(
                     delegate()
                     {
                         _outputListBox.Items.Clear();
+                        _resultList.Clear();
                     })
                 );
             }
 
             public void OnResultUpdate(QueryResult result)
             {
+                if (_currentQueryResult != result)
+                {
+                    _currentQueryResult = result;                        
+                }
+
                 _outputListBox.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(
                     delegate()
                     {
+                        _resultList.Clear();
                         _outputListBox.Items.Clear();
-                        foreach (SearchEngineResult searchItem in result.Items)
+                        if (result != null && result.Items != null)
                         {
-                            foreach (SearchEngineResult.ResultItem resultItem in searchItem.Results)
+                            foreach (SearchEngineResult searchItem in result.Items)
                             {
-                                _outputListBox.Items.Add(new ListBoxItem() { Content = resultItem.ToString() });
+                                if (searchItem.Results != null)
+                                {
+                                    foreach (SearchEngineResult.ResultItem resultItem in searchItem.Results)
+                                    {
+                                        if (resultItem != null)
+                                        {
+                                            _outputListBox.Items.Add(new ListBoxItem() { Content = resultItem.Title });
+                                        _resultList.AddRange(searchItem.Results);
+                                        }
+                                    }
+                                }
                             }
                         }
                         _outputListBox.InvalidateArrange();
@@ -233,14 +449,64 @@ namespace SmartMe.Windows
 
             public void OnResultDeprecated(QueryResult result)
             {
-                MessageBox.Show("OnResultDeprecated" + result.ToString());
+                if (_currentQueryResult == result)
+                {
+                    
+                    _outputListBox.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(
+                        delegate()
+                        {
+                            _resultList.Clear();
+                            _outputListBox.Items.Clear();
+                        })
+                    );
+                    _currentQueryResult = null;
+                }
+
+                //MessageBox.Show("OnResultDeprecated" + result.ToString());
             }
 
             public void OnResultCompleted(QueryResult result)
             {
-                MessageBox.Show("OnResultCompleted" + result.ToString());
+                if (_currentQueryResult != result)
+                {
+                    _currentQueryResult = result;
+                }
+                //MessageBox.Show("OnResultCompleted" + result.ToString());
             }
-            #endregion
+
+            public string GetUri(int itemIndex)
+            {
+                string uri = null;
+                if ( 0<= itemIndex && itemIndex < _resultList.Count)
+                {
+                    uri = _resultList[itemIndex].Url;
+                }
+                return uri;
+            }
         }
+        #endregion QueryResultHandler
+
+        #region for Debug
+        public enum Level
+        {
+            Normal,
+            Warning,
+            Error,
+            Fatal
+        }
+
+        public void MessageDebug(object o)
+        {
+            MessageDebug(o, Level.Normal);
+        }
+
+        public void MessageDebug(object o, Level level)
+        {
+            string str = o.ToString();
+
+            // TODO: unfinished 
+            //  TT 09/12/5 
+        }
+        #endregion for Debug
 	}
 }
