@@ -95,7 +95,7 @@ namespace SmartMe.Core.Data
             }
         }
 
-        public MessageType Type
+        public MessageType MessageType
         {
             get
             {
@@ -103,7 +103,7 @@ namespace SmartMe.Core.Data
             }
         }
 
-        public SearchEngineType SearchEngine
+        public SearchEngineType SearchEngineType
         {
             get
             {

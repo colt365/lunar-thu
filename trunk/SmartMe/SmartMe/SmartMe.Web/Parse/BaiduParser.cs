@@ -18,7 +18,7 @@ namespace SmartMe.Web.Parse
 		{
 			HTMLparser oP = HtmlParserFactory.GetInstance();
 			searchResult = new SearchEngineResult();
-            searchResult.SearchEngine = SearchEngineType.Baidu;
+            searchResult.SearchEngineType = SearchEngineType.Baidu;
 			item = new SearchEngineResult.ResultItem();
 			//item.Source = "Baidu";
 			oP.Init(encoding.GetBytes(html));

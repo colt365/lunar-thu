@@ -73,7 +73,7 @@ namespace SmartMe.Core.Data
             }
         }
 
-        public MessageType Type
+        public MessageType MessageType
         {
             get
             {

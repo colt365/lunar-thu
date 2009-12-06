@@ -29,11 +29,11 @@ namespace SmartMe.Windows
 	public partial class MainWindow : Window
     {
         #region fields
-        private List<string> _searchResults;
-        public List<string> SearchResults
+        private List<string> _queryHistories;
+        public List<string> QueryHistories
         {
-            get { return _searchResults; }
-            set { _searchResults = value; }
+            get { return _queryHistories; }
+            set { _queryHistories = value; }
         }
 		private string _bindingString;
         public string BindingString
@@ -57,7 +57,7 @@ namespace SmartMe.Windows
         private void CreateListeners()
         {
             _pipeline = new Pipeline();
-            _resultHandler = new QueryResultHandler(this, this.OutputListBox);
+            _resultHandler = new QueryResultHandler(this);
 
             _webResourceManager = new WebResourceManager(_pipeline, _resultHandler);
             _pipeline.InputTextSubscriberManager.AddSubscriber(_webResourceManager);
@@ -65,8 +65,9 @@ namespace SmartMe.Windows
             _webResourceManager.AddSearchEngine(new GoogleSearchEngine());
             _webResourceManager.AddSearchEngine(new BaiduSearchEngine());
         }
-        
-		private void GrabButton_Click(object sender, System.Windows.RoutedEventArgs e)
+
+        #region Hidden
+        private void GrabButton_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
 			// TODO: Add event handler implementation here.
 			//ShowScreenWindowAction action = new ShowScreenWindowAction();
@@ -84,18 +85,35 @@ namespace SmartMe.Windows
                 this.ResultTextBox.Text = string.Format("No SelectionRegion");
             }
             screenWindow.Close();
-		}
+        }
+        #endregion Hidden
+
+        #region Query
+        private void AddQueryHistory(string queryText)
+        {
+            if (this.QueryHistories.Contains(queryText)) 
+            {
+                RemoveQueryHistory(queryText);
+            }
+            this.QueryHistories.Insert(0, queryText);
+        }
+        private void RemoveQueryHistory(string queryText)
+        {
+            this.QueryHistories.Remove(queryText);
+        }
+        #endregion Query
 
         #region Functional
         private void DoQuery(string text, InputQueryType queryType)
         {
-            
             switch (queryType)
             {
                 case InputQueryType.Text:
                 {
                     InputQuery query = new InputQuery(text);
                     query.QueryType = InputQueryType.Text;
+                    AddQueryHistory(text);
+
                     this.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(
                         delegate()
                         {
@@ -117,7 +135,6 @@ namespace SmartMe.Windows
                 }
             }
         }
-
         private void DoShellCall(object o)
         {
             System.Diagnostics.ProcessStartInfo info = (System.Diagnostics.ProcessStartInfo)o;
@@ -154,7 +171,6 @@ namespace SmartMe.Windows
                 return;
             }
         }
-
         private void DoOpenWebBrowser(string defaultPage)
         {
             System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo();
@@ -307,7 +323,6 @@ namespace SmartMe.Windows
             
             ResultTextBox.Text += sb.ToString();
 		}
-
         private void Window_DragEnter(object sender, System.Windows.DragEventArgs e)
         {
             // TODO: Add event handler implementation here.
@@ -323,15 +338,12 @@ namespace SmartMe.Windows
 
             InputTextBox.IsEnabled = false;
         }
-
 		private void Window_DragLeave(object sender, System.Windows.DragEventArgs e)
 		{
 			// TODO: Add event handler implementation here.
 			ResultTextBox.IsEnabled = true;
             InputTextBox.IsEnabled = true;
 		}
-
-		
         #endregion 鼠标拖拽
 
         #region 搜索栏
@@ -345,7 +357,6 @@ namespace SmartMe.Windows
 			}
         	// MessageBox.Show("[" + e.Key + "]"); // TODO: Add event handler implementation here.
         }
-		
         private void InputTextBox_LostKeyboardFocus(object sender, System.Windows.Input.KeyboardFocusChangedEventArgs e)
 		{
 			if (InputTextBox.Text == "")
@@ -354,7 +365,6 @@ namespace SmartMe.Windows
 				InputTextBox.Opacity = 0.5;
 			}
 		}
-
 		private void InputTextBox_GotKeyboardFocus(object sender, System.Windows.Input.KeyboardFocusChangedEventArgs e)
 		{
 			if (InputTextBox.Text == "搜索栏")
@@ -366,11 +376,19 @@ namespace SmartMe.Windows
         #endregion 搜索栏
 
         #region 结果栏
-        private void OutputListBox_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+		private void GoogleOutputListBox_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            int index = OutputListBox.SelectedIndex;
-            string uri = _resultHandler.GetUri(index);
-            // MessageBox.Show("" + uri);
+        	int index = GoogleOutputListBox.SelectedIndex;
+            string uri = _resultHandler.GetUri(sender, index);
+            if (uri != null)
+            {
+                DoOpenWebBrowser(uri);
+            }
+        }
+        private void BaiduOutputListBox_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            int index = BaiduOutputListBox.SelectedIndex;
+            string uri = _resultHandler.GetUri(sender, index);
             if (uri != null)
             {
                 DoOpenWebBrowser(uri);
@@ -381,8 +399,6 @@ namespace SmartMe.Windows
         #region QueryResultHandler
         class QueryResultHandler : IQueryResultHandler
         {
-            private List<SearchEngineResult.ResultItem> _resultList = new List<SearchEngineResult.ResultItem>();
-
             private QueryResult _currentQueryResult = null;
             public SmartMe.Core.Data.QueryResult CurrentQueryResult
             {
@@ -391,27 +407,21 @@ namespace SmartMe.Windows
             }
 
             private MainWindow _parent;
-            private ListBox _outputListBox = null;
 
-            public QueryResultHandler(MainWindow parent, ListBox outputListBox)
+            public QueryResultHandler(MainWindow parent)
             {
                 _parent = parent;
-                _outputListBox = outputListBox;
             }
 
             public void OnResultNew(QueryResult result)
             {
-                _currentQueryResult = result;
-                
-                _outputListBox.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(
-                    delegate()
-                    {
-                        _outputListBox.Items.Clear();
-                        _resultList.Clear();
-                    })
-                );
+                //_currentQueryResult = result;
+                //_parent.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(
+                //    delegate()
+                //    {
+                //    })
+                //);
             }
-
             public void OnResultUpdate(QueryResult result)
             {
                 if (_currentQueryResult != result)
@@ -419,70 +429,156 @@ namespace SmartMe.Windows
                     _currentQueryResult = result;                        
                 }
 
-                _outputListBox.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(
+                _parent.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(
                     delegate()
                     {
-                        _resultList.Clear();
-                        _outputListBox.Items.Clear();
                         if (result != null && result.Items != null)
                         {
-                            foreach (SearchEngineResult searchItem in result.Items)
+                            foreach (SearchEngineResult searchEngineItem in result.Items)
                             {
-                                if (searchItem.Results != null)
+                                if (searchEngineItem.Results != null)
                                 {
-                                    foreach (SearchEngineResult.ResultItem resultItem in searchItem.Results)
+                                    ListBox listBox = null; 
+                                    TabItem tabItem = null;
+                                    string engineName = null;
+                                    bool hasFound = FindUIElements(searchEngineItem, out listBox, out tabItem, out engineName);
+                                    
+                                    if (hasFound)
                                     {
-                                        if (resultItem != null)
+                                        
+                                        listBox.Items.Clear();
+                                        foreach (SearchEngineResult.ResultItem resultItem in searchEngineItem.Results)
                                         {
-                                            _outputListBox.Items.Add(new ListBoxItem() { Content = resultItem.Title });
-                                        _resultList.AddRange(searchItem.Results);
+                                            listBox.Items.Add(new ListBoxItem() { Content = resultItem.Title });
                                         }
+                                        tabItem.Header = string.Format("{0}({1})", engineName, searchEngineItem.Results.Count);
+                                        
+                                        listBox.InvalidateArrange();
+                                        tabItem.InvalidateArrange();
                                     }
+                                    
                                 }
                             }
                         }
-                        _outputListBox.InvalidateArrange();
-                        _outputListBox.UpdateLayout();
                     })
                 );
             }
-
             public void OnResultDeprecated(QueryResult result)
             {
-                if (_currentQueryResult == result)
-                {
-                    
-                    _outputListBox.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(
-                        delegate()
-                        {
-                            _resultList.Clear();
-                            _outputListBox.Items.Clear();
-                        })
-                    );
-                    _currentQueryResult = null;
-                }
+                //if (_currentQueryResult == result)
+                //{
+                //    _parent.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(
+                //        delegate()
+                //        {
+                //            _parent.GoogleOutputListBox.Items.Clear();
+                //            _parent.BaiduOutputListBox.Items.Clear();
+                //        })
+                //    );
+                //    _currentQueryResult = null;
+                //}
 
                 //MessageBox.Show("OnResultDeprecated" + result.ToString());
             }
-
             public void OnResultCompleted(QueryResult result)
             {
-                if (_currentQueryResult != result)
-                {
-                    _currentQueryResult = result;
-                }
-                //MessageBox.Show("OnResultCompleted" + result.ToString());
+                //if (_currentQueryResult != result)
+                //{
+                //    _currentQueryResult = result;
+                //}
             }
 
-            public string GetUri(int itemIndex)
+            public string GetUri(object sender, int itemIndex)
             {
                 string uri = null;
-                if ( 0<= itemIndex && itemIndex < _resultList.Count)
+                if (sender != null)
                 {
-                    uri = _resultList[itemIndex].Url;
+                    SearchEngineResult searchEngineResult = null;
+                    bool hasFound = FindSearchEngineResult(sender, out searchEngineResult);
+                    if (hasFound) 
+                    {
+                        if (0 <= itemIndex && itemIndex < searchEngineResult.Results.Count)
+                        {
+                            uri = string.Format("{0}", searchEngineResult.Results[itemIndex].Url);
+                        }
+                    }
                 }
                 return uri;
             }
+
+            #region private
+            private bool FindSearchEngineResult(object sender, out SearchEngineResult searchEngineResult)
+            {
+                bool hasFound = false;
+                SearchEngineResult result = null;
+                if (sender is ListBox)
+                {
+                    ListBox sourceListBox = sender as ListBox;
+                    if (sourceListBox == _parent.GoogleOutputListBox)
+                    {
+                        hasFound = FindSearchEngineResult(_currentQueryResult, SearchEngineType.Google, out result);
+                    }
+                    else if (sourceListBox == _parent.BaiduOutputListBox)
+                    {
+                        hasFound = FindSearchEngineResult(_currentQueryResult, SearchEngineType.Baidu, out result);
+                    }
+                }
+                searchEngineResult = result;
+                return hasFound;
+            }
+            private bool FindSearchEngineResult(QueryResult queryResult, SearchEngineType targetType, out SearchEngineResult searchEngineResult)
+            {
+                bool hasFound = false;
+                searchEngineResult = null;
+                if (queryResult != null)
+                {
+                    if (queryResult.Items != null)
+                    {
+                        foreach (SearchEngineResult resultItem in queryResult.Items)
+                        {
+                            if (resultItem != null && resultItem.SearchEngineType == targetType)
+                            {
+                                searchEngineResult = resultItem;
+                                hasFound = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                return hasFound;
+            }
+            private bool FindUIElements(SearchEngineResult searchEngineResult, out ListBox listBox, out TabItem tabItem, out string engineName)
+            {
+                bool hasFound = false;
+                switch (searchEngineResult.SearchEngineType)
+                {
+                    case SearchEngineType.Google:
+                        {
+                            hasFound = true;
+                            listBox = _parent.GoogleOutputListBox;
+                            tabItem = _parent.GoogleTabItem;
+                            engineName = "谷歌结果";
+                            break;
+                        }
+                    case SearchEngineType.Baidu:
+                        {
+                            hasFound = true;
+                            listBox = _parent.BaiduOutputListBox;
+                            tabItem = _parent.BaiduTabItem;
+                            engineName = "百度结果";
+                            break;
+                        }
+                    default:
+                        {
+                            hasFound = false;
+                            listBox = null;
+                            tabItem = null;
+                            engineName = "Unknown";
+                            break;
+                        }
+                }
+                return hasFound;
+            }
+            #endregion private
         }
         #endregion QueryResultHandler
 
@@ -506,6 +602,11 @@ namespace SmartMe.Windows
 
             // TODO: unfinished 
             //  TT 09/12/5 
+        }
+
+        private void InputTextBox_LostKeyboardFocus(object sender, System.Windows.RoutedEventArgs e)
+        {
+        	// TODO: Add event handler implementation here.
         }
         #endregion for Debug
 	}

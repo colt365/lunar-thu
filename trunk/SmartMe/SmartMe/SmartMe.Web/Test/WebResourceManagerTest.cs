@@ -40,7 +40,7 @@ namespace SmartMe.Web.Test
             public SearchEngineResult Search(InputQuery query)
             {
                 SearchEngineResult result = new SearchEngineResult();
-                result.SearchEngine = SearchEngineType.Other;
+                result.SearchEngineType = SearchEngineType.Other;
                 SearchEngineResult.ResultItem item1 = new SearchEngineResult.ResultItem();
                 item1.Title = "INFO";
                 item1.CacheUrl = "http://aaa.www.com/";
@@ -95,7 +95,7 @@ namespace SmartMe.Web.Test
             public void Handle(IMessage message)
             {
                 Thread.Sleep(_waitTime);
-                Debug.Assert(message.Type == MessageType.QueryResultItem);
+                Debug.Assert(message.MessageType == MessageType.QueryResultItem);
                 Console.WriteLine(message);
             }
 
