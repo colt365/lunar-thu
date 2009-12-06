@@ -97,27 +97,35 @@ namespace SmartMe.Web.Parse
 									item = new SearchEngineResult.ResultItem();
 									//item.Source = "Google";
 								}
+							}else if(oChunk.sValues[i] == "r" && oChunk.sParams[i] == "class" && state == 3)
+							{
+								state = 4;
+							}else if(oChunk.sValues[i] == "s" && oChunk.sParams[i] == "class" && state == 6)
+							{
+								state = 7;
+							}
+							else if (oChunk.sValues[i] == "gl" && oChunk.sParams[i] == "class" && state == 7)
+							{
+								state = 8;
 							}
 							else if (oChunk.sParams[i] == "href")
 							{
-								if (state == 4)
+								if (state == 5)
 								{
 									item.Url = oChunk.sValues[i];
 								}
-								else if (state == 6)
+								else if (state == 9 || state == 11)
 								{
-									item.CacheUrl = oChunk.sValues[i];
-								}
-								else if (state == 8)
-								{
-									if (item.SimilarUrl == null || item.SimilarUrl == "")
-										item.SimilarUrl = oChunk.sValues[i];
-									else
+									if (oChunk.sValues[i].IndexOf("q=related")!=-1)
 									{
-										item.CacheUrl = item.SimilarUrl;
 										item.SimilarUrl = oChunk.sValues[i];
 									}
+									else
+									{
+										item.CacheUrl = oChunk.sValues[i];
+									}
 								}
+								
 							}
 							break;
 					}
@@ -138,12 +146,12 @@ namespace SmartMe.Web.Parse
 			}
 			else if(oChunk.sTag== "a")
 			{
-				if (state == 3 || state == 5 || state == 7)
+				if (state == 4 || state == 8 || state == 10)
 					state += 1;
-				else if (state == 9)
+				/*else if (state == 9)
 				{
 					state = 8;
-				}
+				}*/
 			}
 
 		}
@@ -155,17 +163,17 @@ namespace SmartMe.Web.Parse
 			}
 			else if(oChunk.sTag== "a")
 			{
-				if (state == 4 || state == 6 || state == 8)
+				if (state == 5 || state == 9 || state == 11)
 					state += 1;
 			}
 		}
 		private void HandleText(HTMLchunk oChunk, ref int state)
 		{
-			if (state == 4)
+			if (state == 5)
 			{
 				item.Title += oChunk.oHTML;
 			}
-			else if (state == 5)
+			else if (state == 7)
 			{
 				item.Description += oChunk.oHTML;
 			}
