@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{A087D166-CD63-45E0-A773-38E4425400BF}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -44,22 +44,6 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Windows.Controls.DataVisualization.Toolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Lib\System.Windows.Controls.DataVisualization.Toolkit.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Windows.Controls.DataVisualization.Toolkit.Design, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Lib\System.Windows.Controls.DataVisualization.Toolkit.Design.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Windows.Controls.DataVisualization.Toolkit.Expression.Design, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Lib\System.Windows.Controls.DataVisualization.Toolkit.Expression.Design.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Windows.Controls.DataVisualization.Toolkit.VisualStudio.Design, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Lib\System.Windows.Controls.DataVisualization.Toolkit.VisualStudio.Design.dll</HintPath>
-    </Reference>
     <Reference Include="System.Windows.Interactivity, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Lib\System.Windows.Interactivity.dll</HintPath>
@@ -78,14 +62,6 @@
     <Reference Include="WPFToolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Lib\WPFToolkit.dll</HintPath>
-    </Reference>
-    <Reference Include="WPFToolkit.Design, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Lib\WPFToolkit.Design.dll</HintPath>
-    </Reference>
-    <Reference Include="WPFToolkit.VisualStudio.Design, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Lib\WPFToolkit.VisualStudio.Design.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -171,6 +147,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

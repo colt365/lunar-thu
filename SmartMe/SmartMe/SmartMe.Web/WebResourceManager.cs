@@ -176,7 +176,7 @@ namespace SmartMe.Web
         #region ISubScriber Members
         public void Handle(IMessage message)
         {
-            if (message.Type == MessageType.InputQuery)
+            if (message.MessageType == MessageType.InputQuery)
             {
                 InputQuery query = (InputQuery)message;
                 if (_result != null && _result.Query == query)

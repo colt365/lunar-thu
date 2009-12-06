@@ -52,7 +52,7 @@ namespace SmartMe.Core.Data
         }
 
         #region IMessage Members
-        public MessageType Type
+        public MessageType MessageType
         {
             get 
             {

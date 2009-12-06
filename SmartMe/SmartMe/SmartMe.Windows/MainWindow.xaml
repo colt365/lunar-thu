@@ -38,10 +38,7 @@
 			</DoubleAnimationUsingKeyFrames>
 		</Storyboard>
 		<DataTemplate x:Key="ItemTemplate">
-			<StackPanel>
-				<TextBlock Text="{Binding Content}" Height="10"/>
-				<TextBlock Text="{Binding Time}" Height="10"/>
-			</StackPanel>
+			<StackPanel/>
 		</DataTemplate>
 		<DataTemplate x:Key="ItemTemplate1">
 			<StackPanel>
@@ -146,19 +143,6 @@
 			<ColumnDefinition Width="0*"/>
 			<ColumnDefinition/>
 		</Grid.ColumnDefinitions>
-		<Button x:Name="GrabButton" Margin="8,8,-40,0" VerticalAlignment="Top" Height="24" Content="Grab Screen" ClickMode="Press" Click="GrabButton_Click" Grid.Column="2" Foreground="Black" RenderTransformOrigin="0.5,0.5" Visibility="Collapsed" d:IsHidden="True">
-			<Button.BindingGroup>
-				<BindingGroup/>
-			</Button.BindingGroup>
-			<Button.RenderTransform>
-				<TransformGroup>
-					<ScaleTransform/>
-					<SkewTransform/>
-					<RotateTransform/>
-					<TranslateTransform/>
-				</TransformGroup>
-			</Button.RenderTransform>
-		</Button>
 		<ScrollViewer x:Name="ScrollViewer" Margin="8,71,-272,12.725" Grid.Column="2" Visibility="Collapsed">
 			<TextBox x:Name="ResultTextBox" TextWrapping="Wrap" Background="#FFFEFEFE" SpellCheck.IsEnabled="True" FontSize="10.667" RenderTransformOrigin="0.5,0.5">
 				<TextBox.RenderTransform>
@@ -171,16 +155,49 @@
 				</TextBox.RenderTransform>
 			</TextBox>
 		</ScrollViewer>
-		<TextBlock x:Name="GrabSuggestionTextBlock" Margin="8,0,0,0" VerticalAlignment="Top" Height="25" Grid.Column="2" Foreground="#FF825757" TextWrapping="Wrap" d:LayoutOverrides="HorizontalAlignment, GridBox" RenderTransformOrigin="0.5,0.5"><TextBlock.RenderTransform>
-				<TransformGroup>
-					<ScaleTransform/>
-					<SkewTransform/>
-					<RotateTransform/>
-					<TranslateTransform/>
-				</TransformGroup>
-			</TextBlock.RenderTransform><Run Text="["/><Run Text="Or you can also drag word to the window"/><Run Text="]"/></TextBlock>
-		<TextBlock x:Name="OutputTextBlock" Margin="8,47,157,0" VerticalAlignment="Top" Height="15.973" Grid.Column="2" Foreground="White" TextWrapping="Wrap"><Run Text="结果"/><Run Text=":"/><LineBreak/><Run Text=""/></TextBlock>
-		<ListBox x:Name="OutputListBox" Margin="8,66.973,13,12.725" Background="White" BorderBrush="Black" Foreground="Black" IsSynchronizedWithCurrentItem="True" Grid.Column="2" ItemTemplate="{DynamicResource ItemTemplate}" DataContext="{Binding Results, Converter={StaticResource AlternationConverter}, Mode=TwoWay, Source={StaticResource SearchEngineResultDataSource}, UpdateSourceTrigger=Explicit}" ItemsSource="{Binding Mode=OneWay}" ItemContainerStyle="{DynamicResource ListBoxItemStyle}" MouseDoubleClick="OutputListBox_MouseDoubleClick"/>
-		<TextBox x:Name="InputTextBox" Margin="8,16,14,0" VerticalAlignment="Top" Height="27" Grid.Column="2" Text="搜索栏" TextWrapping="Wrap" d:LayoutOverrides="HorizontalAlignment" LostKeyboardFocus="InputTextBox_LostKeyboardFocus" GotKeyboardFocus="InputTextBox_GotKeyboardFocus" PreviewKeyDown="InputTextBox_PreviewKeyDown"/>
+		<Grid x:Name="GrabGrid" Margin="8,0,-40,0" VerticalAlignment="Top" Height="32" Visibility="Hidden" Grid.Column="2">
+			<Button x:Name="GrabButton" Margin="0,8,0,0" Content="Grab Screen" ClickMode="Press" Click="GrabButton_Click" Foreground="Black" RenderTransformOrigin="0.5,0.5" Visibility="Collapsed" d:IsHidden="True" d:LayoutOverrides="GridBox">
+				<Button.BindingGroup>
+					<BindingGroup/>
+				</Button.BindingGroup>
+				<Button.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Button.RenderTransform>
+			</Button>
+		</Grid>
+		<DockPanel x:Name="LayoutDockPanel" Margin="0" Grid.Column="2">
+			<Grid x:Name="InputGrid" VerticalAlignment="Top" Height="48" DockPanel.Dock="Top">
+				<TextBlock x:Name="GrabSuggestionTextBlock" Foreground="#FF825757" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" VerticalAlignment="Top" Height="17" d:LayoutOverrides="HorizontalAlignment, VerticalAlignment"><TextBlock.RenderTransform>
+						<TransformGroup>
+							<ScaleTransform/>
+							<SkewTransform/>
+							<RotateTransform/>
+							<TranslateTransform/>
+						</TransformGroup>
+					</TextBlock.RenderTransform><Run Text="["/><Run Text="Or you can also drag word to the window"/><Run Text="]"/></TextBlock>
+				<TextBox x:Name="InputTextBox" Text="搜索栏" TextWrapping="Wrap" d:LayoutOverrides="GridBox" GotKeyboardFocus="InputTextBox_GotKeyboardFocus" PreviewKeyDown="InputTextBox_PreviewKeyDown" Background="White" Margin="0,17,8,4" LostKeyboardFocus="InputTextBox_LostKeyboardFocus"/>
+			</Grid>
+			<TabControl x:Name="OutputTabControl" Margin="0" DockPanel.Dock="Bottom" Background="Black">
+				<TabItem x:Name="GoogleTabItem" Header="Google" Margin="-2,0,-2,-1" VerticalAlignment="Bottom" Height="22.96">
+					<Grid x:Name="GoogleOutputGrid">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="0*"/>
+							<ColumnDefinition/>
+						</Grid.ColumnDefinitions>
+						<ListBox x:Name="GoogleOutputListBox" Background="White" BorderBrush="Black" Foreground="Black" IsSynchronizedWithCurrentItem="True" ItemTemplate="{DynamicResource ItemTemplate}" DataContext="{Binding Results, Converter={StaticResource AlternationConverter}, Mode=TwoWay, Source={StaticResource SearchEngineResultDataSource}, UpdateSourceTrigger=Explicit}" ItemsSource="{Binding Mode=OneWay}" ItemContainerStyle="{DynamicResource ListBoxItemStyle}" MouseDoubleClick="GoogleOutputListBox_MouseDoubleClick" HorizontalAlignment="Left" VerticalAlignment="Top" Width="235" Height="158.04" RenderTransformOrigin="0.5,0.5" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="1"/>
+					</Grid>
+				</TabItem>
+				<TabItem x:Name="BaiduTabItem" Header="Baidu">
+					<Grid x:Name="BaiduOutputGrid">
+						<ListBox x:Name="BaiduOutputListBox" Background="White" BorderBrush="Black" Foreground="Black" IsSynchronizedWithCurrentItem="True" ItemTemplate="{DynamicResource ItemTemplate}" DataContext="{Binding Results, Converter={StaticResource AlternationConverter}, Mode=TwoWay, Source={StaticResource SearchEngineResultDataSource}, UpdateSourceTrigger=Explicit}" ItemsSource="{Binding Mode=OneWay}" ItemContainerStyle="{DynamicResource ListBoxItemStyle}" MouseDoubleClick="BaiduOutputListBox_MouseDoubleClick" HorizontalAlignment="Left" VerticalAlignment="Top" Width="235" Height="158.04" RenderTransformOrigin="0.5,0.5" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+					</Grid>
+				</TabItem>
+			</TabControl>
+		</DockPanel>
 	</Grid>
 </Window>

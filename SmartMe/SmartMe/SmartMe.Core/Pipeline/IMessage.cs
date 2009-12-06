@@ -21,7 +21,7 @@ namespace SmartMe.Core.Pipeline
     public interface IMessage
     {
         #region properties
-        MessageType Type { get; }
+        MessageType MessageType { get; }
         #endregion
 
         #region methods

@@ -21,7 +21,7 @@ namespace SmartMe.Web.Parse
 			
 			HTMLparser oP = HtmlParserFactory.GetInstance();
 			searchResult = new SearchEngineResult();
-            searchResult.SearchEngine = SearchEngineType.Google;
+            searchResult.SearchEngineType = SearchEngineType.Google;
 			item = new SearchEngineResult.ResultItem();
 			//item.Source = "Google";
 			oP.Init(encoding.GetBytes(html));
