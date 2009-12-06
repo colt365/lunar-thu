@@ -436,7 +436,7 @@ namespace SmartMe.Windows
                         {
                             foreach (SearchEngineResult searchEngineItem in result.Items)
                             {
-                                if (searchEngineItem.Results != null)
+                                if (searchEngineItem != null && searchEngineItem.Results != null) // TODO: Bug ASSERT(searchEngineItem != null)
                                 {
                                     ListBox listBox = null; 
                                     TabItem tabItem = null;
@@ -445,7 +445,6 @@ namespace SmartMe.Windows
                                     
                                     if (hasFound)
                                     {
-                                        
                                         listBox.Items.Clear();
                                         foreach (SearchEngineResult.ResultItem resultItem in searchEngineItem.Results)
                                         {
