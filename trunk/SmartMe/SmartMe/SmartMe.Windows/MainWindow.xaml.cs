@@ -29,7 +29,7 @@ namespace SmartMe.Windows
 	public partial class MainWindow : Window
     {
         #region fields
-        private List<string> _queryHistories;
+        private List<string> _queryHistories = new List<string>();
         public List<string> QueryHistories
         {
             get { return _queryHistories; }
