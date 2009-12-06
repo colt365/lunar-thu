@@ -12,7 +12,8 @@ namespace SmartMe.Web
         {
             //WebResourceManagerTester.Test();
             GoogleSearchEngineTest.Test();
-            BaiduSearchEngineTest.Test();
+			BaiduSearchEngineTest.Test();
+			SogouSearchEngineTest.Test();
         }
     }
 }
