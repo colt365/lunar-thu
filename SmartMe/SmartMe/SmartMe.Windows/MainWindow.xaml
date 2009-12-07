@@ -157,17 +157,6 @@
 		</ScrollViewer>
 		<Grid x:Name="GrabGrid" Margin="8,0,-40,0" VerticalAlignment="Top" Height="32" Visibility="Hidden" Grid.Column="2">
 			<Button x:Name="GrabButton" Margin="0,8,0,0" Content="Grab Screen" ClickMode="Press" Click="GrabButton_Click" Foreground="Black" RenderTransformOrigin="0.5,0.5" Visibility="Collapsed" d:IsHidden="True" d:LayoutOverrides="GridBox">
-				<Button.BindingGroup>
-					<BindingGroup/>
-				</Button.BindingGroup>
-				<Button.RenderTransform>
-					<TransformGroup>
-						<ScaleTransform/>
-						<SkewTransform/>
-						<RotateTransform/>
-						<TranslateTransform/>
-					</TransformGroup>
-				</Button.RenderTransform>
 			</Button>
 		</Grid>
 		<DockPanel x:Name="LayoutDockPanel" Margin="0" Grid.Column="2">
