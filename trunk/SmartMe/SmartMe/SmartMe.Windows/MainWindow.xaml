@@ -8,7 +8,7 @@
 	x:Class="SmartMe.Windows.MainWindow"
 	x:Name="Window"
 	Title="MainWindow"
-	Width="251" Height="265" Topmost="True" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" AllowDrop="True" Drop="Window_Drop" DragLeave="Window_DragLeave" DragEnter="Window_DragEnter" DragOver="Window_DragOver">
+	Width="251" Height="265" Topmost="True" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" AllowDrop="True" Drop="Window_Drop" PreviewDragEnter="Window_PreviewDragEnter" PreviewDrop="Window_PreviewDrop" PreviewDragLeave="Window_PreviewDragLeave" PreviewDragOver="Window_PreviewDragOver">
 	<Window.Resources>
 		<SmartMe_Core_Data:SearchEngineResult x:Key="SearchEngineResultDataSource" d:IsDataSource="True"/>
 		<AlternationConverter x:Key="AlternationConverter"/>
