@@ -106,6 +106,11 @@ namespace SmartMe.Windows
         #region Functional
         private void DoQuery(string text, InputQueryType queryType)
         {
+            if (text == string.Empty)
+            {
+                return;
+            }
+
             switch (queryType)
             {
                 case InputQueryType.Text:
@@ -323,27 +328,33 @@ namespace SmartMe.Windows
             
             ResultTextBox.Text += sb.ToString();
 		}
-        private void Window_DragEnter(object sender, System.Windows.DragEventArgs e)
+		
+		private void Window_PreviewDrop(object sender, System.Windows.DragEventArgs e)
         {
-            // TODO: Add event handler implementation here.
-            ResultTextBox.IsEnabled = false;
-            ResultTextBox.Text = "Window_DragEnter: ResultTextBox.IsEnabled: false";
-
-            InputTextBox.IsEnabled = false;
+            DisableKeyBoardInput();
         }
-        private void Window_DragOver(object sender, System.Windows.DragEventArgs e)
+        private void Window_PreviewDragLeave(object sender, System.Windows.DragEventArgs e)
         {
-            ResultTextBox.IsEnabled = false;
-            ResultTextBox.Text = "Window_DragOver: ResultTextBox.IsEnabled: false";
-
-            InputTextBox.IsEnabled = false;
+            EnableKeyBoardInput();
         }
-		private void Window_DragLeave(object sender, System.Windows.DragEventArgs e)
+        private void Window_PreviewDragOver(object sender, System.Windows.DragEventArgs e)
+        {
+            DisableKeyBoardInput();
+        }
+		private void Window_PreviewDragEnter(object sender, System.Windows.DragEventArgs e)
+        {
+            DisableKeyBoardInput();
+        }
+		private void DisableKeyBoardInput()
 		{
-			// TODO: Add event handler implementation here.
-			ResultTextBox.IsEnabled = true;
-            InputTextBox.IsEnabled = true;
+            ResultTextBox.IsEnabled = false;
+            InputTextBox.IsEnabled = false;
 		}
+        private void EnableKeyBoardInput()
+        {
+            ResultTextBox.IsEnabled = true;
+            InputTextBox.IsEnabled = true;
+        }
         #endregion 鼠标拖拽
 
         #region 搜索栏
