@@ -13,7 +13,7 @@ namespace SmartMe.Web.Test
 		public static void Test()
 		{
 			ISearchEngine engine = new SogouSearchEngine();
-			InputQuery query = new InputQuery("姚明");
+			InputQuery query = new InputQuery("");
 			query.QueryType = InputQueryType.Text;
 			IQueryResultItem item = engine.Search(query);
 			Console.WriteLine(item);
