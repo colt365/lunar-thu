@@ -14,48 +14,53 @@ namespace SmartMe.Web.Crawl
 		public static string Crawl(string query,Encoding encoding)
 		{
 			HttpWebRequest request = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(query);
-			request.Timeout = 30000;
+			request.Timeout = 5000;
 			request.UserAgent = "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; .NET CLR 2.0.50727; .NET CLR 3.0.04506.648; .NET CLR 3.5.21022)";
 
 			WebResponse response = null;
 			Stream resStream =null;
 			StreamReader sr = null;
 			string result = null;
-			
-			try
+			for (int i = 0; i < 5; ++i)
 			{
-				response = request.GetResponse();
-				resStream = response.GetResponseStream();
-				sr = new System.IO.StreamReader(resStream, encoding);
-				result =sr.ReadToEnd();
-			}
-			catch (System.Exception e)
-			{
-				
-				result = null;
-			}
-			finally
-			{
-				if (sr != null)
+				try
 				{
-					sr.Close();
+					response = request.GetResponse();
+					resStream = response.GetResponseStream();
+					sr = new System.IO.StreamReader(resStream, encoding);
+					result = sr.ReadToEnd();
 				}
-				if(resStream!=null)
+				catch (System.Exception e)
 				{
-					resStream.Close();
-				}
-				if(response!=null)
-				{
-					response.Close();
-				}
-				
-			}
-	
-			
-			
 
-			
+					result = null;
+				}
+				finally
+				{
+					if (sr != null)
+					{
+						sr.Close();
+					}
+					if (resStream != null)
+					{
+						resStream.Close();
+					}
+					if (response != null)
+					{
+						response.Close();
+					}
 
+				}
+				if (result != null)
+				{
+					break;
+				}
+				else
+				{
+					
+					request.Timeout += 500;
+				}
+			}
 			return result;
 
 		}
