@@ -22,7 +22,7 @@ namespace SmartMe.Core.Data
     {
         #region fields
         private List<ResultItem> _results = new List<ResultItem>();
-
+        private string _searchUrl;
         private SearchEngineType _searchEngine;
         #endregion
 
@@ -126,6 +126,18 @@ namespace SmartMe.Core.Data
                 _results = value;
             }
         }
+        public string SearchUrl
+        {
+            get 
+            {
+                return _searchUrl;
+            }
+            set 
+            {
+                _searchUrl=value;
+            }
+        }
+
         #endregion
 
         #region methods
