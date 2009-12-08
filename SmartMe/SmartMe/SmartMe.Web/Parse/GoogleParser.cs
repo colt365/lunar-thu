@@ -120,7 +120,7 @@ namespace SmartMe.Web.Parse
 									{
 										item.SimilarUrl = oChunk.sValues[i];
 									}
-									else
+                                    else if (oChunk.sValues[i].IndexOf("q=cache") != -1)
 									{
 										item.CacheUrl = oChunk.sValues[i];
 									}
