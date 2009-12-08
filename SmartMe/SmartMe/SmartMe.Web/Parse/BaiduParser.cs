@@ -101,18 +101,18 @@ namespace SmartMe.Web.Parse
 								{
 									item.Url = oChunk.sValues[i];
 								}
-								else if (state == 6 || state==8)
-								{
-									if (oChunk.sValues[i].IndexOf("cache") != -1)
-									{
-										item.CacheUrl = oChunk.sValues[i];
-									}
-									else
-									{
-										item.CacheUrl = item.SimilarUrl;
-										item.SimilarUrl = oChunk.sValues[i];
-									}
-								
+                                else if (state == 6 || state == 8)
+                                {
+                                    if (oChunk.sValues[i].IndexOf("cache") != -1)
+                                    {
+                                        item.CacheUrl = oChunk.sValues[i];
+                                    }
+                                    else
+                                    {
+                                        
+                                        item.SimilarUrl = oChunk.sValues[i];
+                                    }
+                                }	
 							}
 							break;
 					}
