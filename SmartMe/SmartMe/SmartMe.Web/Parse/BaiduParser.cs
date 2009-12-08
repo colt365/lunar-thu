@@ -107,7 +107,7 @@ namespace SmartMe.Web.Parse
                                     {
                                         item.CacheUrl = oChunk.sValues[i];
                                     }
-                                    else
+                                    else if (oChunk.sValues[i].StartsWith("s?cl=2"))
                                     {
                                         
                                         item.SimilarUrl = oChunk.sValues[i];

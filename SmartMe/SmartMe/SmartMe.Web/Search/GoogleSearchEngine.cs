@@ -16,19 +16,22 @@ namespace SmartMe.Web.Search
 		{
             SmartMe.Core.Data.SearchEngineResult emptyResult = new SmartMe.Core.Data.SearchEngineResult();
             emptyResult.SearchEngineType = SmartMe.Core.Data.SearchEngineType.Google;
+            string url = "http://www.google.cn/search?q=" + HttpUtility.UrlEncode(query.Text, Encoding.UTF8);
+            emptyResult.SearchUrl=url;
 			if(query == null || query.QueryType!= SmartMe.Core.Data.InputQueryType.Text|| query.Text==null || query.Text=="")
 			{
                 return emptyResult;
 			}
-			string url = "http://www.google.cn/search?q=" + HttpUtility.UrlEncode(query.Text, Encoding.UTF8);
-
+			
 			string html=SmartMe.Web.Crawl.Crawler.Crawl(url,Encoding.UTF8);
 			if(html==null || html=="")
 			{
                 return emptyResult;
 			}
 			SmartMe.Web.Parse.GoogleParser parser= new SmartMe.Web.Parse.GoogleParser();
-			return parser.Parse(html,Encoding.UTF8);
+			SmartMe.Core.Data.SearchEngineResult result=parser.Parse(html,Encoding.UTF8);
+            result.SearchUrl = url;
+            return result;
 		}
 
 		#endregion
