@@ -96,7 +96,7 @@ namespace SmartMe.Web.Parse
                             }
                             else if (oChunk.sParams[i] == "href" && state == 6)
                             {
-                                item.Url = oChunk.sValues[i];
+                                item.Url ="http://en.wikipedia.org"+ oChunk.sValues[i];
                             }
                             else if (oChunk.sParams[i] == "title" && state == 6)
                             {
