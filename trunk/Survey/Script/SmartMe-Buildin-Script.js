@@ -26,7 +26,7 @@ function _SmartMeGlobal() {
 };
 // _SmartMeGlobal member functions
 _SmartMeGlobal.prototype.console = function(str) { 
-	if (console != null && console.log != null ) {
+	if (typeof(console) != 'undefined' && console != null && console.log != null ) {
 		console.log(str);
 	}
 	else {
@@ -34,7 +34,7 @@ _SmartMeGlobal.prototype.console = function(str) {
 	}
 };
 _SmartMeGlobal.prototype.error = function(str) { 
-	this.console("Error:" + str);
+	_SmartMeGlobal.prototype.console("Error:" + str);
 };
 
 // return: bool 
@@ -58,14 +58,12 @@ _SmartMeGlobal.prototype.unbind = function(name) {
 //////////////////////////////////
 // Define Global Variable:
 var $_S = new _SmartMeGlobal();
-
 //////////////////////////////////
 
 
 /////////////////////////////////////////
 // SmartMe API:
 //
-
 //////////////////////////
 // Class SmartMeItem
 function SmartMeItem (title, linkUrl, content, similarUrl, cachedUrl) {
@@ -113,22 +111,89 @@ if (document != null && document.getElementById != null) {
 }
 
 var $S = $_S;
+/////////////////////////////////////////////
+
+
+/////////////////////////////////////////////
+// For serialization:
+function toXML(obj) {
+	if (typeof(obj) == "undefined" || obj == null) {
+		return "";
+	}
+	if (typeof(obj) == "object") {
+		var objXML = "";
+		for (var property in obj) {
+			var begin = "<" + property +  ">";
+			var value = toXML(obj[property]);
+			var end = "<" + property + "/>";
+			objXML += begin + value + end;
+		}
+		return objXML;
+	}
+	else  {
+		return obj;
+	}
+}
+
+function toJSON(obj) {
+	if (typeof(obj) == "undefined" || obj == null) {
+		return "";
+	}
+	if (typeof(obj) == "object") {
+		if (obj instanceof Array) {
+			var objJson = "";
+			objJson += "[";
+			var isFirst = true;
+			for (var property in obj) {
+				if (isFirst) { isFirst = false; }
+				else { objJson += ","; }
+				var value = toJson(obj[property]);
+				objJson += value;
+			}
+			objJson += "]";
+			return objJson;
+		}
+		else {
+			var objJson = "";
+			objJson += "{";
+			var isFirst = true;
+			for (var property in obj) {
+				if (isFirst) { isFirst = false; }
+				else { objJson += ","; }
+				objJson += property + ":";
+				var value = toJson(obj[property]);
+				objJson += value;
+			}
+			objJson += "}";
+			return objJson;
+		}
+	}
+	else {
+		return obj;
+	}
+};
 
 /////////////////////////////////////////////
 // Test Function:
 
-function Run() {
+function RunTest() {
 	for (var i = 0; i < 3; i++) {
 		var item = $S.CreateItem("title" + i, "linkUrl" + i, "content" + i, "similarUrl" + i, "cachedUrl" + i);
 		$S.AddItem(item);
 	}
 	$S.PrintItems();
+	$S.console( toXML($S._return) );
+	$S.console( toJSON($S._return) );
+	
 	$S.RemoveItems();
+	
 	$S.PrintItems();
+	$S.console( toXML($S._return) );
+	$S.console( toJSON($S._return) );
 }
 
 /////////////////////////////////////////////
 //
 
-Run();
+RunTest();
 //
