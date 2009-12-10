@@ -169,7 +169,7 @@
 							<TranslateTransform/>
 						</TransformGroup>
 					</TextBlock.RenderTransform><Run Text="["/><Run Text="Or you can also drag word to the window"/><Run Text="]"/></TextBlock>
-				<TextBox x:Name="InputTextBox" Text="搜索栏" TextWrapping="Wrap" d:LayoutOverrides="GridBox" GotKeyboardFocus="InputTextBox_GotKeyboardFocus" PreviewKeyDown="InputTextBox_PreviewKeyDown" Background="White" Margin="0,17,8,4" LostKeyboardFocus="InputTextBox_LostKeyboardFocus"/>
+				<TextBox x:Name="InputTextBox" Text="搜索栏" TextWrapping="Wrap" d:LayoutOverrides="GridBox" GotKeyboardFocus="InputTextBox_GotKeyboardFocus" Background="White" Margin="0,17,8,4" LostKeyboardFocus="InputTextBox_LostKeyboardFocus" PreviewKeyUp="InputTextBox_PreviewKeyUp"/>
 			</Grid>
 			<TabControl x:Name="OutputTabControl" Margin="0" DockPanel.Dock="Bottom" Background="Black">
 				<TabItem x:Name="GoogleTabItem" Header="谷歌" Margin="-2,0,-2,-1" VerticalAlignment="Bottom" Height="22.96">

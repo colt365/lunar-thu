@@ -45,6 +45,11 @@ namespace SmartMe.Windows
         WebResourceManager _webResourceManager = null;
         Pipeline _pipeline = null;
         QueryResultHandler _resultHandler = null;
+
+        // For DelayedQuery Method
+        private DateTime _lastInputTime = DateTime.Now;
+        private Object _lastInputTimeLock = new Object();
+		private string _lastQueryText = "";
         #endregion
 
         public MainWindow()
@@ -104,12 +109,36 @@ namespace SmartMe.Windows
         #endregion Query
 
         #region Functional
+        private void DoDelayedQuery(string text, InputQueryType queryType, int milliSecondsTimedOut)
+        {
+            DateTime curInputTime = DateTime.Now;
+            lock (_lastInputTimeLock)
+            {
+                if (_lastInputTime < curInputTime)
+                {
+                    _lastInputTime = curInputTime;
+                }
+            }
+            Thread.Sleep(milliSecondsTimedOut);
+            if (_lastInputTime == curInputTime)
+            {
+                DoQuery(text, queryType);
+            }
+        }
         private void DoQuery(string text, InputQueryType queryType)
         {
+            lock (_lastInputTimeLock)
+            {
+                _lastInputTime = DateTime.Now;
+            }
             if (text == string.Empty)
             {
                 return;
             }
+			if (text == _lastQueryText)
+			{
+				return;
+			}
 
             switch (queryType)
             {
@@ -117,6 +146,8 @@ namespace SmartMe.Windows
                 {
                     InputQuery query = new InputQuery(text);
                     query.QueryType = InputQueryType.Text;
+					
+					_lastQueryText = text;
                     AddQueryHistory(text);
 
                     this.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(
@@ -146,29 +177,22 @@ namespace SmartMe.Windows
             System.Diagnostics.Process process = null;
             try
             {
-                //
-                //启动外部程序
-                //
                 process = System.Diagnostics.Process.Start(info);
             }
             catch (ArgumentNullException e)
             {
-                // MessageBox.Show(string.Format("错误：{0}", e.Message));
                 return;
             }
             catch (Win32Exception e)
             {
-                // MessageBox.Show(string.Format("错误：{0}", e.Message));
                 return;
             }
             catch (ObjectDisposedException e)
             {
-                // MessageBox.Show(string.Format("错误：{0}", e.Message));
                 return;
             }
             catch (InvalidOperationException e)
             {
-                // MessageBox.Show(string.Format("错误：{0}", e.Message));
                 return;
             }
             catch (Exception e)
@@ -210,26 +234,6 @@ namespace SmartMe.Windows
                         this.DoShellCall(info);
                     })
             );
-            
-
-            ////打印出外部程序的开始执行时间
-            //Console.WriteLine("外部程序的开始执行时间：{0}",  Proc.StartTime);
-
-            ////等待3秒钟
-            //Proc.WaitForExit(3000);
-
-            ////如果这个外部程序没有结束运行则对其强行终止
-            //if(Proc.HasExited  ==  false)
-            //{
-            //    Console.WriteLine("由主程序强行终止外部程序的运行！");
-            //    Proc.Kill();
-            //}
-            //else
-            //{
-            //    Console.WriteLine("由外部程序正常退出！");
-            //}
-            //Console.WriteLine("外部程序的结束运行时间：{0}",  Proc.ExitTime);
-            //Console.WriteLine("外部程序在结束运行时的返回值：{0}",  Proc.ExitCode);
         }
         #endregion Functional
 
@@ -358,15 +362,24 @@ namespace SmartMe.Windows
         #endregion 鼠标拖拽
 
         #region 搜索栏
-		private void InputTextBox_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+		private void InputTextBox_PreviewKeyUp(object sender, System.Windows.Input.KeyEventArgs e)
         {
-			if (e.Key == Key.Return)
-			{
-				string text = InputTextBox.Text;
-				text = text.Trim(new char[] {' ', '\t', '\r', '\n'});
-				DoQuery(text, InputQueryType.Text);
-			}
-        	// MessageBox.Show("[" + e.Key + "]"); // TODO: Add event handler implementation here.
+        	string text = InputTextBox.Text;
+            string trimedText = text.Trim(new char[] { ' ', '\t', '\r', '\n' });
+
+            if (e.Key == Key.Return)
+            {
+                DoQuery(trimedText, InputQueryType.Text);
+            }
+            else // DoWaitedQuery
+            {
+                int milliSecondsTimedOut = 500; // 500 毫秒
+                ThreadStart threadStart = delegate {
+                    this.DoDelayedQuery(trimedText, InputQueryType.Text, milliSecondsTimedOut);
+                };
+                Thread thread = new Thread(threadStart);
+                thread.Start();
+            }
         }
         private void InputTextBox_LostKeyboardFocus(object sender, System.Windows.Input.KeyboardFocusChangedEventArgs e)
 		{
@@ -612,12 +625,7 @@ namespace SmartMe.Windows
 
             // TODO: unfinished 
             //  TT 09/12/5 
-        }
-
-        private void InputTextBox_LostKeyboardFocus(object sender, System.Windows.RoutedEventArgs e)
-        {
-        	// TODO: Add event handler implementation here.
-        }
+        }   
         #endregion for Debug
 	}
 }
