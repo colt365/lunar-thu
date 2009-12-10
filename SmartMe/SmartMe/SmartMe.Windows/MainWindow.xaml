@@ -8,7 +8,7 @@
 	x:Class="SmartMe.Windows.MainWindow"
 	x:Name="Window"
 	Title="MainWindow"
-	Width="251" Height="265" Topmost="True" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" AllowDrop="True" Drop="Window_Drop" PreviewDragEnter="Window_PreviewDragEnter" PreviewDrop="Window_PreviewDrop" PreviewDragLeave="Window_PreviewDragLeave" PreviewDragOver="Window_PreviewDragOver">
+	Width="251" Height="265" Topmost="True" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" AllowDrop="True" Drop="Window_Drop" PreviewDragEnter="Window_PreviewDragEnter" PreviewDrop="Window_PreviewDrop" PreviewDragLeave="Window_PreviewDragLeave" PreviewDragOver="Window_PreviewDragOver" HorizontalAlignment="Left" VerticalAlignment="Top">
 	<Window.Resources>
 		<SmartMe_Core_Data:SearchEngineResult x:Key="SearchEngineResultDataSource" d:IsDataSource="True"/>
 		<AlternationConverter x:Key="AlternationConverter"/>
@@ -161,7 +161,7 @@
 		</Grid>
 		<DockPanel x:Name="LayoutDockPanel" Margin="0" Grid.Column="2">
 			<Grid x:Name="InputGrid" VerticalAlignment="Top" Height="48" DockPanel.Dock="Top">
-				<TextBlock x:Name="GrabSuggestionTextBlock" Foreground="#FF825757" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" VerticalAlignment="Top" Height="17" d:LayoutOverrides="HorizontalAlignment, VerticalAlignment"><TextBlock.RenderTransform>
+				<TextBlock x:Name="GrabSuggestionTextBlock" Foreground="#FF825757" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" VerticalAlignment="Top" Height="17" d:LayoutOverrides="HorizontalAlignment, VerticalAlignment" Margin="9,0,-9,0"><TextBlock.RenderTransform>
 						<TransformGroup>
 							<ScaleTransform/>
 							<SkewTransform/>
@@ -169,7 +169,7 @@
 							<TranslateTransform/>
 						</TransformGroup>
 					</TextBlock.RenderTransform><Run Text="["/><Run Text="Or you can also drag word to the window"/><Run Text="]"/></TextBlock>
-				<TextBox x:Name="InputTextBox" Text="搜索栏" TextWrapping="Wrap" d:LayoutOverrides="GridBox" GotKeyboardFocus="InputTextBox_GotKeyboardFocus" Background="White" Margin="0,17,8,4" LostKeyboardFocus="InputTextBox_LostKeyboardFocus" PreviewKeyUp="InputTextBox_PreviewKeyUp"/>
+				<TextBox x:Name="InputTextBox" Text="搜索栏" TextWrapping="Wrap" d:LayoutOverrides="GridBox" GotKeyboardFocus="InputTextBox_GotKeyboardFocus" Background="White" Margin="3,17,5,4" LostKeyboardFocus="InputTextBox_LostKeyboardFocus" PreviewKeyUp="InputTextBox_PreviewKeyUp"/>
 			</Grid>
 			<TabControl x:Name="OutputTabControl" Margin="0" DockPanel.Dock="Bottom" Background="Black">
 				<TabItem x:Name="GoogleTabItem" Header="谷歌" Margin="-2,0,-2,-1" VerticalAlignment="Bottom" Height="22.96">
@@ -178,12 +178,31 @@
 							<ColumnDefinition Width="0*"/>
 							<ColumnDefinition/>
 						</Grid.ColumnDefinitions>
-						<ListBox x:Name="GoogleOutputListBox" Background="White" BorderBrush="Black" Foreground="Black" IsSynchronizedWithCurrentItem="True" ItemTemplate="{DynamicResource ItemTemplate}" DataContext="{Binding Results, Converter={StaticResource AlternationConverter}, Mode=TwoWay, Source={StaticResource SearchEngineResultDataSource}, UpdateSourceTrigger=Explicit}" ItemsSource="{Binding Mode=OneWay}" ItemContainerStyle="{DynamicResource ListBoxItemStyle}" MouseDoubleClick="GoogleOutputListBox_MouseDoubleClick" HorizontalAlignment="Left" VerticalAlignment="Top" Width="235" Height="158.04" RenderTransformOrigin="0.5,0.5" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="1"/>
+						<ListBox x:Name="GoogleOutputListBox" Background="White" BorderBrush="Black" Foreground="Black" IsSynchronizedWithCurrentItem="True" ItemTemplate="{DynamicResource ItemTemplate}" DataContext="{Binding Results, Converter={StaticResource AlternationConverter}, Mode=TwoWay, Source={StaticResource SearchEngineResultDataSource}, UpdateSourceTrigger=Explicit}" ItemsSource="{Binding Mode=OneWay}" ItemContainerStyle="{DynamicResource ListBoxItemStyle}" MouseDoubleClick="GoogleOutputListBox_MouseDoubleClick" HorizontalAlignment="Left" VerticalAlignment="Top" Width="235" Height="158.04" RenderTransformOrigin="0.5,0.5" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="1" PreviewMouseRightButtonDown="GoogleOutputListBox_PreviewMouseRightButtonDown"/>
 					</Grid>
 				</TabItem>
 				<TabItem x:Name="BaiduTabItem" Header="百度">
 					<Grid x:Name="BaiduOutputGrid">
 						<ListBox x:Name="BaiduOutputListBox" Background="White" BorderBrush="Black" Foreground="Black" IsSynchronizedWithCurrentItem="True" ItemTemplate="{DynamicResource ItemTemplate}" DataContext="{Binding Results, Converter={StaticResource AlternationConverter}, Mode=TwoWay, Source={StaticResource SearchEngineResultDataSource}, UpdateSourceTrigger=Explicit}" ItemsSource="{Binding Mode=OneWay}" ItemContainerStyle="{DynamicResource ListBoxItemStyle}" MouseDoubleClick="BaiduOutputListBox_MouseDoubleClick" HorizontalAlignment="Left" VerticalAlignment="Top" Width="235" Height="158.04" RenderTransformOrigin="0.5,0.5" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+					</Grid>
+				</TabItem>
+				<TabItem x:Name="SougouTabItem" Header="搜狗" Margin="-2,0,-2,-1" VerticalAlignment="Bottom" Height="22.96">
+					<Grid x:Name="SougouOutputGrid">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="0*"/>
+							<ColumnDefinition Width="0*"/>
+							<ColumnDefinition/>
+						</Grid.ColumnDefinitions>
+						<ListBox x:Name="SougouOutputListBox" Background="White" BorderBrush="Black" Foreground="Black" IsSynchronizedWithCurrentItem="True" ItemTemplate="{DynamicResource ItemTemplate}" DataContext="{Binding Results, Converter={StaticResource AlternationConverter}, Mode=TwoWay, Source={StaticResource SearchEngineResultDataSource}, UpdateSourceTrigger=Explicit}" ItemsSource="{Binding Mode=OneWay}" ItemContainerStyle="{DynamicResource ListBoxItemStyle}" MouseDoubleClick="SougouOutputListBox_MouseDoubleClick" HorizontalAlignment="Left" VerticalAlignment="Top" Width="235" Height="158.04" RenderTransformOrigin="0.5,0.5" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="2"/>
+					</Grid>
+				</TabItem>
+				<TabItem x:Name="WikipediaTabItem" Header="维基" Margin="-2,0,-2,-1" VerticalAlignment="Bottom" Height="22.96">
+					<Grid x:Name="WikipediaOutputGrid">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="0*"/>
+							<ColumnDefinition/>
+						</Grid.ColumnDefinitions>
+						<ListBox x:Name="WikipediaOutputListBox" Background="White" BorderBrush="Black" Foreground="Black" IsSynchronizedWithCurrentItem="True" ItemTemplate="{DynamicResource ItemTemplate}" DataContext="{Binding Results, Converter={StaticResource AlternationConverter}, Mode=TwoWay, Source={StaticResource SearchEngineResultDataSource}, UpdateSourceTrigger=Explicit}" ItemsSource="{Binding Mode=OneWay}" ItemContainerStyle="{DynamicResource ListBoxItemStyle}" MouseDoubleClick="WikipediaOutputListBox_MouseDoubleClick" HorizontalAlignment="Left" VerticalAlignment="Top" Width="235" Height="158.04" RenderTransformOrigin="0.5,0.5" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="1"/>
 					</Grid>
 				</TabItem>
 			</TabControl>
