@@ -50,6 +50,10 @@ namespace SmartMe.Windows
         private DateTime _lastInputTime = DateTime.Now;
         private Object _lastInputTimeLock = new Object();
 		private string _lastQueryText = "";
+
+
+        // Detailed Window
+        private DetailedInfoWindow _detailedInfoWindow = new DetailedInfoWindow();
         #endregion
 
         public MainWindow()
@@ -59,6 +63,12 @@ namespace SmartMe.Windows
 			// Insert code required on object creation below this point.
             CreateListeners();
 		}
+
+        ~MainWindow()
+        {
+            _detailedInfoWindow.Close();
+        }
+
         private void CreateListeners()
         {
             _pipeline = new Pipeline();
@@ -69,8 +79,11 @@ namespace SmartMe.Windows
 
             _webResourceManager.AddSearchEngine(new GoogleSearchEngine());
             _webResourceManager.AddSearchEngine(new BaiduSearchEngine());
+            _webResourceManager.AddSearchEngine(new SogouSearchEngine());
+            _webResourceManager.AddSearchEngine(new WikipediaSearchEngine());
         }
 
+        
         #region Hidden
         private void GrabButton_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
@@ -92,6 +105,55 @@ namespace SmartMe.Windows
             screenWindow.Close();
         }
         #endregion Hidden
+        #region DetailedInfoWindow
+        private Point GetDetailedInfoScreenPosition(MouseEventArgs e)
+        {
+            Point mouseWindowPosition = e.GetPosition(this);
+            double mainWindowLeft = this.Left;
+            double mainWindowTop = this.Top;
+
+            Point detailedInfoScreenPostion = new Point();
+            detailedInfoScreenPostion.X = mainWindowLeft - _detailedInfoWindow.Width;
+            detailedInfoScreenPostion.Y = mainWindowTop + mouseWindowPosition.Y;
+
+            return detailedInfoScreenPostion;
+        }
+
+        private void ToggleDetailedInfoWindow(MouseEventArgs e)
+        {
+            Point p = GetDetailedInfoScreenPosition(e);
+            if (_detailedInfoWindow.Visibility == Visibility.Visible)
+            {
+                HideDetailedInfoWindow();
+            }
+            else
+            {
+                ShowDetailedInfoWindow((int)p.X, (int)p.Y);
+            }
+        }
+
+        private void ShowDetailedInfoWindow(int left, int top)
+        {
+            _detailedInfoWindow.Left = left;
+            _detailedInfoWindow.Top = top;
+            this.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Render, new Action(
+                delegate()
+                {
+                    _detailedInfoWindow.Show();
+                })
+            );
+        }
+
+        private void HideDetailedInfoWindow()
+        {
+            this.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Render, new Action(
+                delegate()
+                {
+                    _detailedInfoWindow.Hide();
+                })
+            );
+        }
+        #endregion DetailedInfoWindow
 
         #region Query
         private void AddQueryHistory(string queryText)
@@ -203,29 +265,10 @@ namespace SmartMe.Windows
         private void DoOpenWebBrowser(string defaultPage)
         {
             System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo();
-
             UriBuilder uriBuilder = new UriBuilder(defaultPage);
-            /*
-            bool ignoreCase = true;
-            System.Globalization.CultureInfo culture = System.Globalization.CultureInfo.CurrentUICulture;
-            if (!defaultPage.StartsWith("http://", ignoreCase, culture))
-            {
-                string url = defaultPage.TrimStart(new char[] { ' ' });
-                defaultPage = "http://" + defaultPage;
-            }
-            */
-            //MessageBox.Show("Uri:" + uriBuilder.Uri.ToString());
             info.UseShellExecute = true;
-            
-            //设置外部程序名 www.baidu.com
             info.FileName = uriBuilder.Uri.ToString();
-
-            //设置外部程序的启动参数（命令行参数) 
             info.Arguments = "";
-
-            //MessageBox.Show(info.FileName + " " + info.Arguments);
-
-            //设置外部程序工作目录为  C:\
             info.WorkingDirectory = ".";
 
             this.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(
@@ -306,29 +349,7 @@ namespace SmartMe.Windows
             {
                 sb.AppendLine("UniformResourceLocatorW:" + e.Data.GetData("UniformResourceLocatorW", true));
             }
-			/*
-            if (e.Data.GetDataPresent("UniformResourceLocator", true))
-            {
-                sb.AppendLine("UniformResourceLocator:" + e.Data.GetData(Type.GetType("UniformResourceLocator", false, true)));
-            }
-            if (e.Data.GetDataPresent("UniformResourceLocatorW", true))
-            {
-                sb.AppendLine("UniformResourceLocatorW:" + e.Data.GetData(Type.GetType("UniformResourceLocatorW", false, true)));
-            }
 			
-            if (e.Data.GetDataPresent("UniformText", true))
-            {
-                sb.AppendLine("UniformText:" + e.Data.GetData(Type.GetType("UniformText", false, true)));
-            }
-            if (e.Data.GetDataPresent("FileName", true))
-            {
-                sb.AppendLine("FileName:" + e.Data.GetData(Type.GetType("FileName", false, true)));
-            }
-            if (e.Data.GetDataPresent("FileContents", true))
-            {
-                sb.AppendLine("FileContents:" + e.Data.GetData(Type.GetType("FileContents", false, true)));
-            }
-			*/
             
             ResultTextBox.Text += sb.ToString();
 		}
@@ -399,25 +420,95 @@ namespace SmartMe.Windows
         }
         #endregion 搜索栏
 
-        #region 结果栏
-		private void GoogleOutputListBox_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        #region 打开 Detailed Window
+		private void GoogleOutputListBox_PreviewMouseRightButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
         	int index = GoogleOutputListBox.SelectedIndex;
-            string uri = _resultHandler.GetUri(sender, index);
-            if (uri != null)
+            SearchEngineResult result = _resultHandler.GetSearchEngineResult(sender);
+            if (result != null)
             {
-                DoOpenWebBrowser(uri);
+                if (0 <= index && index < result.Results.Count)
+                {
+                    string title = string.Format("{0}", result.Results[index].Title);
+                    string uri = string.Format("{0}", result.Results[index].Url);
+                    string description = string.Format("{0}", result.Results[index].Description);
+                    string cachedUri = string.Format("{0}", result.Results[index].CacheUrl);
+                    string similarUri = string.Format("{0}", result.Results[index].SimilarUrl);
+                    _detailedInfoWindow.TitleTextBlock.Text = title;
+                    _detailedInfoWindow.DescriptionTextBlock.Text = description;
+                    ToggleDetailedInfoWindow(e);
+                }
             }
         }
+        #endregion
+
+        #region 结果栏
+        private void GoogleOutputListBox_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                int index = GoogleOutputListBox.SelectedIndex;
+                SearchEngineResult result = _resultHandler.GetSearchEngineResult(sender);
+                if (result != null)
+                {
+                    if (0 <= index && index < result.Results.Count)
+                    {
+                        string uri = string.Format("{0}", result.Results[index].Url);
+                        DoOpenWebBrowser(uri);
+                    }
+                }
+            }
+        }
+		
         private void BaiduOutputListBox_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            int index = BaiduOutputListBox.SelectedIndex;
-            string uri = _resultHandler.GetUri(sender, index);
-            if (uri != null)
+            if (e.LeftButton == MouseButtonState.Pressed)
             {
-                DoOpenWebBrowser(uri);
+                int index = BaiduOutputListBox.SelectedIndex;
+                SearchEngineResult result = _resultHandler.GetSearchEngineResult(sender);
+                if (result != null)
+                {
+                    if (0 <= index && index < result.Results.Count)
+                    {
+                        string uri = string.Format("{0}", result.Results[index].Url);
+                        DoOpenWebBrowser(uri);
+                    }
+                }
             }
         }
+		private void SougouOutputListBox_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                int index = SougouOutputListBox.SelectedIndex;
+                SearchEngineResult result = _resultHandler.GetSearchEngineResult(sender);
+                if (result != null)
+                {
+                    if (0 <= index && index < result.Results.Count)
+                    {
+                        string uri = string.Format("{0}", result.Results[index].Url);
+                        DoOpenWebBrowser(uri);
+                    }
+                }
+            }
+        }
+
+        private void WikipediaOutputListBox_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                int index = WikipediaOutputListBox.SelectedIndex;
+                SearchEngineResult result = _resultHandler.GetSearchEngineResult(sender);
+                if (result != null)
+                {
+                    if (0 <= index && index < result.Results.Count)
+                    {
+                        string uri = string.Format("{0}", result.Results[index].Url);
+                        DoOpenWebBrowser(uri);
+                    }
+                }
+            }
+        }   
         #endregion 结果栏
 
         #region QueryResultHandler
@@ -479,7 +570,6 @@ namespace SmartMe.Windows
                                         listBox.InvalidateArrange();
                                         tabItem.InvalidateArrange();
                                     }
-                                    
                                 }
                             }
                         }
@@ -510,22 +600,14 @@ namespace SmartMe.Windows
                 //}
             }
 
-            public string GetUri(object sender, int itemIndex)
+            public SearchEngineResult GetSearchEngineResult(object sender)
             {
-                string uri = null;
+                SearchEngineResult searchEngineResult = null;
                 if (sender != null)
                 {
-                    SearchEngineResult searchEngineResult = null;
                     bool hasFound = FindSearchEngineResult(sender, out searchEngineResult);
-                    if (hasFound) 
-                    {
-                        if (0 <= itemIndex && itemIndex < searchEngineResult.Results.Count)
-                        {
-                            uri = string.Format("{0}", searchEngineResult.Results[itemIndex].Url);
-                        }
-                    }
                 }
-                return uri;
+                return searchEngineResult;
             }
 
             #region private
@@ -543,6 +625,14 @@ namespace SmartMe.Windows
                     else if (sourceListBox == _parent.BaiduOutputListBox)
                     {
                         hasFound = FindSearchEngineResult(_currentQueryResult, SearchEngineType.Baidu, out result);
+                    }
+                    else if (sourceListBox == _parent.SougouOutputListBox)
+                    {
+                        hasFound = FindSearchEngineResult(_currentQueryResult, SearchEngineType.Sougou, out result);
+                    }
+                    else if (sourceListBox == _parent.WikipediaOutputListBox)
+                    {
+                        hasFound = FindSearchEngineResult(_currentQueryResult, SearchEngineType.Wikipedia, out result);
                     }
                 }
                 searchEngineResult = result;
@@ -579,7 +669,7 @@ namespace SmartMe.Windows
                             hasFound = true;
                             listBox = _parent.GoogleOutputListBox;
                             tabItem = _parent.GoogleTabItem;
-                            engineName = "谷歌结果";
+                            engineName = "谷歌";
                             break;
                         }
                     case SearchEngineType.Baidu:
@@ -587,7 +677,23 @@ namespace SmartMe.Windows
                             hasFound = true;
                             listBox = _parent.BaiduOutputListBox;
                             tabItem = _parent.BaiduTabItem;
-                            engineName = "百度结果";
+                            engineName = "百度";
+                            break;
+                        }
+					case SearchEngineType.Sougou:
+                        {
+                            hasFound = true;
+                            listBox = _parent.SougouOutputListBox;
+                            tabItem = _parent.SougouTabItem;
+                            engineName = "搜狗";
+                            break;
+                        }
+                    case SearchEngineType.Wikipedia:
+                        {
+                            hasFound = true;
+                            listBox = _parent.WikipediaOutputListBox;
+                            tabItem = _parent.WikipediaTabItem;
+                            engineName = "维基";
                             break;
                         }
                     default:
@@ -625,7 +731,8 @@ namespace SmartMe.Windows
 
             // TODO: unfinished 
             //  TT 09/12/5 
-        }   
+        }
+
         #endregion for Debug
 	}
 }
