@@ -30,15 +30,15 @@ namespace SmartMe.Core.Data
         public class ResultItem
         {
             #region fields
-            private string _title;            
+            private string _title="";            
 
-            private string _url;
+            private string _url="";
 
-            private string _description;
+            private string _description="";
 
-            private string _cacheUrl;
+            private string _cacheUrl="";
 
-            private string _similarUrl;
+            private string _similarUrl="";
             #endregion
 
             #region properties
