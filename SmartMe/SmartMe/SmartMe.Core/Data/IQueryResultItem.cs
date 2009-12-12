@@ -8,7 +8,8 @@ namespace SmartMe.Core.Data
 {
     public enum QueryResultItemType
     {
-        SearchEngineResult
+        SearchEngineResult,
+        DictionaryResult
     }
 
     public interface IQueryResultItem : IMessage
