@@ -15,6 +15,7 @@ namespace SmartMe.Web
 			BaiduSearchEngineTest.Test();
 			SogouSearchEngineTest.Test();
             WikipeidaSearchEngineTest.Test();
+            DictCnTest.Test();
         }
     }
 }
