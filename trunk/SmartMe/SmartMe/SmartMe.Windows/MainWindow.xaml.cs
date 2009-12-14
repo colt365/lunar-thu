@@ -64,9 +64,9 @@ namespace SmartMe.Windows
             CreateListeners();
 		}
 
-        ~MainWindow()
+		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            _detailedInfoWindow.Close();
+        	_detailedInfoWindow.Close();
         }
 
         private void CreateListeners()
@@ -118,20 +118,13 @@ namespace SmartMe.Windows
 
             return detailedInfoScreenPostion;
         }
-
+		/*
         private void ToggleDetailedInfoWindow(MouseEventArgs e)
         {
             Point p = GetDetailedInfoScreenPosition(e);
-            if (_detailedInfoWindow.Visibility == Visibility.Visible)
-            {
-                HideDetailedInfoWindow();
-            }
-            else
-            {
-                ShowDetailedInfoWindow((int)p.X, (int)p.Y);
-            }
+            ShowDetailedInfoWindow((int)p.X, (int)p.Y);
         }
-
+		*/
         private void ShowDetailedInfoWindow(int left, int top)
         {
             _detailedInfoWindow.Left = left;
@@ -152,6 +145,32 @@ namespace SmartMe.Windows
                     _detailedInfoWindow.Hide();
                 })
             );
+        }
+		
+		private void GoogleOutputListBox_GotMouseCapture(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+			int index = GoogleOutputListBox.SelectedIndex;
+            SearchEngineResult result = _resultHandler.GetSearchEngineResult(sender);
+            if (result != null)
+            {
+                if (0 <= index && index < result.Results.Count)
+                {
+                    string title = string.Format("{0}", result.Results[index].Title);
+                    string uri = string.Format("{0}", result.Results[index].Url);
+                    string description = string.Format("{0}", result.Results[index].Description);
+                    string cachedUri = string.Format("{0}", result.Results[index].CacheUrl);
+                    string similarUri = string.Format("{0}", result.Results[index].SimilarUrl);
+                    _detailedInfoWindow.TitleTextBlock.Text = title;
+                    _detailedInfoWindow.DescriptionTextBlock.Text = description;
+                    Point p = GetDetailedInfoScreenPosition(e);
+					ShowDetailedInfoWindow((int)p.X, (int)p.Y);
+                }
+            }
+        }
+
+        private void GoogleOutputListBox_LostMouseCapture(object sender, System.Windows.Input.MouseEventArgs e)
+        {	
+			HideDetailedInfoWindow();
         }
         #endregion DetailedInfoWindow
 
@@ -436,7 +455,7 @@ namespace SmartMe.Windows
                     string similarUri = string.Format("{0}", result.Results[index].SimilarUrl);
                     _detailedInfoWindow.TitleTextBlock.Text = title;
                     _detailedInfoWindow.DescriptionTextBlock.Text = description;
-                    ToggleDetailedInfoWindow(e);
+                    // ToggleDetailedInfoWindow(e);
                 }
             }
         }
@@ -733,6 +752,20 @@ namespace SmartMe.Windows
             //  TT 09/12/5 
         }
 
+        private void GoogleOutputListBox_PreviewMouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
+        {
+			int count = GoogleOutputListBox.Items.Count;
+        	int selectedIndex = GoogleOutputListBox.SelectedIndex;
+			if ( 0 <= selectedIndex && selectedIndex < count)
+			{
+				if (e.Delta < 0) {
+					selectedIndex = Math.Min(selectedIndex + 1, count);
+				} else {
+					selectedIndex = Math.Max(selectedIndex - 1, 0);
+				}
+				GoogleOutputListBox.SelectedIndex = selectedIndex;
+			}
+        }
         #endregion for Debug
 	}
 }
