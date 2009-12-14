@@ -147,7 +147,7 @@ function toJSON(obj) {
 			for (var property in obj) {
 				if (isFirst) { isFirst = false; }
 				else { objJson += ","; }
-				var value = toJson(obj[property]);
+				var value = toJSON(obj[property]);
 				objJson += value;
 			}
 			objJson += "]";
@@ -161,7 +161,7 @@ function toJSON(obj) {
 				if (isFirst) { isFirst = false; }
 				else { objJson += ","; }
 				objJson += property + ":";
-				var value = toJson(obj[property]);
+				var value = toJSON(obj[property]);
 				objJson += value;
 			}
 			objJson += "}";
@@ -169,7 +169,7 @@ function toJSON(obj) {
 		}
 	}
 	else {
-		return obj;
+		return obj.toString();
 	}
 };
 
@@ -181,6 +181,7 @@ function RunTest() {
 		var item = $S.CreateItem("title" + i, "linkUrl" + i, "content" + i, "similarUrl" + i, "cachedUrl" + i);
 		$S.AddItem(item);
 	}
+	
 	$S.PrintItems();
 	$S.console( toXML($S._return) );
 	$S.console( toJSON($S._return) );
@@ -190,7 +191,9 @@ function RunTest() {
 	$S.PrintItems();
 	$S.console( toXML($S._return) );
 	$S.console( toJSON($S._return) );
-}
+	
+	return toXML($S._return);
+};
 
 /////////////////////////////////////////////
 //

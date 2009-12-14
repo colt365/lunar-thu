@@ -145,6 +145,7 @@ function RunParserWithjQuery() {
 		alert(e);   // alert error if exists. TODO: should be removed when release!
 	}
 	
+	$S.RemoveItems();
 	try {
 		var items = jQuery("#res > div:eq(1) > ol > li");
 		
@@ -173,6 +174,8 @@ function RunParserWithjQuery() {
 				similarUrl = jQuery(span).find('a:eq(1)').attr("href");
 			} catch(e) {}
 			
+			var item = $S.CreateItem(title, url, content, similarUrl, cachedUrl); // $S.CreateItem("title" + i, "linkUrl" + i, "content" + i, "similarUrl" + i, "cachedUrl" + i);
+			$S.AddItem(item);
 			console.log("title:" + title);
 			console.log("url:" + url);
 			console.log("content:" + content);
@@ -182,5 +185,7 @@ function RunParserWithjQuery() {
 	} catch (e) {
 		alert(e);   // alert error if exists. TODO: should be removed when release!
 	}
+	$S.PrintItems();
+	
 };
 RunParserWithjQuery();
