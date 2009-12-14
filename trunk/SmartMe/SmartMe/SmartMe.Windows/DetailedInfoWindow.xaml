@@ -1,0 +1,16 @@
+﻿<Window x:Name="Window" x:Class="SmartMe.Windows.DetailedInfoWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="DetailedInfoWindow" Height="262" Width="304" Background="#FF101010" HorizontalAlignment="Left" VerticalAlignment="Top" WindowStyle="ToolWindow">
+    <Grid>
+    	<Grid.ColumnDefinitions>
+    		<ColumnDefinition Width="0*"/>
+    		<ColumnDefinition Width="0*"/>
+    		<ColumnDefinition Width="0*"/>
+    		<ColumnDefinition/>
+    	</Grid.ColumnDefinitions>
+    	<TextBlock x:Name="TitleTextBlock" Margin="19,16,21,0" VerticalAlignment="Top" Height="34" TextWrapping="Wrap" Background="White" Text="Title" Grid.Column="3"/>
+    	<TextBlock x:Name="DescriptionTextBlock" Margin="19,64,21,10" TextWrapping="Wrap" Background="White" Text="Desciption" Grid.Column="3"/>
+        
+    </Grid>
+</Window>
