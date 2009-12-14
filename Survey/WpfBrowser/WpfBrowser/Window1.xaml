@@ -4,10 +4,9 @@
     Title="Window1" Height="600" Width="800" Background="Black">
     <Grid>
     	<WebBrowser x:Name="WebBrowser" Margin="8,8,320,86" Focusable="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
-    	<TextBox x:Name="OpenAddressTextBox" HorizontalAlignment="Left" Margin="8,0,0,34" VerticalAlignment="Bottom" Width="248" Height="32" Text="TextBox" TextWrapping="Wrap"/>
-    	<Button x:Name="OpenBrowserButton" HorizontalAlignment="Left" Margin="260,0,0,34" VerticalAlignment="Bottom" Width="68" Height="32" Content="Button" Click="OpenBrowserButton_Click"/>
-    	<Button x:Name="RunButton" HorizontalAlignment="Right" Margin="0,0,64,162" VerticalAlignment="Bottom" Width="184" Height="40" Content="Button" Click="RunButton_Click"/>
-    	<TextBox x:Name="ScriptTextBox" HorizontalAlignment="Right" Margin="0,8,40,218" Width="208" Text="alert('hi 你好哦啊!!!');" TextWrapping="Wrap"/>
+    	<TextBox x:Name="OpenAddressTextBox" HorizontalAlignment="Left" Margin="8,0,0,34" VerticalAlignment="Bottom" Width="248" Height="32" Text="http://www.google.com" TextWrapping="Wrap"/>
+    	<Button x:Name="OpenBrowserButton" Margin="260,0,352,34" VerticalAlignment="Bottom" Height="32" Content="Navigate Button" Click="OpenBrowserButton_Click"/>
+    	<Button x:Name="RunButton" HorizontalAlignment="Right" Margin="0,0,64,154" VerticalAlignment="Bottom" Width="184" Height="40" Content="Run Script Button" Click="RunButton_Click"/>
         
     </Grid>
 </Window>

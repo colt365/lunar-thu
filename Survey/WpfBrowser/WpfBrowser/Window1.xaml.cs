@@ -45,12 +45,9 @@ namespace WpfBrowser
                  */
             }
         }
-
-        private void WebBrowser_LoadCompleted(object sender, NavigationEventArgs e)
+        
+        private bool LoadLibrary(string libPath)
         {
-            MessageBox.Show("WebBrowser_LoadCompleted");
-
-            string libPath = @"SmartMe-Buildin-Script.js";
             string content = "";
             string error = "";
             bool isOK = FileLoader.LoadScript(libPath, out content, out error);
@@ -59,88 +56,107 @@ namespace WpfBrowser
                 MessageBox.Show("Code is: \r\n" + content);
                 try
                 {
-                    MessageBox.Show("[ Embedding Script ]");
+                    //MessageBox.Show("[ Embedding Script ]");
                     object o = this.WebBrowser.InvokeScript("eval", new String[] { content });
-                    MessageBox.Show("[ Script Embedded ]");
+                    //MessageBox.Show("[ Script Embedded ]");
                     MessageBox.Show("[Application]Result:" + o);
+                    return true;
                 }
                 catch (Exception ex)
                 {
                     string msg = "Could not call script: " +
                                 ex.Message;
                     MessageBox.Show(msg);
+
+                    return false;
                 }
             }
             else
             {
                 MessageBox.Show(error);
+                return false;
+            }
+        }
+
+        private void WebBrowser_LoadCompleted(object sender, NavigationEventArgs e)
+        {
+            string[] libPath = { @"jquery-1.3.2.min.js", @"SmartMe-Buildin-Script.js"};
+            foreach(string str in libPath)
+            {
+                LoadLibrary(str);
             }
         }
 
 
         private void RunButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-			string text = this.ScriptTextBox.Text;
-			try
-			{
-                MessageBox.Show("begin: " + text);
-        		var o = this.WebBrowser.InvokeScript("eval", new String[] {  text });
-                if (o == null)
+            string text = "";
+            string error = "";
+            string libPath = @"google.template.js";
+            bool isOK = FileLoader.LoadScript(libPath, out text, out error);
+            if (isOK)
+            {
+                try
                 {
-                    MessageBox.Show("[Application] Result is null");
-                }
-                else
-                {
-                    MessageBox.Show("[Application] Get Result:" + "\r\n" 
-                                    + "GetType(): "+ o.GetType() + "\r\n"
-                                    + "ToString(): " + o.ToString() + "\r\n"
-                        );
-                    try
+                    MessageBox.Show("begin: " + text);
+                    var o = this.WebBrowser.InvokeScript("eval", new String[] { text });
+                    if (o == null)
                     {
-                        Object obj = o as Object;
-                        if (obj != null)
+                        MessageBox.Show("[Application] Result is null");
+                    }
+                    else
+                    {
+                        MessageBox.Show("[Application] Get Result:" + "\r\n"
+                                        + "GetType(): " + o.GetType() + "\r\n"
+                                        + "ToString(): " + o.ToString() + "\r\n"
+                            );
+                        try
                         {
-                            MessageBox.Show("o as Object: " + obj);
+                            Object obj = o as Object;
+                            if (obj != null)
+                            {
+                                MessageBox.Show("o as Object: " + obj);
+                            }
+                            else
+                            {
+                                MessageBox.Show("o as Object failure");
+                            }
                         }
-                        else 
+                        catch (System.Exception)
                         {
-                            MessageBox.Show("o as Object failure");
                         }
-                    }
-                    catch (System.Exception)
-                    {
-                    }
-                    try
-                    {
-                        Array array = o as Array;
-                        if (array != null)
+                        try
                         {
-                            MessageBox.Show("o as Array: " + array);
+                            Array array = o as Array;
+                            if (array != null)
+                            {
+                                MessageBox.Show("o as Array: " + array);
+                            }
+                            else
+                            {
+                                MessageBox.Show("o as Array failure");
+                            }
                         }
-                        else
+                        catch (System.Exception ex)
                         {
-                            MessageBox.Show("o as Array failure");
-                        }
-                    }
-                    catch (System.Exception ex)
-                    {
-                        
-                    }
-                    try
-                    {
-                    }
-                    catch (System.Exception ex)
-                    {
-                     
-                    }
 
+                        }
+                        try
+                        {
+                        }
+                        catch (System.Exception ex)
+                        {
+
+                        }
+
+                    }
                 }
-			}
-			catch (Exception ex)
-			{
-				string msg = "Could not call script: " + ex.Message;
-				MessageBox.Show(msg);
-			}
+                catch (Exception ex)
+                {
+                    string msg = "Could not call script: " + ex.Message;
+                    MessageBox.Show(msg);
+                }
+            }
         }
     }
 }

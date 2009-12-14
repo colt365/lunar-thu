@@ -105,6 +105,7 @@ namespace SmartMe.Windows
             screenWindow.Close();
         }
         #endregion Hidden
+
         #region DetailedInfoWindow
         private Point GetDetailedInfoScreenPosition(MouseEventArgs e)
         {
@@ -150,20 +151,23 @@ namespace SmartMe.Windows
 		private void GoogleOutputListBox_GotMouseCapture(object sender, System.Windows.Input.MouseEventArgs e)
         {
 			int index = GoogleOutputListBox.SelectedIndex;
-            SearchEngineResult result = _resultHandler.GetSearchEngineResult(sender);
-            if (result != null)
+            if (index >= 0)
             {
-                if (0 <= index && index < result.Results.Count)
+                SearchEngineResult result = _resultHandler.GetSearchEngineResult(sender);
+                if (result != null)
                 {
-                    string title = string.Format("{0}", result.Results[index].Title);
-                    string uri = string.Format("{0}", result.Results[index].Url);
-                    string description = string.Format("{0}", result.Results[index].Description);
-                    string cachedUri = string.Format("{0}", result.Results[index].CacheUrl);
-                    string similarUri = string.Format("{0}", result.Results[index].SimilarUrl);
-                    _detailedInfoWindow.TitleTextBlock.Text = title;
-                    _detailedInfoWindow.DescriptionTextBlock.Text = description;
-                    Point p = GetDetailedInfoScreenPosition(e);
-					ShowDetailedInfoWindow((int)p.X, (int)p.Y);
+                    if (0 <= index && index < result.Results.Count)
+                    {
+                        string title = string.Format("{0}", result.Results[index].Title);
+                        string uri = string.Format("{0}", result.Results[index].Url);
+                        string description = string.Format("{0}", result.Results[index].Description);
+                        string cachedUri = string.Format("{0}", result.Results[index].CacheUrl);
+                        string similarUri = string.Format("{0}", result.Results[index].SimilarUrl);
+                        _detailedInfoWindow.TitleTextBlock.Text = title;
+                        _detailedInfoWindow.DescriptionTextBlock.Text = description;
+                        Point p = GetDetailedInfoScreenPosition(e);
+                        ShowDetailedInfoWindow((int)p.X, (int)p.Y);
+                    }
                 }
             }
         }
@@ -173,6 +177,86 @@ namespace SmartMe.Windows
 			HideDetailedInfoWindow();
         }
         #endregion DetailedInfoWindow
+
+        #region 打开 Detailed Window
+        private void GoogleOutputListBox_PreviewMouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
+        {
+            int count = GoogleOutputListBox.Items.Count;
+            int selectedIndex = GoogleOutputListBox.SelectedIndex;
+            if (0 <= selectedIndex && selectedIndex < count)
+            {
+                if (e.Delta < 0)
+                {
+                    selectedIndex = Math.Min(selectedIndex + 1, count);
+                }
+                else
+                {
+                    selectedIndex = Math.Max(selectedIndex - 1, 0);
+                }
+                GoogleOutputListBox.SelectedIndex = selectedIndex;
+            }
+        }
+
+        private void GoogleOutputListBox_SelectionChanged(object sender, 
+                                        System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            int index = GoogleOutputListBox.SelectedIndex;
+            if (index >= 0)
+            {
+                SearchEngineResult result = _resultHandler.GetSearchEngineResult(sender);
+                if (result != null)
+                {
+                    if (0 <= index && index < result.Results.Count)
+                    {
+                        string title = string.Format("{0}", result.Results[index].Title);
+                        string uri = string.Format("{0}", result.Results[index].Url);
+                        string description = string.Format("{0}", result.Results[index].Description);
+                        string cachedUri = string.Format("{0}", result.Results[index].CacheUrl);
+                        string similarUri = string.Format("{0}", result.Results[index].SimilarUrl);
+                        _detailedInfoWindow.TitleTextBlock.Text = title;
+                        _detailedInfoWindow.DescriptionTextBlock.Text = description;
+                        //Point p = GetDetailedInfoScreenPosition(e);
+                        ShowDetailedInfoWindow(100, 100);
+                    }
+                }
+            }
+            else 
+            {
+                HideDetailedInfoWindow();
+            }
+        }
+
+        private void GoogleOutputListBox_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            HideDetailedInfoWindow();
+        }
+        /*
+        private void GoogleOutputListBox_PreviewMouseRightButtonDown(object sender, 
+                                            System.Windows.Input.MouseButtonEventArgs e)
+        {
+            int index = GoogleOutputListBox.SelectedIndex;
+            if (index >= 0)
+            {
+                SearchEngineResult result = _resultHandler.GetSearchEngineResult(sender);
+                if (result != null)
+                {
+                    if (0 <= index && index < result.Results.Count)
+                    {
+                        string title = string.Format("{0}", result.Results[index].Title);
+                        string uri = string.Format("{0}", result.Results[index].Url);
+                        string description = string.Format("{0}", result.Results[index].Description);
+                        string cachedUri = string.Format("{0}", result.Results[index].CacheUrl);
+                        string similarUri = string.Format("{0}", result.Results[index].SimilarUrl);
+                        _detailedInfoWindow.TitleTextBlock.Text = title;
+                        _detailedInfoWindow.DescriptionTextBlock.Text = description;
+                        // ToggleDetailedInfoWindow(e);
+                    }
+                }
+            }
+        }
+        */
+
+        #endregion
 
         #region Query
         private void AddQueryHistory(string queryText)
@@ -438,28 +522,6 @@ namespace SmartMe.Windows
 			InputTextBox.Opacity = 1.0;
         }
         #endregion 搜索栏
-
-        #region 打开 Detailed Window
-		private void GoogleOutputListBox_PreviewMouseRightButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-        	int index = GoogleOutputListBox.SelectedIndex;
-            SearchEngineResult result = _resultHandler.GetSearchEngineResult(sender);
-            if (result != null)
-            {
-                if (0 <= index && index < result.Results.Count)
-                {
-                    string title = string.Format("{0}", result.Results[index].Title);
-                    string uri = string.Format("{0}", result.Results[index].Url);
-                    string description = string.Format("{0}", result.Results[index].Description);
-                    string cachedUri = string.Format("{0}", result.Results[index].CacheUrl);
-                    string similarUri = string.Format("{0}", result.Results[index].SimilarUrl);
-                    _detailedInfoWindow.TitleTextBlock.Text = title;
-                    _detailedInfoWindow.DescriptionTextBlock.Text = description;
-                    // ToggleDetailedInfoWindow(e);
-                }
-            }
-        }
-        #endregion
 
         #region 结果栏
         private void GoogleOutputListBox_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -750,21 +812,6 @@ namespace SmartMe.Windows
 
             // TODO: unfinished 
             //  TT 09/12/5 
-        }
-
-        private void GoogleOutputListBox_PreviewMouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
-        {
-			int count = GoogleOutputListBox.Items.Count;
-        	int selectedIndex = GoogleOutputListBox.SelectedIndex;
-			if ( 0 <= selectedIndex && selectedIndex < count)
-			{
-				if (e.Delta < 0) {
-					selectedIndex = Math.Min(selectedIndex + 1, count);
-				} else {
-					selectedIndex = Math.Max(selectedIndex - 1, 0);
-				}
-				GoogleOutputListBox.SelectedIndex = selectedIndex;
-			}
         }
         #endregion for Debug
 	}
