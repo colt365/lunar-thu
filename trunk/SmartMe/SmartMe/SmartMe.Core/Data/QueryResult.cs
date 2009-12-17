@@ -11,7 +11,7 @@ namespace SmartMe.Core.Data
     /// <summary>
     /// 搜索返回的结果
     /// </summary>
-    public class QueryResult : IMessage
+    public class QueryResult : Message
     {
 		#region fields
         private InputQuery _query;
@@ -26,16 +26,37 @@ namespace SmartMe.Core.Data
         #endregion
 
         #region properties
+
         public InputQuery Query
         {
-            get { return _query; }
-            set { _query = value; }
+            get
+            {
+                return _query;
+            }
+            set 
+            {
+                _query = value;
+            }
         }
 
         public List<SearchEngineResult> Items
         {
             get { return _items; }
         }
+
+
+        #region IMessage Members
+
+        public override MessageType MessageType
+        {
+            get
+            {
+                return MessageType.QueryResult;
+            }
+        }
+
+        #endregion
+
         #endregion
 
         #region methods
@@ -50,16 +71,6 @@ namespace SmartMe.Core.Data
             }
             return stringBuilder.ToString();
         }
-
-        #region IMessage Members
-        public MessageType MessageType
-        {
-            get 
-            {
-                return MessageType.QueryResult;
-            }
-        }
-        #endregion
 
         #endregion
     }

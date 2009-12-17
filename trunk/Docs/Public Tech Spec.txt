@@ -1,0 +1,27 @@
+SmartMe::Common
+
+SmartMe.Core::Communication
+
+SmartMe.Core::Data
+
+SmartMe.Core::Pipeline
+
+SmartMe.Input
+接口：
+1. ITextFetcher：表示输入文本的工具
+	(1) public InputText Fetch();
+		输入文本，返回输入的文字
+
+类：
+1. InputText：表示一个输入的文本信息
+	(1) public String Text{get;set;}
+		表示文本的文字信息
+SmartMe.Input::Grab
+接口：
+
+
+SmartMe.Web
+接口：
+2. IWebResource
+
+SmartMe.Windows

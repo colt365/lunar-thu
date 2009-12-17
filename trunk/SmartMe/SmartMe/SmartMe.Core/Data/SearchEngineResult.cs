@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Xml;
+using System.Xml.Serialization;
+
 using SmartMe.Core.Pipeline;
 
 namespace SmartMe.Core.Data
@@ -18,15 +22,20 @@ namespace SmartMe.Core.Data
         Other
     }
 
-    public class SearchEngineResult : IQueryResultItem
+    /// <summary>
+    /// 从一个搜索引擎返回的结果
+    /// </summary>
+    [Serializable]
+    public class SearchEngineResult : IQueryResultItem, IXMLSerializable
     {
         #region fields
         private List<ResultItem> _results = new List<ResultItem>();
-        private string _searchUrl;
-        private SearchEngineType _searchEngine;
+        private string _searchUrl = string.Empty;
+        private SearchEngineType _searchEngine = SearchEngineType.Other;
         #endregion
 
         #region nested
+        [Serializable]
         public class ResultItem
         {
             #region fields
@@ -150,6 +159,42 @@ namespace SmartMe.Core.Data
             }
             return stringBuilder.ToString();
         }
+
+        public static SearchEngineResult GetSearchEngineResultFromXMLObject(XMLObject xmlObject)
+        {
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(SearchEngineResult));
+            StringReader xmlStringReader = new StringReader(xmlObject.ToString());
+            SearchEngineResult result = xmlSerializer.Deserialize(xmlStringReader) as SearchEngineResult;
+            xmlStringReader.Close();
+            if (result == null)
+            {
+                result = new SearchEngineResult();
+            }
+            return result;
+        }
+
+        #region IXMLSerializable Members
+
+        public XMLObject ToXMLObject()
+        {
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(SearchEngineResult));
+            StringBuilder xmlString = new StringBuilder();
+            StringWriter xmlStringWriter = new StringWriter(xmlString);
+            xmlSerializer.Serialize(xmlStringWriter, this);
+            xmlStringWriter.Close();
+            return new XMLObject(xmlString.ToString());
+        }
+
+        public void FromXMLObject(XMLObject xmlObject)
+        {
+            SearchEngineResult result = GetSearchEngineResultFromXMLObject(xmlObject);
+            this._searchEngine = result._searchEngine;
+            this._searchUrl = result._searchUrl;
+            this._results = result._results;
+        }
+
+        #endregion
+
         #endregion
     }
 }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using SmartMe.Core.Data;
+
 namespace SmartMe.Core.Pipeline
 {
     /// <summary>

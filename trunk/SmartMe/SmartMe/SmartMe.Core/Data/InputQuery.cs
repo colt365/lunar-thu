@@ -19,7 +19,7 @@ namespace SmartMe.Core.Data
     /// <summary>
     /// 供查询的文本
     /// </summary>
-    public class InputQuery : IMessage
+    public class InputQuery : Message
     {
         #region fields
         /// <summary>
@@ -39,6 +39,16 @@ namespace SmartMe.Core.Data
         #endregion
 
         #region constructor
+
+        /// <summary>
+        /// 一个空的查询输入
+        /// </summary>
+        public InputQuery()
+        {
+            Text = string.Empty;
+            QueryType = InputQueryType.Unknown;
+        }
+
         /// <summary>
         /// 输入的文字的构造函数
         /// </summary>
@@ -46,6 +56,7 @@ namespace SmartMe.Core.Data
         public InputQuery(String text)
         {
             Text = text;
+            QueryType = InputQueryType.Text;
         }
 
         /// <summary>
@@ -73,7 +84,7 @@ namespace SmartMe.Core.Data
             }
         }
 
-        public MessageType MessageType
+        public override MessageType MessageType
         {
             get
             {

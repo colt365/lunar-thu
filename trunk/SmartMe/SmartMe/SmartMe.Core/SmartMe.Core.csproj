@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{591D485B-85C8-40E2-9515-4438D338DE33}</ProjectGuid>
     <OutputType>Exe</OutputType>
@@ -56,21 +56,28 @@
   <ItemGroup>
     <Compile Include="Data\DictResult.cs" />
     <Compile Include="Data\IQueryResultItem.cs" />
+    <Compile Include="Data\Message.cs" />
     <Compile Include="Data\QueryResult.cs" />
     <Compile Include="Data\SearchEngineResult.cs" />
+    <Compile Include="Data\XMLObject.cs" />
     <Compile Include="Pipeline\IMessage.cs" />
     <Compile Include="Pipeline\IPipeline.cs" />
     <Compile Include="Pipeline\ISubScriberManager.cs" />
     <Compile Include="Pipeline\ISubScriber.cs" />
     <Compile Include="Data\IXMLSerializable.cs" />
-    <Compile Include="Data\IXMLObject.cs" />
     <Compile Include="Pipeline\Pipeline.cs" />
     <Compile Include="Pipeline\SubscriberManager.cs" />
     <Compile Include="Data\InputQuery.cs" />
     <Compile Include="Pipeline\Pipe.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Record\InputQueryRecordManager.cs" />
+    <Compile Include="Record\IRecordFileManager.cs" />
     <Compile Include="Record\IRecordManager.cs" />
+    <Compile Include="Record\RecordFileManager.cs" />
+    <Compile Include="Record\RecordManager.cs" />
+    <Compile Include="Test\InputQueryRecordManagerTest.cs" />
+    <Compile Include="Test\XMLTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Readme.txt" />
