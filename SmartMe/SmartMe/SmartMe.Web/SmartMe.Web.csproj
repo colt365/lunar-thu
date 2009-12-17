@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{198302D6-A42D-4EE4-9B7D-79F66B191636}</ProjectGuid>
     <OutputType>Exe</OutputType>
@@ -34,6 +34,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="HTMLparserLibDotNet20, Version=3.1.4.37526, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="PresentationCore">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="PresentationFramework">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -56,7 +62,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Crawl\Crawler.cs" />
+    <Compile Include="Externel\ExternelSearchEngine.cs" />
+    <Compile Include="Externel\ScriptManager.cs" />
     <Compile Include="IQueryResultHandler.cs" />
+    <Compile Include="Externel\ExternelParser.cs" />
     <Compile Include="Parse\BaiduParser.cs" />
     <Compile Include="Parse\DictCnParser.cs" />
     <Compile Include="Parse\GoogleParser.cs" />
@@ -74,6 +83,7 @@
     <Compile Include="Search\WikipediaSearchEngine.cs" />
     <Compile Include="Test\BaiduSearchEngineTest.cs" />
     <Compile Include="Test\DictCnTest.cs" />
+    <Compile Include="Test\ExternelSearchEngineTest.cs" />
     <Compile Include="Test\GoogleSearchEngineTest.cs" />
     <Compile Include="Test\SogouSearchEngineTest.cs" />
     <Compile Include="Test\WebResourceManagerTest.cs" />

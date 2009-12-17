@@ -15,13 +15,13 @@ namespace SmartMe.Core.Data
         /// 输出到XML对象
         /// </summary>
         /// <returns>XML对象</returns>
-        IXMLObject ToXMLObject();
+        XMLObject ToXMLObject();
 
         /// <summary>
         /// 从XML对象读入
         /// </summary>
         /// <param name="xmlObject">读入的XML对象</param>
-        void FromXMLObject(IXMLObject xmlObject);
+        void FromXMLObject(XMLObject xmlObject);
         #endregion
     }
 }

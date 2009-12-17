@@ -17,6 +17,7 @@ using System.Threading;
 using SmartMe.Core;
 using SmartMe.Core.Pipeline;
 using SmartMe.Core.Data;
+using SmartMe.Core.Record;
 using SmartMe.Web;
 using SmartMe.Web.Search;
 
@@ -43,6 +44,7 @@ namespace SmartMe.Windows
         }
 
         WebResourceManager _webResourceManager = null;
+        InputQueryRecordManager _inputQueryRecordManager = null;
         Pipeline _pipeline = null;
         QueryResultHandler _resultHandler = null;
 
@@ -81,6 +83,10 @@ namespace SmartMe.Windows
             _webResourceManager.AddSearchEngine(new BaiduSearchEngine());
             _webResourceManager.AddSearchEngine(new SogouSearchEngine());
             _webResourceManager.AddSearchEngine(new WikipediaSearchEngine());
+
+            _inputQueryRecordManager = new InputQueryRecordManager(
+                "data\\query.xml", new TimeSpan(2, 0, 0, 0));
+            _pipeline.InputTextSubscriberManager.AddSubscriber(_inputQueryRecordManager);
         }
 
         
