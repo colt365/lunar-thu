@@ -20,6 +20,7 @@ using SmartMe.Core.Data;
 using SmartMe.Core.Record;
 using SmartMe.Web;
 using SmartMe.Web.Search;
+using SmartMe.Windows.Externel;
 
 
 namespace SmartMe.Windows
@@ -85,7 +86,7 @@ namespace SmartMe.Windows
             _webResourceManager.AddSearchEngine(new WikipediaSearchEngine());
 
             _inputQueryRecordManager = new InputQueryRecordManager(
-                "data\\query.xml", new TimeSpan(2, 0, 0, 0));
+                "data\\query.xml", new TimeSpan(2, 0, 0, 0));           // TODO: BUG! Magic Number defeat! by TT
             _pipeline.InputTextSubscriberManager.AddSubscriber(_inputQueryRecordManager);
         }
 
@@ -333,7 +334,8 @@ namespace SmartMe.Windows
                 case InputQueryType.FtpUri:
                 case InputQueryType.HttpUri:
                 {
-                    DoOpenWebBrowser(text);
+                    Shell shell = new Shell();
+                    shell.DoOpenWebBrowser(text);
                     break;
                 }
                 case InputQueryType.FileName:
@@ -341,51 +343,6 @@ namespace SmartMe.Windows
                     break;
                 }
             }
-        }
-        private void DoShellCall(object o)
-        {
-            System.Diagnostics.ProcessStartInfo info = (System.Diagnostics.ProcessStartInfo)o;
-            System.Diagnostics.Process process = null;
-            try
-            {
-                process = System.Diagnostics.Process.Start(info);
-            }
-            catch (ArgumentNullException e)
-            {
-                return;
-            }
-            catch (Win32Exception e)
-            {
-                return;
-            }
-            catch (ObjectDisposedException e)
-            {
-                return;
-            }
-            catch (InvalidOperationException e)
-            {
-                return;
-            }
-            catch (Exception e)
-            {
-                return;
-            }
-        }
-        private void DoOpenWebBrowser(string defaultPage)
-        {
-            System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo();
-            UriBuilder uriBuilder = new UriBuilder(defaultPage);
-            info.UseShellExecute = true;
-            info.FileName = uriBuilder.Uri.ToString();
-            info.Arguments = "";
-            info.WorkingDirectory = ".";
-
-            this.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(
-                    delegate()
-                    {
-                        this.DoShellCall(info);
-                    })
-            );
         }
         #endregion Functional
 
@@ -541,7 +498,8 @@ namespace SmartMe.Windows
                     if (0 <= index && index < result.Results.Count)
                     {
                         string uri = string.Format("{0}", result.Results[index].Url);
-                        DoOpenWebBrowser(uri);
+                        Shell shell = new Shell();
+                        shell.DoOpenWebBrowser(uri);
                     }
                 }
             }
@@ -558,7 +516,8 @@ namespace SmartMe.Windows
                     if (0 <= index && index < result.Results.Count)
                     {
                         string uri = string.Format("{0}", result.Results[index].Url);
-                        DoOpenWebBrowser(uri);
+                        Shell shell = new Shell();
+                        shell.DoOpenWebBrowser(uri);
                     }
                 }
             }
@@ -574,7 +533,8 @@ namespace SmartMe.Windows
                     if (0 <= index && index < result.Results.Count)
                     {
                         string uri = string.Format("{0}", result.Results[index].Url);
-                        DoOpenWebBrowser(uri);
+                        Shell shell = new Shell();
+                        shell.DoOpenWebBrowser(uri);
                     }
                 }
             }
@@ -591,7 +551,8 @@ namespace SmartMe.Windows
                     if (0 <= index && index < result.Results.Count)
                     {
                         string uri = string.Format("{0}", result.Results[index].Url);
-                        DoOpenWebBrowser(uri);
+                        Shell shell = new Shell();
+                        shell.DoOpenWebBrowser(uri);
                     }
                 }
             }

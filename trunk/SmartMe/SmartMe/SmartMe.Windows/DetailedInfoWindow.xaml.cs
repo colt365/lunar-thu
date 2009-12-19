@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.ComponentModel;
 
 namespace SmartMe.Windows
 {
@@ -18,9 +19,42 @@ namespace SmartMe.Windows
     /// </summary>
     public partial class DetailedInfoWindow : Window
     {
+	    private string _linkedUrl = string.Empty;
+        public string LinkedUrl
+        {
+            get { return _linkedUrl; }
+            set { _linkedUrl = (value != null) ? value : string.Empty; }
+        }
+        private string _title = string.Empty;
+        public string Title
+        {
+            get { return _title; }
+            set { _title = (value != null) ? value : string.Empty; }
+        }
+        private string _desciprtion = string.Empty;
+        public string Desciprtion
+        {
+            get { return _desciprtion; }
+            set { _desciprtion = (value != null) ? value : string.Empty; }
+        }
+	
         public DetailedInfoWindow()
         {
             InitializeComponent();
+        }
+
+        private void OpenLinkButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (LinkedUrl != string.Empty)
+            {
+                this.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(
+                    delegate()
+                    {
+                        Externel.Shell shell = new Externel.Shell();
+                        shell.DoOpenWebBrowser(LinkedUrl);
+                    })
+                );
+            }
         }
     }
 }

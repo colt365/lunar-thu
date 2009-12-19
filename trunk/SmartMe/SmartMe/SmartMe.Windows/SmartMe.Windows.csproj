@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{A087D166-CD63-45E0-A773-38E4425400BF}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -141,6 +141,7 @@
     <Compile Include="DetailedInfoWindow.xaml.cs">
       <DependentUpon>DetailedInfoWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Externel\Shell.cs" />
     <Compile Include="HistoryWindow.xaml.cs">
       <DependentUpon>HistoryWindow.xaml</DependentUpon>
     </Compile>
@@ -233,6 +234,36 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\button\add.gif" />
+    <Resource Include="Images\button\forward_button.gif" />
+    <Resource Include="Images\button\home.gif" />
+    <Resource Include="Images\button\ico_end.gif" />
+    <Resource Include="Images\button\ico_home.gif" />
+    <Resource Include="Images\button\ico_home_no.gif" />
+    <Resource Include="Images\button\ico_next.gif" />
+    <Resource Include="Images\button\ico_up.gif" />
+    <Resource Include="Images\button\ico_up_no.gif" />
+    <Resource Include="Images\button\ie.gif" />
+    <Resource Include="Images\button\popup.gif" />
+    <Resource Include="Images\button\question.gif" />
+    <Resource Include="Images\button\search.gif" />
+    <Resource Include="Images\button\search_button.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\icon\icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\loading\big.gif" />
+    <Resource Include="Images\loading\border.gif" />
+    <Resource Include="Images\loading\small.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\logo\baidu_small.gif" />
+    <Resource Include="Images\logo\baidu_title.gif" />
+    <Resource Include="Images\logo\google_small.gif" />
+    <Resource Include="Images\logo\nav_logo7.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
