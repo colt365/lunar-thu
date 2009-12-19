@@ -172,13 +172,13 @@
 				<TextBox x:Name="InputTextBox" Text="搜索栏" TextWrapping="Wrap" d:LayoutOverrides="GridBox" GotKeyboardFocus="InputTextBox_GotKeyboardFocus" Background="White" Margin="3,17,5,4" LostKeyboardFocus="InputTextBox_LostKeyboardFocus" PreviewKeyUp="InputTextBox_PreviewKeyUp"/>
 			</Grid>
 			<TabControl x:Name="OutputTabControl" Margin="0" DockPanel.Dock="Bottom" Background="Black">
-				<TabItem x:Name="GoogleTabItem" Header="谷歌" Margin="-2,0,-2,-1" VerticalAlignment="Bottom" Height="22.96">
+				<TabItem x:Name="GoogleTabItem" Header="谷歌">
 					<Grid x:Name="GoogleOutputGrid">
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="0*"/>
 							<ColumnDefinition/>
 						</Grid.ColumnDefinitions>
-						<ListBox x:Name="GoogleOutputListBox" Background="White" BorderBrush="Black" Foreground="Black" IsSynchronizedWithCurrentItem="True" ItemTemplate="{DynamicResource ItemTemplate}" DataContext="{Binding Results, Converter={StaticResource AlternationConverter}, Mode=TwoWay, Source={StaticResource SearchEngineResultDataSource}, UpdateSourceTrigger=Explicit}" ItemsSource="{Binding Mode=OneWay}" ItemContainerStyle="{DynamicResource ListBoxItemStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="235" Height="158.04" RenderTransformOrigin="0.5,0.5" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="1" GotMouseCapture="GoogleOutputListBox_GotMouseCapture" PreviewMouseWheel="GoogleOutputListBox_PreviewMouseWheel" SelectionChanged="GoogleOutputListBox_SelectionChanged" MouseLeave="GoogleOutputListBox_MouseLeave"/>
+						<ListBox x:Name="GoogleOutputListBox" Background="White" BorderBrush="Black" Foreground="Black" IsSynchronizedWithCurrentItem="True" ItemTemplate="{DynamicResource ItemTemplate}" DataContext="{Binding Results, Converter={StaticResource AlternationConverter}, Mode=TwoWay, Source={StaticResource SearchEngineResultDataSource}, UpdateSourceTrigger=Explicit}" ItemsSource="{Binding Mode=OneWay}" ItemContainerStyle="{DynamicResource ListBoxItemStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="235" Height="158.04" RenderTransformOrigin="0.5,0.5" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="1" PreviewMouseWheel="GoogleOutputListBox_PreviewMouseWheel" MouseDoubleClick="GoogleOutputListBox_MouseDoubleClick"/>
 					</Grid>
 				</TabItem>
 				<TabItem x:Name="BaiduTabItem" Header="百度">
@@ -186,7 +186,7 @@
 						<ListBox x:Name="BaiduOutputListBox" Background="White" BorderBrush="Black" Foreground="Black" IsSynchronizedWithCurrentItem="True" ItemTemplate="{DynamicResource ItemTemplate}" DataContext="{Binding Results, Converter={StaticResource AlternationConverter}, Mode=TwoWay, Source={StaticResource SearchEngineResultDataSource}, UpdateSourceTrigger=Explicit}" ItemsSource="{Binding Mode=OneWay}" ItemContainerStyle="{DynamicResource ListBoxItemStyle}" MouseDoubleClick="BaiduOutputListBox_MouseDoubleClick" HorizontalAlignment="Left" VerticalAlignment="Top" Width="235" Height="158.04" RenderTransformOrigin="0.5,0.5" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
 					</Grid>
 				</TabItem>
-				<TabItem x:Name="SougouTabItem" Header="搜狗" Margin="-2,0,-2,-1" VerticalAlignment="Bottom" Height="22.96">
+				<TabItem x:Name="SougouTabItem" Header="搜狗">
 					<Grid x:Name="SougouOutputGrid">
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="0*"/>
@@ -196,7 +196,7 @@
 						<ListBox x:Name="SougouOutputListBox" Background="White" BorderBrush="Black" Foreground="Black" IsSynchronizedWithCurrentItem="True" ItemTemplate="{DynamicResource ItemTemplate}" DataContext="{Binding Results, Converter={StaticResource AlternationConverter}, Mode=TwoWay, Source={StaticResource SearchEngineResultDataSource}, UpdateSourceTrigger=Explicit}" ItemsSource="{Binding Mode=OneWay}" ItemContainerStyle="{DynamicResource ListBoxItemStyle}" MouseDoubleClick="SougouOutputListBox_MouseDoubleClick" HorizontalAlignment="Left" VerticalAlignment="Top" Width="235" Height="158.04" RenderTransformOrigin="0.5,0.5" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="2"/>
 					</Grid>
 				</TabItem>
-				<TabItem x:Name="WikipediaTabItem" Header="维基" Margin="-2,0,-2,-1" VerticalAlignment="Bottom" Height="22.96">
+				<TabItem x:Name="WikipediaTabItem" Header="维基">
 					<Grid x:Name="WikipediaOutputGrid">
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="0*"/>
