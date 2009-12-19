@@ -265,6 +265,20 @@
     <Resource Include="Images\logo\google_small.gif" />
     <Resource Include="Images\logo\nav_logo7.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\button\add_green.png" />
+    <Resource Include="Images\button\minus_yellow.png" />
+    <Resource Include="Images\button\search.png" />
+    <Content Include="Lib\Microsoft.Expression.Interactions.dll" />
+    <Content Include="Lib\System.Windows.Controls.DataVisualization.Toolkit.Design.dll" />
+    <Content Include="Lib\System.Windows.Controls.DataVisualization.Toolkit.dll" />
+    <Content Include="Lib\System.Windows.Controls.DataVisualization.Toolkit.Expression.Design.dll" />
+    <Content Include="Lib\System.Windows.Controls.DataVisualization.Toolkit.VisualStudio.Design.dll" />
+    <Content Include="Lib\System.Windows.Interactivity.dll" />
+    <Content Include="Lib\WPFToolkit.Design.dll" />
+    <Content Include="Lib\WPFToolkit.dll" />
+    <Content Include="Lib\WPFToolkit.VisualStudio.Design.dll" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
