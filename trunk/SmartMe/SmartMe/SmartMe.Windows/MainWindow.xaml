@@ -5,10 +5,10 @@
 	mc:Ignorable="d" xmlns:ic="clr-namespace:Microsoft.Expression.Interactivity.Core;assembly=Microsoft.Expression.Interactions"
 	
 	xmlns:SmartMe_Core_Data="clr-namespace:SmartMe.Core.Data;assembly=SmartMe.Core"
+	xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" xmlns:il="clr-namespace:Microsoft.Expression.Interactivity.Layout;assembly=Microsoft.Expression.Interactions"
 	x:Class="SmartMe.Windows.MainWindow"
 	x:Name="Window"
-	Title="MainWindow"
-	Width="251" Height="265" Topmost="True" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" AllowDrop="True" Drop="Window_Drop" PreviewDragEnter="Window_PreviewDragEnter" PreviewDrop="Window_PreviewDrop" PreviewDragLeave="Window_PreviewDragLeave" PreviewDragOver="Window_PreviewDragOver" HorizontalAlignment="Left" VerticalAlignment="Top" Closing="Window_Closing">
+	Title="MainWindow" Topmost="True" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" AllowDrop="True" Drop="Window_Drop" PreviewDragEnter="Window_PreviewDragEnter" PreviewDrop="Window_PreviewDrop" PreviewDragLeave="Window_PreviewDragLeave" PreviewDragOver="Window_PreviewDragOver" Closing="Window_Closing" WindowStyle="None" Background="{x:Null}" Foreground="{x:Null}" AllowsTransparency="True" Opacity="0.8" HorizontalAlignment="Center" VerticalAlignment="Center" WindowState="Maximized">
 	<Window.Resources>
 		<SmartMe_Core_Data:SearchEngineResult x:Key="SearchEngineResultDataSource" d:IsDataSource="True"/>
 		<AlternationConverter x:Key="AlternationConverter"/>
@@ -90,6 +90,7 @@
 									<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="0.28"/>
 								</DoubleAnimationUsingKeyFrames>
 							</Storyboard>
+							<Storyboard x:Key="OutputListBox_BdPreviewMouseEnterStoryboard"/>
 						</ControlTemplate.Resources>
 						<Border x:Name="Bd" OpacityMask="{x:Null}" SnapsToDevicePixels="true" Background="{Binding Mode=OneWay}" BorderBrush="{Binding Mode=OneWay}" BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}">
 							<ContentPresenter x:Name="contentPresenter" OpacityMask="Black" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" RenderTransformOrigin="0.5,0.5" Width="Auto" Height="Auto">
@@ -132,7 +133,7 @@
 		</EventTrigger>
 	</Window.Triggers>
 
-	<Grid x:Name="LayoutRoot" Background="Black">
+	<Grid x:Name="LayoutRoot" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="将文本拖拽到这里">
 		<Grid.RowDefinitions>
 			<RowDefinition/>
 			<RowDefinition Height="0*"/>
@@ -141,9 +142,28 @@
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="0*"/>
 			<ColumnDefinition Width="0*"/>
+			<ColumnDefinition Width="0*"/>
 			<ColumnDefinition/>
 		</Grid.ColumnDefinitions>
-		<ScrollViewer x:Name="ScrollViewer" Margin="8,71,-272,12.725" Grid.Column="2" Visibility="Collapsed">
+		<VisualStateManager.VisualStateGroups>
+			<VisualStateGroup x:Name="LoadingImageVisualStateGroup">
+				<VisualState x:Name="Loading">
+					<Storyboard>
+						<ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.0010000" Storyboard.TargetName="LoadingImage" Storyboard.TargetProperty="(UIElement.Visibility)">
+							<DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Visible}"/>
+						</ObjectAnimationUsingKeyFrames>
+					</Storyboard>
+				</VisualState>
+				<VisualState x:Name="Complete"/>
+			</VisualStateGroup>
+		</VisualStateManager.VisualStateGroups>
+		<VisualStateManager.CustomVisualStateManager>
+			<ic:ExtendedVisualStateManager/>
+		</VisualStateManager.CustomVisualStateManager>
+		<i:Interaction.Behaviors>
+			<il:MouseDragElementBehavior ConstrainToParentBounds="False" X="1" Y="1"/>
+		</i:Interaction.Behaviors>
+		<ScrollViewer x:Name="ScrollViewer" Margin="8,71,-272,12.725" Grid.Column="3" Visibility="Collapsed">
 			<TextBox x:Name="ResultTextBox" TextWrapping="Wrap" Background="#FFFEFEFE" SpellCheck.IsEnabled="True" FontSize="10.667" RenderTransformOrigin="0.5,0.5">
 				<TextBox.RenderTransform>
 					<TransformGroup>
@@ -155,30 +175,48 @@
 				</TextBox.RenderTransform>
 			</TextBox>
 		</ScrollViewer>
-		<Grid x:Name="GrabGrid" Margin="8,0,-40,0" VerticalAlignment="Top" Height="32" Visibility="Hidden" Grid.Column="2">
-			<Button x:Name="GrabButton" Margin="0,8,0,0" Content="Grab Screen" ClickMode="Press" Click="GrabButton_Click" Foreground="Black" RenderTransformOrigin="0.5,0.5" Visibility="Collapsed" d:IsHidden="True" d:LayoutOverrides="GridBox">
-			</Button>
+		<Grid x:Name="GrabGrid" Margin="8,0,-40,0" VerticalAlignment="Top" Height="32" Visibility="Hidden" Grid.Column="3">
+			<Button x:Name="GrabButton" Margin="0,8,0,0" Content="Grab Screen" ClickMode="Press" Click="GrabButton_Click" Foreground="Black" RenderTransformOrigin="0.5,0.5" Visibility="Collapsed" d:IsHidden="True" d:LayoutOverrides="GridBox"/>
 		</Grid>
-		<DockPanel x:Name="LayoutDockPanel" Margin="0" Grid.Column="2">
+		<DockPanel x:Name="LayoutDockPanel" Margin="0" Grid.Column="3" Background="Black" Width="245" Height="238">
 			<Grid x:Name="InputGrid" VerticalAlignment="Top" Height="48" DockPanel.Dock="Top">
-				<TextBlock x:Name="GrabSuggestionTextBlock" Foreground="#FF825757" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" VerticalAlignment="Top" Height="17" d:LayoutOverrides="HorizontalAlignment, VerticalAlignment" Margin="9,0,8,0"><TextBlock.RenderTransform>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="0*"/>
+					<ColumnDefinition/>
+				</Grid.ColumnDefinitions>
+				<TextBlock x:Name="GrabSuggestionTextBlock" Foreground="#FF825757" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" VerticalAlignment="Top" Height="17" d:LayoutOverrides="HorizontalAlignment, VerticalAlignment" Margin="8,0,9.925,0" Grid.Column="1"><TextBlock.RenderTransform>
 						<TransformGroup>
 							<ScaleTransform/>
 							<SkewTransform/>
 							<RotateTransform/>
 							<TranslateTransform/>
 						</TransformGroup>
-					</TextBlock.RenderTransform><Run Text="["/><Run Text="Or you can also drag word to the window"/><Run Text="]"/></TextBlock>
-				<TextBox x:Name="InputTextBox" Text="搜索栏" TextWrapping="Wrap" d:LayoutOverrides="GridBox" GotKeyboardFocus="InputTextBox_GotKeyboardFocus" Background="White" Margin="3,17,5,4" LostKeyboardFocus="InputTextBox_LostKeyboardFocus" PreviewKeyUp="InputTextBox_PreviewKeyUp"/>
+					</TextBlock.RenderTransform><Run Text="["/><Run Text="Y"/><Run Text="ou can also drag word to the window"/><Run Text="]"/></TextBlock>
+				<TextBox x:Name="InputTextBox" Text="搜索栏" TextWrapping="Wrap" GotKeyboardFocus="InputTextBox_GotKeyboardFocus" Background="White" Margin="3,17,8,4" LostKeyboardFocus="InputTextBox_LostKeyboardFocus" PreviewKeyUp="InputTextBox_PreviewKeyUp" Grid.Column="1" ToolTip="请输入搜索内容"/>
+				<Image x:Name="LoadingImage" HorizontalAlignment="Right" Margin="0,19,35,5" Width="24" Height="24" Grid.Column="1" Source="Images/loading/big.gif" Stretch="Fill" Visibility="Hidden"/>
+				<Image x:Name="ContextMenuImage" HorizontalAlignment="Right" VerticalAlignment="Top" Width="15" Height="15" Grid.Column="1" Margin="0,-0.06,0.333,0" ToolTip="选项(关闭窗口！)" MouseDown="ContextMenuImage_MouseDown" Source="Images/button/add_green.png" ForceCursor="True" Cursor="Hand">
+					<Image.ContextMenu>
+						<ContextMenu/>
+					</Image.ContextMenu>
+				</Image>
+				<Image x:Name="MinimizeImage" HorizontalAlignment="Right" VerticalAlignment="Top" Width="15" Height="15" Grid.Column="1" Source="Images/button/minus_yellow.png" Margin="0,0,16.998,0" ToolTip="最小化" MouseDown="MinimizeImage_MouseDown" ForceCursor="True" Cursor="Hand">
+					<Image.ContextMenu>
+						<ContextMenu/>
+					</Image.ContextMenu>
+				</Image>
+				<Button x:Name="SearchButton" Margin="210.75,18.334,9.25,4.666" Grid.Column="1" d:LayoutOverrides="GridBox" BorderBrush="{x:Null}" Foreground="{x:Null}" Width="25" Height="25" ClickMode="Press">
+					<Image x:Name="SearchImage" Source="Images/button/search.png"/>
+				</Button>
 			</Grid>
 			<TabControl x:Name="OutputTabControl" Margin="0" DockPanel.Dock="Bottom" Background="Black">
 				<TabItem x:Name="GoogleTabItem" Header="谷歌">
 					<Grid x:Name="GoogleOutputGrid">
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="0*"/>
+							<ColumnDefinition Width="0*"/>
 							<ColumnDefinition/>
 						</Grid.ColumnDefinitions>
-						<ListBox x:Name="GoogleOutputListBox" Background="White" BorderBrush="Black" Foreground="Black" IsSynchronizedWithCurrentItem="True" ItemTemplate="{DynamicResource ItemTemplate}" DataContext="{Binding Results, Converter={StaticResource AlternationConverter}, Mode=TwoWay, Source={StaticResource SearchEngineResultDataSource}, UpdateSourceTrigger=Explicit}" ItemsSource="{Binding Mode=OneWay}" ItemContainerStyle="{DynamicResource ListBoxItemStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="235" Height="158.04" RenderTransformOrigin="0.5,0.5" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="1" PreviewMouseWheel="GoogleOutputListBox_PreviewMouseWheel" MouseDoubleClick="GoogleOutputListBox_MouseDoubleClick"/>
+						<ListBox x:Name="GoogleOutputListBox" Background="White" BorderBrush="Black" Foreground="Black" IsSynchronizedWithCurrentItem="True" ItemTemplate="{DynamicResource ItemTemplate}" DataContext="{Binding Results, Converter={StaticResource AlternationConverter}, Mode=TwoWay, Source={StaticResource SearchEngineResultDataSource}, UpdateSourceTrigger=Explicit}" ItemsSource="{Binding [0].Title, Mode=OneWay}" ItemContainerStyle="{DynamicResource ListBoxItemStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="235" Height="158.04" RenderTransformOrigin="0.5,0.5" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="2" PreviewMouseWheel="GoogleOutputListBox_PreviewMouseWheel" MouseDoubleClick="GoogleOutputListBox_MouseDoubleClick"/>
 					</Grid>
 				</TabItem>
 				<TabItem x:Name="BaiduTabItem" Header="百度">
