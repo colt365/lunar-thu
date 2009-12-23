@@ -55,25 +55,12 @@ namespace SmartMe.Windows.Externel
 
         public bool DoOpenWebBrowser(string uri)
         {
+            Debug.Assert(uri != null && uri != string.Empty, "uri should not be null or empty!");
+
             System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo();
-            UriBuilder uriBuilder = null;
-            try
-            {
-                uriBuilder = new UriBuilder(uri);
-            }
-            catch (ArgumentNullException e)
-            {
-                App.Logger.Error(e.Message + "\n" + "when: uri=" + uri.ToString() + "\n" + e.StackTrace);
-                return false;
-            }
-            catch (UriFormatException e)
-            {
-                App.Logger.Error(e.Message + "\n" + "when: uri=" + uri.ToString() + "\n" + e.StackTrace);
-                return false;
-            }
 
             info.UseShellExecute = true;
-            info.FileName = uriBuilder.Uri.ToString();
+            info.FileName = uri;
             info.Arguments = "";
             info.WorkingDirectory = ".";
 
