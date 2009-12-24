@@ -8,10 +8,80 @@ using SmartMe.Core.Data;
 
 namespace SmartMe.Core.Record
 {
-    public class RecordManager : IRecordManager
+    public class SearchEngineResultRecordManager : IRecordManager
     {
         #region fields
-        private IRecordFileManager _fileManager;
+
+        private IRecordFileManager _fileManager =
+            new RecordFileManager(typeof(SearchEngineResult));
+
+        private TimeSpan _obsoletedDuration;
+
+        private string _recordPath;
+
+        private List<SearchEngineResult> _resultList = new List<SearchEngineResult>();
+
+        #endregion
+
+        #region constructors
+
+        /// <summary>
+        /// 创立一个管理搜索引擎结果的管理器
+        /// </summary>
+        /// <param name="recordPath">记录根路径</param>
+        /// <param name="obsoletedTimeDuration">超期时间</param>
+        public SearchEngineResultRecordManager(
+            string recordPath, TimeSpan obsoletedTimeDuration)
+        {
+            ObsoletedTimeDuration = obsoletedTimeDuration;
+            RecordPath = recordPath;
+            //LoadQuery();
+            //CleanObsoletedRecord();
+        }
+
+        #endregion
+
+        #region properties
+
+        /// <summary>
+        /// 存储所有输入的文件位置
+        /// </summary>
+        public string RecordPath
+        {
+            get
+            {
+                return _recordPath;
+            }
+            set
+            {
+                _recordPath = value;
+            }
+        }
+
+        /// <summary>
+        /// 所有查询结果
+        /// </summary>
+        public List<SearchEngineResult> ResultList
+        {
+            get
+            {
+                return _resultList;
+            }
+            set
+            {
+                _resultList = value;
+            }
+        }
+
+        /// <summary>
+        /// 条目最长保留的时间
+        /// </summary>
+        public TimeSpan ObsoletedTimeDuration
+        {
+            get;
+            set;
+        }
+
         #endregion
 
         #region methods

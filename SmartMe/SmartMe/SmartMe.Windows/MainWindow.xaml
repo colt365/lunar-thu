@@ -182,23 +182,29 @@
 				</Grid.ColumnDefinitions>
 				<TextBox x:Name="InputTextBox" Text="搜索栏" TextWrapping="Wrap" GotKeyboardFocus="InputTextBox_GotKeyboardFocus" Background="White" Margin="3,17,8,4" LostKeyboardFocus="InputTextBox_LostKeyboardFocus" PreviewKeyUp="InputTextBox_PreviewKeyUp" Grid.Column="1" ToolTip="请输入搜索内容"/>
 				<Image x:Name="LoadingImage" HorizontalAlignment="Right" Margin="0,19,35,5" Width="24" Height="24" Grid.Column="1" Source="Images/loading/big.gif" Stretch="Fill" Visibility="Hidden"/>
-				<Image x:Name="ContextMenuImage" HorizontalAlignment="Right" VerticalAlignment="Top" Width="15" Height="15" Grid.Column="1" Margin="0,-0.06,0.333,0" ToolTip="选项(关闭窗口！)" MouseDown="ContextMenuImage_MouseDown" Source="Images/button/add_green.png" ForceCursor="True" Cursor="Hand">
-					<Image.ContextMenu>
-						<ContextMenu>
-							<ContextMenu.BindingGroup>
-								<BindingGroup/>
-							</ContextMenu.BindingGroup>
-						</ContextMenu>
-					</Image.ContextMenu>
-				</Image>
-				<Image x:Name="MinimizeImage" HorizontalAlignment="Right" VerticalAlignment="Top" Width="15" Height="15" Grid.Column="1" Source="Images/button/minus_yellow.png" Margin="0,0,16.998,0" ToolTip="最小化" MouseDown="MinimizeImage_MouseDown" ForceCursor="True" Cursor="Hand">
-					<Image.ContextMenu>
-						<ContextMenu/>
-					</Image.ContextMenu>
-				</Image>
 				<Button x:Name="SearchButton" Margin="210.75,18.334,9.25,4.666" Grid.Column="1" d:LayoutOverrides="GridBox" BorderBrush="{x:Null}" Foreground="{x:Null}" Width="25" Height="25" ClickMode="Press">
 					<Image x:Name="SearchImage" Source="Images/button/search.png"/>
 				</Button>
+				<Menu x:Name="OptionMenu" Margin="0,0,0.333,0" VerticalAlignment="Top" Height="14.334" Grid.Column="1" Background="#FF0E0E0E" HorizontalAlignment="Right" Width="58.667">
+					<MenuItem x:Name="MinimizeMenuItem" Margin="0" Foreground="Silver" Header="" Width="26">
+						<MenuItem.Icon>
+							<Image x:Name="MinimizeImage" Width="15" Height="15" Source="Images/button/minus_yellow.png" ToolTip="最小化" MouseDown="MinimizeImage_MouseDown" ForceCursor="True" Cursor="Hand" RenderTransformOrigin="12.433,0.5">
+								<Image.ContextMenu>
+									<ContextMenu/>
+								</Image.ContextMenu>
+							</Image>
+						</MenuItem.Icon>
+					</MenuItem>
+					<MenuItem x:Name="OptionMenuItem" Margin="0" Foreground="#FFFC0E0E" Header="" Width="25">
+						<MenuItem.Icon>
+							<StackPanel> 
+								<Image x:Name="ContextMenuImage" Width="15" Height="15" ToolTip="选项(关闭窗口！)" Source="Images/button/add_green.png" ForceCursor="True" Cursor="Hand" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1"/>
+							</StackPanel>
+						</MenuItem.Icon>
+						<MenuItem x:Name="ShowHistoryWindowMenuItem" Click="ShowHistoryWindowMenuItem_Click" Margin="0" Header="History..."/>
+						<MenuItem x:Name="ExitMenuItem" Click="ExitMenuItem_Click" Width="100" Height="18" Header="Exit"/>
+					</MenuItem>
+				</Menu>
 			</Grid>
 			<TabControl x:Name="OutputTabControl" Margin="0" DockPanel.Dock="Bottom" Background="Black">
 				<TabItem x:Name="GoogleTabItem" Header="谷歌">
