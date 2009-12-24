@@ -57,6 +57,9 @@ namespace SmartMe.Windows
 
         // Detailed Window
         private DetailedInfoWindow _detailedInfoWindow = new DetailedInfoWindow();
+
+        // History Window
+        private HistoryWindow _historyWindow = new HistoryWindow();
         #endregion
 
         public MainWindow()
@@ -781,16 +784,37 @@ namespace SmartMe.Windows
 			App.Logger.Message(str);
         }
 		#endregion for Debug
-		
-        private void ContextMenuImage_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-			this.Close();
-        	//this.ContextMenuImage.ContextMenu.Visibility = Visibility.Visible;
-        }
 
         private void MinimizeImage_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
         	// TODO: minimize to bar!
         }
-	}
+
+        #region HistoryWindow
+
+        private void ShowHistoryWindowMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            ShowHistoryWindow(this.Top, this.Left);
+        }
+
+        private void ShowHistoryWindow(double top, double left)
+        {
+            _historyWindow.Left = left;
+            _historyWindow.Top = top;
+            MessageBox.Show("" + left + "," + top);
+            this.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Render, new Action(
+                delegate()
+                {
+                    _historyWindow.Show();
+                })
+            );
+        }
+
+        #endregion
+
+        private void ExitMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+    }
 }
