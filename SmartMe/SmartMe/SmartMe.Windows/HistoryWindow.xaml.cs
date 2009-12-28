@@ -35,7 +35,7 @@ namespace SmartMe.Windows
 			this.InitializeComponent();
 			
 			// Insert code required on object creation below this point.
-            InitializeHistoryManager();
+            //InitializeHistoryManager();
         }
 
         #endregion
