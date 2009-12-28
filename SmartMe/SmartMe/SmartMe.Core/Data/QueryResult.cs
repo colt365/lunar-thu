@@ -19,10 +19,17 @@ namespace SmartMe.Core.Data
 		#endregion
         
         #region constructor
+
+        public QueryResult()
+        {
+            // do nothing
+        }
+
         public QueryResult(InputQuery query)
         {
             _query = query;
         }
+
         #endregion
 
         #region properties

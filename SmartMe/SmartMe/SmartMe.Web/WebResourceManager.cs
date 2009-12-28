@@ -159,6 +159,7 @@ namespace SmartMe.Web
                     if (_result.Items.Count == _searchEngineList.Count)
                     {
                         _handler.OnResultCompleted(_result);
+                        _pipeline.OnQueryResultReady(_result);
                     }
 
                 }
