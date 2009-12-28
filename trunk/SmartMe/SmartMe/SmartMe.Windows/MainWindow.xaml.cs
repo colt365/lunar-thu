@@ -48,6 +48,7 @@ namespace SmartMe.Windows
 
         WebResourceManager _webResourceManager = null;
         InputQueryRecordManager _inputQueryRecordManager = null;
+        QueryResultRecordManager _queryResultRecordManager = null;
         Pipeline _pipeline = null;
         QueryResultHandler _resultHandler = null;
 
@@ -103,10 +104,10 @@ namespace SmartMe.Windows
             //    "data\\query.xml", InputQueryObsoletedTime);
             _pipeline.InputTextSubscriberManager.AddSubscriber(_inputQueryRecordManager);
 
-            _historyWindow.Pipeline = _pipeline;
-            _historyWindow.QueryResultHandler = _resultHandler;
-            _historyWindow.ChangeText = new ChangeString(ChangeInputText);
-            _pipeline.QueryResultSubscriberManager.AddSubscriber(_historyWindow.QueryResultRecordManager);
+            _queryResultRecordManager =
+                new QueryResultRecordManager(
+                    "data", new TimeSpan(30, 0, 0, 0));
+            _pipeline.QueryResultSubscriberManager.AddSubscriber(_queryResultRecordManager);            
         }
 
         
@@ -824,8 +825,13 @@ namespace SmartMe.Windows
 
         private void ShowHistoryWindow(double top, double left)
         {
+            _historyWindow = new HistoryWindow();
             _historyWindow.Left = left;
             _historyWindow.Top = top;
+            _historyWindow.Pipeline = _pipeline;
+            _historyWindow.QueryResultHandler = _resultHandler;
+            _historyWindow.QueryResultRecordManager = _queryResultRecordManager;
+            _historyWindow.ChangeText = new ChangeString(ChangeInputText);
             this.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Render, new Action(
                 delegate()
                 {

@@ -49,7 +49,5 @@ namespace SmartMe.Windows
             Ok = false;
             this.Close();
         }
-	}
-
- 
+	} 
 }
