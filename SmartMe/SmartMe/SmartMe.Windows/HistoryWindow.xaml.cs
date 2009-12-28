@@ -132,7 +132,9 @@ namespace SmartMe.Windows
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
             // 取消关闭窗口，改为隐藏
-            e.Cancel = true;
+            //e.Cancel = true;   // BUG:  cancel close window event, but resources are unreleased when exit program!
+                                 //   FIXED! TT 09/12/28 21:59
+
             this.Hide();
         }
 
