@@ -54,6 +54,13 @@ namespace SmartMe.Windows
         private Object _lastInputTimeLock = new Object();
 		private string _lastQueryText = "";
 
+        private TimeSpan _defaultInputQueryObsoletedTime = new TimeSpan(2, 0, 0, 0);
+
+        public TimeSpan InputQueryObsoletedTime
+        {
+            get;
+            set;
+        }
 
         // Detailed Window
         private DetailedInfoWindow _detailedInfoWindow = new DetailedInfoWindow();
@@ -88,9 +95,13 @@ namespace SmartMe.Windows
             _webResourceManager.AddSearchEngine(new SogouSearchEngine());
             _webResourceManager.AddSearchEngine(new WikipediaSearchEngine());
 
+            InputQueryObsoletedTime = _defaultInputQueryObsoletedTime;
             _inputQueryRecordManager = new InputQueryRecordManager(
-                "data\\query.xml", new TimeSpan(2, 0, 0, 0));           // TODO: BUG! Magic Number defeat! by TT
+                "data\\query.xml", InputQueryObsoletedTime);
             _pipeline.InputTextSubscriberManager.AddSubscriber(_inputQueryRecordManager);
+
+            _historyWindow.Pipeline = _pipeline;
+            _pipeline.QueryResultSubscriberManager.AddSubscriber(_historyWindow.QueryResultRecordManager);
         }
 
         
@@ -801,10 +812,10 @@ namespace SmartMe.Windows
         {
             _historyWindow.Left = left;
             _historyWindow.Top = top;
-            MessageBox.Show("" + left + "," + top);
             this.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Render, new Action(
                 delegate()
                 {
+                    _historyWindow.LoadHistoryRecord();
                     _historyWindow.Show();
                 })
             );

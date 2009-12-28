@@ -12,29 +12,43 @@ namespace SmartMe.Core.Pipeline
     public interface IPipeline
     {
         #region methods
+
         /// <summary>
         /// 准备好了输入数据
         /// </summary>
-        /// <param name="text"></param>
+        /// <param name="text">输入</param>
         void OnInputTextReady(InputQuery text);
 
         /// <summary>
         /// 准备好了新的查询项
         /// </summary>
-        /// <param name="item"></param>
+        /// <param name="item">查询项</param>
         void OnQueryResultItemReady(IQueryResultItem item);
 
         /// <summary>
         /// 取消了输入数据
         /// </summary>
-        /// <param name="text"></param>
+        /// <param name="text">输入</param>
         void OnInputTextCanceled(InputQuery text);
 
         /// <summary>
         /// 取消了查询结果
         /// </summary>
-        /// <param name="result"></param>
+        /// <param name="result">结果</param>
         void OnQueryResultCanceled(QueryResult result);
+
+        /// <summary>
+        /// 准备好查询结果
+        /// </summary>
+        /// <param name="result">结果</param>
+        void OnQueryResultReady(QueryResult result);
+
+        /// <summary>
+        /// 取消了查询项
+        /// </summary>
+        /// <param name="item">查询项</param>
+        void OnQueryResultItemCanceled(IQueryResultItem item);
+
         #endregion
 
 

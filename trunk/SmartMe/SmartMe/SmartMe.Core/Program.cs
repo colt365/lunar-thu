@@ -11,7 +11,8 @@ namespace SmartMe.Core
     {
         public static void Main(string[] args)
         {
-            InputQueryRecordManagerTest.Test();
+            //InputQueryRecordManagerTest.Test();
+            QueryResultRecordManagerTest.Test();
             //XMLTest.Test();
         }
     }

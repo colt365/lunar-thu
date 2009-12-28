@@ -27,6 +27,7 @@ namespace SmartMe.Core.Pipeline
         #endregion
 
         #region properties
+
         /// <summary>
         /// 订阅了输入消息的集合
         /// </summary>
@@ -39,7 +40,7 @@ namespace SmartMe.Core.Pipeline
         }
 
         /// <summary>
-        /// 订阅了搜索结果的集合
+        /// 订阅了搜索项的集合
         /// </summary>
         public ISubScriberManager QueryResultItemSubscriberManager
         {
@@ -48,19 +49,44 @@ namespace SmartMe.Core.Pipeline
                 return _queryResultItemSubscriberManager;
             }
         }
+
+        /// <summary>
+        /// 订阅了搜索结果的集合
+        /// </summary>
+        public ISubScriberManager QueryResultSubscriberManager
+        {
+            get
+            {
+                return _queryResultSubscriberManager;
+            }
+        }
+
         #endregion
 
         #region methods
+
+        #region IPipeline Members
+
         public void OnInputTextReady(InputQuery text)
         {
-            List<Pipe> newPipes = _inputTextSubscriberManager.NotifyAll(text);
+            List<Pipe> newPipes =
+                _inputTextSubscriberManager.NotifyAll(text);
             // Assert(newPipes != null)
             _inputTextPipes.AddRange(newPipes);
         }
 
+        public void OnQueryResultReady(QueryResult result)
+        {
+            List<Pipe> newPipes =
+                _queryResultSubscriberManager.NotifyAll(result);
+            //Assert(newPipes != null)
+            _queryResultPipes.AddRange(newPipes);
+        }
+
         public void OnQueryResultItemReady(IQueryResultItem item)
         {
-            List<Pipe> newPipes = _queryResultItemSubscriberManager.NotifyAll(item);
+            List<Pipe> newPipes =
+                _queryResultItemSubscriberManager.NotifyAll(item);
             // Assert(newPipes != null)
             _queryResultItemPipes.AddRange(newPipes);
         }
@@ -86,6 +112,20 @@ namespace SmartMe.Core.Pipeline
                 }
             }
         }
+
+        public void OnQueryResultItemCanceled(IQueryResultItem item)
+        {
+            foreach (Pipe pipe in _queryResultItemPipes)
+            {
+                if (pipe.Message == item)
+                {
+                    pipe.CancelMessage();
+                }
+            }
+        }
+
+        #endregion
+
         #endregion
     }
 }

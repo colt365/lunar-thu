@@ -12,7 +12,7 @@ namespace SmartMe.Core.Record
         #region methods
         void appendRecord(QueryResult result, DateTime date);
         void modifyRecord(QueryResult result, DateTime date);
-        List<QueryResult> getAllRecords(DateTime beginDate, DateTime endDate);
+        List<QueryResult> getResultList(DateTime beginDate, DateTime endDate);
         #endregion
     }
 }

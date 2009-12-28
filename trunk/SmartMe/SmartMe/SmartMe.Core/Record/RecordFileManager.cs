@@ -61,20 +61,35 @@ namespace SmartMe.Core.Record
 
         public object ReadFromFile(string filePath)
         {
-            StreamReader fileReader = new StreamReader(filePath);
             try
             {
-                object result = _xmlSerializer.Deserialize(fileReader);
-                return result;
+                StreamReader fileReader = new StreamReader(filePath);
+                try
+                {
+                    object result = _xmlSerializer.Deserialize(fileReader);
+                    return result;
+                }
+                catch (InvalidOperationException e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
+                finally
+                {
+                    fileReader.Close();
+                }
             }
-            catch (InvalidOperationException e)
+            catch (FileNotFoundException)
             {
-                Console.WriteLine(e);
-                throw;
+                return null;
             }
-            finally
+            catch (DirectoryNotFoundException)
             {
-                fileReader.Close();
+                return null;
+            }
+            catch (IOException)
+            {
+                return null;
             }
         }
 

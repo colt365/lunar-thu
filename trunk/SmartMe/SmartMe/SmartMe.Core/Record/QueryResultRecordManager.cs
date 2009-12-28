@@ -5,21 +5,21 @@ using System.Text;
 using System.IO;
 
 using SmartMe.Core.Data;
+using SmartMe.Core.Pipeline;
 
 namespace SmartMe.Core.Record
 {
-    public class SearchEngineResultRecordManager : IRecordManager
+    public class QueryResultRecordManager : IRecordManager, ISubScriber
     {
         #region fields
 
         private IRecordFileManager _fileManager =
-            new RecordFileManager(typeof(SearchEngineResult));
-
-        private TimeSpan _obsoletedDuration;
+            new RecordFileManager(typeof(List<QueryResult>));
 
         private string _recordPath;
 
-        private List<SearchEngineResult> _resultList = new List<SearchEngineResult>();
+        private List<QueryResult> _resultList =
+            new List<QueryResult>();
 
         #endregion
 
@@ -30,13 +30,11 @@ namespace SmartMe.Core.Record
         /// </summary>
         /// <param name="recordPath">记录根路径</param>
         /// <param name="obsoletedTimeDuration">超期时间</param>
-        public SearchEngineResultRecordManager(
+        public QueryResultRecordManager(
             string recordPath, TimeSpan obsoletedTimeDuration)
         {
             ObsoletedTimeDuration = obsoletedTimeDuration;
             RecordPath = recordPath;
-            //LoadQuery();
-            //CleanObsoletedRecord();
         }
 
         #endregion
@@ -61,7 +59,7 @@ namespace SmartMe.Core.Record
         /// <summary>
         /// 所有查询结果
         /// </summary>
-        public List<SearchEngineResult> ResultList
+        public List<QueryResult> ResultList
         {
             get
             {
@@ -85,6 +83,7 @@ namespace SmartMe.Core.Record
         #endregion
 
         #region methods
+
         #region IRecordManager Members
 
         public void appendRecord(QueryResult result, DateTime date)
@@ -109,10 +108,10 @@ namespace SmartMe.Core.Record
             }
         }
 
-        public List<QueryResult> getAllRecords(DateTime beginDate, DateTime endDate)
+        public List<QueryResult> getResultList(DateTime beginDate, DateTime endDate)
         {
             List<QueryResult> resultList = new List<QueryResult>();
-            for (DateTime date = beginDate; date < endDate; date = date.AddDays(1))
+            for (DateTime date = beginDate; date <= endDate; date = date.AddDays(1))
             {
                 List<QueryResult> results = getResultList(date);
                 resultList.AddRange(results);
@@ -122,15 +121,21 @@ namespace SmartMe.Core.Record
 
         private void setResultList(DateTime date, List<QueryResult> resultList)
         {
+            string directoryPath = getDirectoryPath(date);
             string filePath = getFilePath(date);
+
+            if (!Directory.Exists(directoryPath))
+            {
+                Directory.CreateDirectory(directoryPath);
+            }
             _fileManager.SaveToFile(resultList, filePath);
-            throw new NotImplementedException();
         }
 
         private List<QueryResult> getResultList(DateTime date)
         {
             string filePath = getFilePath(date);
-            List<QueryResult> resultList = _fileManager.ReadFromFile(filePath) as List<QueryResult>;
+            List<QueryResult> resultList =
+                _fileManager.ReadFromFile(filePath) as List<QueryResult>;
             if (resultList == null)
             {
                 return new List<QueryResult>();
@@ -139,16 +144,38 @@ namespace SmartMe.Core.Record
             {
                 return resultList;
             }
-            throw new NotImplementedException();
         }
 
         private string getFilePath(DateTime date)
         {
+            return getDirectoryPath(date) + "\\default.xml";
+        }
+
+        private string getDirectoryPath(DateTime date)
+        {
             string dateName = date.Year + "-" + date.Month + "-" + date.Day;
-            return "data\\" + dateName + "\\default.xml";
+            return RecordPath + "\\" + dateName;
         }
 
         #endregion
+
+        #region ISubScriber Members
+
+        public void Handle(IMessage message)
+        {
+            if (message.MessageType == MessageType.QueryResult)
+            {
+                QueryResult result = message as QueryResult;
+                if (result == null)
+                {
+                    return;
+                }
+                appendRecord(result, DateTime.Today);
+            }
+        }
+
+        #endregion
+
         #endregion
     }
 }
