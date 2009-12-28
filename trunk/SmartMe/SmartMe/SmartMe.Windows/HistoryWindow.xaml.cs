@@ -137,5 +137,20 @@ namespace SmartMe.Windows
         }
 
         #endregion
+
+
+        #region 控制历史记录
+
+        private void HistoryTreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            InputQuery newQuery = e.NewValue as InputQuery;
+            if (newQuery == null)
+            {
+                return;
+            }
+            Pipeline.OnInputTextReady(newQuery);
+        }
+
+        #endregion
     }
 }
