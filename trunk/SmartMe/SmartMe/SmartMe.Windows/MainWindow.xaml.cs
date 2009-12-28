@@ -80,6 +80,7 @@ namespace SmartMe.Windows
 		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
         	_detailedInfoWindow.Close();
+			_historyWindow.Close();
         }
 
         private void CreateListeners()
