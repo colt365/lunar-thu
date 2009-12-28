@@ -96,6 +96,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="ConfigDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="DetailedInfoWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -138,6 +142,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConfigDialog.xaml.cs">
+      <DependentUpon>ConfigDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DetailedInfoWindow.xaml.cs">
       <DependentUpon>DetailedInfoWindow.xaml</DependentUpon>
     </Compile>

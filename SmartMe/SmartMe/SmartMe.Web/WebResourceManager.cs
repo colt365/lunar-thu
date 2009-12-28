@@ -66,6 +66,7 @@ namespace SmartMe.Web
         #endregion
 
         #region nested
+
         private class SearchAndReturnPipe
         {
             #region fields
@@ -84,6 +85,7 @@ namespace SmartMe.Web
                 _searchEngine = engine;
                 _inputQuery = query;
                 _thread = new Thread(new ThreadStart(SearchAndReturn));
+                _thread.IsBackground = true;
                 _thread.Start();
             }
             #endregion
@@ -105,6 +107,7 @@ namespace SmartMe.Web
             }
             #endregion
         }
+
         #endregion
 
         #region properties
@@ -202,6 +205,7 @@ namespace SmartMe.Web
             }
         }
         #endregion
+
         #endregion
     }
 }

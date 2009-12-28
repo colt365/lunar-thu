@@ -13,9 +13,12 @@ using System.Windows.Shapes;
 using SmartMe.Core.Record;
 using SmartMe.Core.Data;
 using SmartMe.Core.Pipeline;
+using SmartMe.Web;
 
 namespace SmartMe.Windows
 {
+    public delegate void ChangeString(string text);
+
 	/// <summary>
 	/// Interaction logic for HistoryWindow.xaml
 	/// </summary>
@@ -37,6 +40,44 @@ namespace SmartMe.Windows
 
         #endregion
 
+        #region nested
+
+        /// <summary>
+        /// 一个辅助类，用来在TreeView中显示
+        /// </summary>
+        class DisplayQueryResult
+        {
+            #region constructors
+
+            public DisplayQueryResult(QueryResult queryResult)
+            {
+                QueryResult = queryResult;
+            }
+
+            #endregion
+
+            #region properties
+
+            public QueryResult QueryResult
+            {
+                get;
+                set;
+            }
+
+            #endregion
+
+            #region methods
+
+            public override string ToString()
+            {
+                return QueryResult.Query.ToString();
+            }
+
+            #endregion
+        }
+
+        #endregion
+
         #region properties
 
         /// <summary>
@@ -48,7 +89,28 @@ namespace SmartMe.Windows
             set;
         }
 
+        /// <summary>
+        /// 通讯管道
+        /// </summary>
         public Pipeline Pipeline
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// 搜索引擎控制
+        /// </summary>
+        public IQueryResultHandler QueryResultHandler
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// 改变文本
+        /// </summary>
+        public ChangeString ChangeText
         {
             get;
             set;
@@ -58,7 +120,7 @@ namespace SmartMe.Windows
 
         #region 读进历史记录
 
-        internal void InitializeHistoryManager()
+        private void InitializeHistoryManager()
         {
             QueryResultRecordManager =
                 new QueryResultRecordManager(
@@ -71,29 +133,25 @@ namespace SmartMe.Windows
             HistoryTreeView.Items.Clear();
 
             // Today
-            TreeViewItem todayRecordItem = GetRootItem(DateTime.Today, DateTime.Today);
+            TreeViewItem todayRecordItem = GetRootItem(
+                DateTime.Today, DateTime.Today);
             todayRecordItem.Header = "今天";
             HistoryTreeView.Items.Add(todayRecordItem);
 
             // Yesterday
             DateTime yesterday = DateTime.Today - new TimeSpan(1, 0, 0, 0);
-            TreeViewItem yesterdayRecordItem = GetRootItem(yesterday, yesterday);
+            TreeViewItem yesterdayRecordItem =
+                GetRootItem(yesterday, yesterday);
             yesterdayRecordItem.Header = "昨天";
             HistoryTreeView.Items.Add(yesterdayRecordItem);
 
             // 7 days
             DateTime sevenDaysAgo = DateTime.Today - new TimeSpan(7, 0, 0, 0);
             DateTime twoDaysAgo = DateTime.Today - new TimeSpan(2, 0, 0, 0);
-            TreeViewItem sevenDaysRecordItem = GetRootItem(sevenDaysAgo, twoDaysAgo);
-            sevenDaysRecordItem.Header = "7天内";
+            TreeViewItem sevenDaysRecordItem =
+                GetRootItem(sevenDaysAgo, twoDaysAgo);
+            sevenDaysRecordItem.Header = "过去7天";
             HistoryTreeView.Items.Add(sevenDaysRecordItem);
-
-            // 30 days
-            DateTime eightDaysAgo = DateTime.Today - new TimeSpan(8, 0, 0, 0);
-            DateTime thirtyDaysAgo = DateTime.Today - new TimeSpan(30, 0, 0, 0);
-            TreeViewItem thirtyDaysRecordItem = GetRootItem(thirtyDaysAgo, eightDaysAgo);
-            thirtyDaysRecordItem.Header = "30天内";
-            HistoryTreeView.Items.Add(thirtyDaysRecordItem);
         }
 
         /// <summary>
@@ -106,7 +164,7 @@ namespace SmartMe.Windows
         {
             TreeViewItem rootItem = new TreeViewItem();
             List<QueryResult> resultList =
-                QueryResultRecordManager.getResultList(startDate, endDate);
+                QueryResultRecordManager.GetResultList(startDate, endDate);
             foreach (QueryResult result in resultList)
             {
                 object resultItem = GetResultItem(result);
@@ -122,10 +180,7 @@ namespace SmartMe.Windows
         /// <returns>对应的一项</returns>
         private object GetResultItem(QueryResult result)
         {
-            //TreeViewItem resultItem = new TreeViewItem();
-            // To-do: Show the result
-            InputQuery resultItem = result.Query;
-            
+            DisplayQueryResult resultItem = new DisplayQueryResult(result);
             return resultItem;
         }
 
@@ -143,14 +198,83 @@ namespace SmartMe.Windows
 
         #region 控制历史记录
 
-        private void HistoryTreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        /// <summary>
+        /// 清除所有历史记录
+        /// </summary>
+        private void CleanHistoryRecord()
         {
-            InputQuery newQuery = e.NewValue as InputQuery;
-            if (newQuery == null)
+            QueryResultRecordManager.RemoveAllResultList();
+        }
+
+        /// <summary>
+        /// 清除某天之前（不包括这一天）的历史记录
+        /// </summary>
+        /// <param name="date">某一天</param>
+        private void CleanHistoryRecord(DateTime date)
+        {
+            QueryResultRecordManager.RemoveResultListFromDate(date);
+        }
+
+        /// <summary>
+        /// 显示历史记录
+        /// </summary>
+        /// <param name="result">记录</param>
+        private void ShowHistoryResult(QueryResult result)
+        {
+            if (ChangeText != null)
+            {
+                ChangeText(result.Query.ToString());
+            }
+            QueryResultHandler.OnResultNew(result);
+            QueryResultHandler.OnResultUpdate(result);
+            QueryResultHandler.OnResultCompleted(result);
+        }
+
+        #endregion
+
+        #region 响应消息
+
+        private void HistoryTreeView_SelectedItemChanged(
+            object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            DisplayQueryResult displayQueryResult =
+                e.NewValue as DisplayQueryResult;
+            if (displayQueryResult == null)
             {
                 return;
             }
-            Pipeline.OnInputTextReady(newQuery);
+            // 显示历史记录结果
+            ShowHistoryResult(displayQueryResult.QueryResult);
+
+            // 显示搜索引擎结果
+            // Pipeline.OnInputTextReady(newQuery);
+        }
+
+        private void CleanAllRecordsMenuItem_Click(
+            object sender, RoutedEventArgs e)
+        {
+            CleanHistoryRecord();
+            LoadHistoryRecord();
+        }
+
+        private void CleanRecordsFromDateMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            // TO-DO: Add a dialog to let user choose instead of the magic number
+            ConfigDialog dialog = new ConfigDialog();
+            dialog.ShowDialog();
+            if (dialog.Ok)
+            {
+                string timeSpanText = dialog.TimeSpanText;
+                int day = int.Parse(timeSpanText);
+                TimeSpan timeSpan = new TimeSpan(day, 0, 0, 0);
+                CleanHistoryRecord(DateTime.Today - timeSpan);
+                LoadHistoryRecord();
+            }
+        }
+
+        private void RefreshMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            LoadHistoryRecord();
         }
 
         #endregion
