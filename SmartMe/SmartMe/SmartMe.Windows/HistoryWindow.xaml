@@ -61,12 +61,7 @@
 			</MenuItem>
 		</Menu>
 		<Grid x:Name="Grid" Margin="0,-197,0,-23" d:LayoutOverrides="Width" Background="White">
-            <TreeView x:Name="HistoryTreeView" HorizontalAlignment="Left" VerticalAlignment="Top" Width="624" Height="441">
-                <TreeViewItem Header="Today">
-                </TreeViewItem>
-                <TreeViewItem Header="Yesterday">
-                </TreeViewItem>
-            </TreeView>
+            <TreeView x:Name="HistoryTreeView" HorizontalAlignment="Left" VerticalAlignment="Top" Width="624" Height="441" SelectedItemChanged="HistoryTreeView_SelectedItemChanged"/>
         </Grid>
 	</UniformGrid>
 </Window>
