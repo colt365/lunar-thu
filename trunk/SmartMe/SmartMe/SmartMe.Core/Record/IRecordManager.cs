@@ -10,9 +10,29 @@ namespace SmartMe.Core.Record
     public interface IRecordManager
     {
         #region methods
-        void appendRecord(QueryResult result, DateTime date);
-        void modifyRecord(QueryResult result, DateTime date);
-        List<QueryResult> getResultList(DateTime beginDate, DateTime endDate);
+
+        /// <summary>
+        /// 增加一条历史记录
+        /// </summary>
+        /// <param name="result">增加的记录</param>
+        /// <param name="date">增加的日期</param>
+        void AppendRecord(QueryResult result, DateTime date);
+
+        /// <summary>
+        /// 修改一条历史记录
+        /// </summary>
+        /// <param name="result">修改的记录</param>
+        /// <param name="date">修改的日期</param>
+        void ModifyRecord(QueryResult result, DateTime date);
+
+        /// <summary>
+        /// 得到一段时间的历史记录
+        /// </summary>
+        /// <param name="beginDate">开始时间</param>
+        /// <param name="endDate">结束时间</param>
+        /// <returns>得到的历史记录</returns>
+        List<QueryResult> GetResultList(DateTime beginDate, DateTime endDate);
+
         #endregion
     }
 }

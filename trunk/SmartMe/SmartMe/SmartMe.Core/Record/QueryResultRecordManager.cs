@@ -86,16 +86,16 @@ namespace SmartMe.Core.Record
 
         #region IRecordManager Members
 
-        public void appendRecord(QueryResult result, DateTime date)
+        public void AppendRecord(QueryResult result, DateTime date)
         {
-            List<QueryResult> resultList = getResultList(date);
+            List<QueryResult> resultList = GetResultList(date);
             resultList.Add(result);
-            setResultList(date, resultList);
+            SetResultList(date, resultList);
         }
 
-        public void modifyRecord(QueryResult result, DateTime date)
+        public void ModifyRecord(QueryResult result, DateTime date)
         {
-            List<QueryResult> resultList = getResultList(date);
+            List<QueryResult> resultList = GetResultList(date);
             foreach (QueryResult existResult in resultList)
             {
                 if (result.Query.Equals(result.Query))
@@ -108,21 +108,88 @@ namespace SmartMe.Core.Record
             }
         }
 
-        public List<QueryResult> getResultList(DateTime beginDate, DateTime endDate)
+        public List<QueryResult> GetResultList(DateTime beginDate, DateTime endDate)
         {
             List<QueryResult> resultList = new List<QueryResult>();
             for (DateTime date = beginDate; date <= endDate; date = date.AddDays(1))
             {
-                List<QueryResult> results = getResultList(date);
+                List<QueryResult> results = GetResultList(date);
                 resultList.AddRange(results);
             }
             return resultList;
         }
 
-        private void setResultList(DateTime date, List<QueryResult> resultList)
+        /// <summary>
+        /// 移除指定时间内的结果项
+        /// </summary>
+        /// <param name="beginDate">开始日期</param>
+        /// <param name="endDate">终结日期</param>
+        public void RemoveResultList(DateTime beginDate, DateTime endDate)
         {
-            string directoryPath = getDirectoryPath(date);
-            string filePath = getFilePath(date);
+            for (DateTime date = beginDate; date <= endDate; date = date.AddDays(1))
+            {
+                RemoveResultList(date);
+            }            
+        }
+
+        /// <summary>
+        /// 移除指定天份的结果项
+        /// </summary>
+        /// <param name="date">指定的天份</param>
+        public void RemoveResultList(DateTime date)
+        {
+            string path = GetDirectoryPath(date);
+            if (Directory.Exists(path))
+            {
+                Directory.Delete(path, true);
+            }
+        }
+
+        /// <summary>
+        /// 移除所有记录
+        /// </summary>
+        public void RemoveAllResultList()
+        {
+            string[] allRecordDirectories = Directory.GetDirectories(RecordPath);
+            foreach (string directory in allRecordDirectories)
+            {
+                string dateString = Path.GetFileName(directory);
+                DateTime date = GetDate(dateString);
+                if (date == DateTime.MaxValue)
+                {
+                    continue;
+                }
+                Directory.Delete(directory, true);
+            }
+        }
+
+        /// <summary>
+        /// 移除某天之前的记录
+        /// </summary>
+        /// <param name="dueDate">保留下来的第一天记录</param>
+        public void RemoveResultListFromDate(DateTime dueDate)
+        {
+            string[] allRecordDirectories = Directory.GetDirectories(RecordPath);
+            foreach (string directory in allRecordDirectories)
+            {
+                string dateString = Path.GetFileName(directory);
+                DateTime date = GetDate(dateString);
+                if (date == DateTime.MaxValue)
+                {
+                    continue;
+                }
+                if (date >= dueDate)
+                {
+                    continue;
+                }
+                Directory.Delete(directory, true);
+            }
+        }
+
+        private void SetResultList(DateTime date, List<QueryResult> resultList)
+        {
+            string directoryPath = GetDirectoryPath(date);
+            string filePath = GetFilePath(date);
 
             if (!Directory.Exists(directoryPath))
             {
@@ -131,9 +198,9 @@ namespace SmartMe.Core.Record
             _fileManager.SaveToFile(resultList, filePath);
         }
 
-        private List<QueryResult> getResultList(DateTime date)
+        private List<QueryResult> GetResultList(DateTime date)
         {
-            string filePath = getFilePath(date);
+            string filePath = GetFilePath(date);
             List<QueryResult> resultList =
                 _fileManager.ReadFromFile(filePath) as List<QueryResult>;
             if (resultList == null)
@@ -146,15 +213,30 @@ namespace SmartMe.Core.Record
             }
         }
 
-        private string getFilePath(DateTime date)
+        private string GetFilePath(DateTime date)
         {
-            return getDirectoryPath(date) + "\\default.xml";
+            return GetDirectoryPath(date) + "\\default.xml";
         }
 
-        private string getDirectoryPath(DateTime date)
+        private string GetDirectoryPath(DateTime date)
         {
             string dateName = date.Year + "-" + date.Month + "-" + date.Day;
             return RecordPath + "\\" + dateName;
+        }
+
+        public static DateTime GetDate(string dateTimeString)
+        {
+            DateTime date = DateTime.MaxValue;
+            string[] numbers = dateTimeString.Split(new char[] { '-' });
+            if (numbers.Length != 3)
+            {
+                return date;
+            }
+            int year = int.Parse(numbers[0]);
+            int month = int.Parse(numbers[1]);
+            int day = int.Parse(numbers[2]);
+            date = new DateTime(year, month, day);
+            return date;
         }
 
         #endregion
@@ -170,7 +252,7 @@ namespace SmartMe.Core.Record
                 {
                     return;
                 }
-                appendRecord(result, DateTime.Today);
+                AppendRecord(result, DateTime.Today);
             }
         }
 

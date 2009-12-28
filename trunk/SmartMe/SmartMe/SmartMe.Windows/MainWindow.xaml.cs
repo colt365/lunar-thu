@@ -44,6 +44,8 @@ namespace SmartMe.Windows
             set { _bindingString = value; }
         }
 
+        private bool _hasInputText = false;
+
         WebResourceManager _webResourceManager = null;
         InputQueryRecordManager _inputQueryRecordManager = null;
         Pipeline _pipeline = null;
@@ -97,11 +99,13 @@ namespace SmartMe.Windows
             _webResourceManager.AddSearchEngine(new WikipediaSearchEngine());
 
             InputQueryObsoletedTime = _defaultInputQueryObsoletedTime;
-            _inputQueryRecordManager = new InputQueryRecordManager(
-                "data\\query.xml", InputQueryObsoletedTime);
+            //_inputQueryRecordManager = new InputQueryRecordManager(
+            //    "data\\query.xml", InputQueryObsoletedTime);
             _pipeline.InputTextSubscriberManager.AddSubscriber(_inputQueryRecordManager);
 
             _historyWindow.Pipeline = _pipeline;
+            _historyWindow.QueryResultHandler = _resultHandler;
+            _historyWindow.ChangeText = new ChangeString(ChangeInputText);
             _pipeline.QueryResultSubscriberManager.AddSubscriber(_historyWindow.QueryResultRecordManager);
         }
 
@@ -480,20 +484,27 @@ namespace SmartMe.Windows
                     this.DoDelayedQuery(trimedText, InputQueryType.Text, milliSecondsTimedOut);
                 };
                 Thread thread = new Thread(threadStart);
+                thread.IsBackground = true;
                 thread.Start();
             }
         }
         private void InputTextBox_LostKeyboardFocus(object sender, System.Windows.Input.KeyboardFocusChangedEventArgs e)
 		{
-			if (InputTextBox.Text == "")
-			{
-				InputTextBox.Text = "搜索栏";
-				InputTextBox.Opacity = 0.5;
-			}
+            if (InputTextBox.Text == "")
+            {
+                InputTextBox.Text = "搜索栏";
+                InputTextBox.Opacity = 0.5;
+                _hasInputText = false;
+            }
+            else
+            {
+                _hasInputText = true;
+            }
 		}
 		private void InputTextBox_GotKeyboardFocus(object sender, System.Windows.Input.KeyboardFocusChangedEventArgs e)
 		{
-			if (InputTextBox.Text == "搜索栏")
+			//if (InputTextBox.Text == "搜索栏")
+            if (!_hasInputText)
 			{
 				InputTextBox.Text = "";
 			}
@@ -575,6 +586,7 @@ namespace SmartMe.Windows
         #endregion 结果栏
 
         #region QueryResultHandler
+
         class QueryResultHandler : IQueryResultHandler
         {
             private QueryResult _currentQueryResult = null;
@@ -774,6 +786,7 @@ namespace SmartMe.Windows
             }
             #endregion private
         }
+
         #endregion QueryResultHandler
 
         #region for Debug
@@ -826,7 +839,22 @@ namespace SmartMe.Windows
 
         private void ExitMenuItem_Click(object sender, RoutedEventArgs e)
         {
+            _detailedInfoWindow.Close();
+            _historyWindow.Close();
             this.Close();
+        }
+
+        public void ChangeInputText(string text)
+        {
+            InputTextBox.Text = text;
+        }
+
+        private void SearchImage_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                DoQuery(InputTextBox.Text, InputQueryType.Text);
+            }
         }
     }
 }
