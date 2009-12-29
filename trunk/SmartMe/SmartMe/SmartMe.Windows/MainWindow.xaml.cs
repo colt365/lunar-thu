@@ -69,7 +69,7 @@ namespace SmartMe.Windows
         private DetailedInfoWindow _detailedInfoWindow = new DetailedInfoWindow();
 
         // History Window
-        private HistoryWindow _historyWindow = new HistoryWindow();
+        private HistoryWindow _historyWindow = null;
 
 		// NotifyIcon
         private System.Windows.Forms.NotifyIcon notifyIcon;
@@ -894,6 +894,12 @@ namespace SmartMe.Windows
 
         private void ShowHistoryWindow(double top, double left)
         {
+            if (_historyWindow != null && !_historyWindow.IsClosed) 
+            {
+                // do nothing
+                return;
+            }
+
             _historyWindow = new HistoryWindow();
             _historyWindow.Left = left;
             _historyWindow.Top = top;

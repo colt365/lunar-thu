@@ -79,6 +79,24 @@ namespace SmartMe.Core.Data
             return stringBuilder.ToString();
         }
 
+        public override bool Equals(object obj)
+        {
+            QueryResult result = obj as QueryResult;
+            if (result != null)
+            {
+                return (result.ToString() == this.ToString());
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return ToString().GetHashCode();
+        }
+
         #endregion
     }
 }

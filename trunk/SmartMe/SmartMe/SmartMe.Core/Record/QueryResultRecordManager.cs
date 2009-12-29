@@ -146,6 +146,18 @@ namespace SmartMe.Core.Record
         }
 
         /// <summary>
+        /// 移除一条历史记录
+        /// </summary>
+        /// <param name="result">历史记录</param>
+        /// <param name="date">日期</param>
+        public void RemoveResult(QueryResult result, DateTime date)
+        {
+            List<QueryResult> resultList = GetResultList(date);
+            resultList.Remove(result);
+            SetResultList(date, resultList);
+        }
+
+        /// <summary>
         /// 移除所有记录
         /// </summary>
         public void RemoveAllResultList()
@@ -186,7 +198,7 @@ namespace SmartMe.Core.Record
             }
         }
 
-        private void SetResultList(DateTime date, List<QueryResult> resultList)
+        public void SetResultList(DateTime date, List<QueryResult> resultList)
         {
             string directoryPath = GetDirectoryPath(date);
             string filePath = GetFilePath(date);
@@ -198,7 +210,7 @@ namespace SmartMe.Core.Record
             _fileManager.SaveToFile(resultList, filePath);
         }
 
-        private List<QueryResult> GetResultList(DateTime date)
+        public List<QueryResult> GetResultList(DateTime date)
         {
             string filePath = GetFilePath(date);
             List<QueryResult> resultList =
