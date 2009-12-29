@@ -134,7 +134,7 @@ namespace SmartMe.Windows
             notifyIcon.BalloonTipTitle = "SmartMe";
             notifyIcon.Text = "SmartMe";
             notifyIcon.Icon = new System.Drawing.Icon("icon.ico");
-            notifyIcon.Click += new EventHandler(notifyIcon_DoubleClick);
+            notifyIcon.DoubleClick += new EventHandler(notifyIcon_DoubleClick);
             notifyIcon.ContextMenu = this.contextMenu1;
             ShowTrayIcon(true);	// Always show the icon
         }
