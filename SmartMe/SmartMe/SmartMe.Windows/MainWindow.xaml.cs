@@ -90,8 +90,14 @@ namespace SmartMe.Windows
 
 		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-        	_detailedInfoWindow.Close();
-			_historyWindow.Close();
+            if (_detailedInfoWindow != null)
+            {
+                _detailedInfoWindow.Close();
+            }
+            if (_historyWindow != null)
+            {
+                _historyWindow.Close();
+            }
         }
 
         private void CreateListeners()
@@ -920,8 +926,6 @@ namespace SmartMe.Windows
 
         private void ExitMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            _detailedInfoWindow.Close();
-            _historyWindow.Close();
             notifyIcon.Dispose();
             this.Close();
         }

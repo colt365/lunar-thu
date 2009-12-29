@@ -19,6 +19,15 @@ namespace SmartMe.Windows
     /// </summary>
     public partial class DetailedInfoWindow : Window
     {
+        private bool _isClosed = false;
+        public bool IsClosed
+        {
+            get
+            {
+                return _isClosed;
+            }
+        }
+
 	    private string _linkedUrl = string.Empty;
         public string LinkedUrl
         {
