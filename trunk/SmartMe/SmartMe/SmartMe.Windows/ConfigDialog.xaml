@@ -5,7 +5,7 @@
 	x:Class="SmartMe.Windows.ConfigDialog"
 	x:Name="Window"
 	Title="ConfigDialog"
-	Width="248" Height="140" mc:Ignorable="d">
+	Width="248" Height="140" mc:Ignorable="d" ResizeMode="NoResize">
 
 	<Grid x:Name="LayoutRoot">
 		<Grid.ColumnDefinitions>
