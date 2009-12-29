@@ -202,7 +202,7 @@
 							</StackPanel>
 						</MenuItem.Icon>
 						<MenuItem x:Name="ShowHistoryWindowMenuItem" Click="ShowHistoryWindowMenuItem_Click" Margin="0" Header="历史记录"/>
-						<MenuItem x:Name="ExitMenuItem" Click="ExitMenuItem_Click" Header="退出"/>
+						<MenuItem x:Name="ExitMenuItem" Click="ExitMenuItem_Click" Header="退出" Visibility="Collapsed"/>
 					</MenuItem>
 				</Menu>
 			</Grid>
