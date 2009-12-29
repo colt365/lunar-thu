@@ -66,7 +66,7 @@ namespace SmartMe.Windows
         }
 
         // Detailed Window
-        private DetailedInfoWindow _detailedInfoWindow = new DetailedInfoWindow();
+        private DetailedInfoWindow _detailedInfoWindow = null;
 
         // History Window
         private HistoryWindow _historyWindow = null;
@@ -189,8 +189,17 @@ namespace SmartMe.Windows
 		*/
         private void ShowDetailedInfoWindow(int left, int top)
         {
-            _detailedInfoWindow.Left = left;
-            _detailedInfoWindow.Top = top;
+            if (_detailedInfoWindow != null && !_detailedInfoWindow.IsClosed)
+            {
+                // do nothing
+                //return;
+            }
+            else
+            {
+                _detailedInfoWindow = new DetailedInfoWindow();
+                _detailedInfoWindow.Left = left;
+                _detailedInfoWindow.Top = top;
+            }
             MessageBox.Show(""+ left + "," + top);
             this.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Render, new Action(
                 delegate()

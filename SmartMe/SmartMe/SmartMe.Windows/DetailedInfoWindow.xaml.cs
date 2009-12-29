@@ -65,5 +65,11 @@ namespace SmartMe.Windows
                 );
             }
         }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            _isClosed = true;
+            base.OnClosed(e);
+        }
     }
 }
