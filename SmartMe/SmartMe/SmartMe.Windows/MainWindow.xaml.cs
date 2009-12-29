@@ -73,8 +73,9 @@ namespace SmartMe.Windows
 
 		// NotifyIcon
         private System.Windows.Forms.NotifyIcon notifyIcon;
-        private System.Windows.Forms.ContextMenu contextMenu1;
-        private System.Windows.Forms.MenuItem menuItem1;
+        private System.Windows.Forms.ContextMenu trayContextMenu;
+        private System.Windows.Forms.MenuItem trayExitMenuItem;
+        private System.Windows.Forms.MenuItem menuItem2;
 
         #endregion
 		
@@ -97,6 +98,10 @@ namespace SmartMe.Windows
             if (_historyWindow != null)
             {
                 _historyWindow.Close();
+            }
+            if (notifyIcon != null)
+            {
+                notifyIcon.Dispose();
             }
         }
 
@@ -125,15 +130,16 @@ namespace SmartMe.Windows
         }
 
         private void InitNotifyIcon(){
-            contextMenu1 = new System.Windows.Forms.ContextMenu();
-            menuItem1 = new System.Windows.Forms.MenuItem();
+            trayContextMenu = new System.Windows.Forms.ContextMenu();
+            trayExitMenuItem = new System.Windows.Forms.MenuItem();
+            menuItem2 = new System.Windows.Forms.MenuItem();
 
-            contextMenu1.MenuItems.AddRange(
-                        new System.Windows.Forms.MenuItem[] { menuItem1 });
+            trayContextMenu.MenuItems.AddRange(
+                        new System.Windows.Forms.MenuItem[] { trayExitMenuItem });
 
-            menuItem1.Index = 0;
-            menuItem1.Text = "退出(&E)";
-            menuItem1.Click += new EventHandler(TrayExitMenuItem_Click);
+            trayExitMenuItem.Index = 0;
+            trayExitMenuItem.Text = "退出(&E)";
+            trayExitMenuItem.Click += new EventHandler(TrayExitMenuItem_Click);
 
             notifyIcon = new System.Windows.Forms.NotifyIcon();
             notifyIcon.BalloonTipText = "SmartMe已最小化到托盘，双击此处恢复窗口";
@@ -141,7 +147,7 @@ namespace SmartMe.Windows
             notifyIcon.Text = "SmartMe";
             notifyIcon.Icon = new System.Drawing.Icon("icon.ico");
             notifyIcon.DoubleClick += new EventHandler(notifyIcon_DoubleClick);
-            notifyIcon.ContextMenu = this.contextMenu1;
+            notifyIcon.ContextMenu = this.trayContextMenu;
             ShowTrayIcon(true);	// Always show the icon
         }
         
@@ -893,9 +899,6 @@ namespace SmartMe.Windows
         //TrayExitMenuItem_Click
         private void TrayExitMenuItem_Click(object sender, EventArgs e)
         {
-            _detailedInfoWindow.Close();
-            _historyWindow.Close();
-            notifyIcon.Dispose();
             this.Close();
         }
         #endregion MinimizeToIcon
@@ -935,7 +938,6 @@ namespace SmartMe.Windows
 
         private void ExitMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            notifyIcon.Dispose();
             this.Close();
         }
 
