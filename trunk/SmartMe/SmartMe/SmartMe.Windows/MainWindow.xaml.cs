@@ -70,14 +70,22 @@ namespace SmartMe.Windows
 
         // History Window
         private HistoryWindow _historyWindow = new HistoryWindow();
-        #endregion
 
+		// NotifyIcon
+        private System.Windows.Forms.NotifyIcon m_notifyIcon;
+        private System.Windows.Forms.ContextMenu contextMenu1;
+        private System.Windows.Forms.MenuItem menuItem1;
+
+        #endregion
+		
         public MainWindow()
 		{
 			this.InitializeComponent();
 
 			// Insert code required on object creation below this point.
             CreateListeners();
+            InitNotifyIcon();
+			
 		}
 
 		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -110,6 +118,28 @@ namespace SmartMe.Windows
             _pipeline.QueryResultSubscriberManager.AddSubscriber(_queryResultRecordManager);            
         }
 
+        private void InitNotifyIcon(){
+            contextMenu1 = new System.Windows.Forms.ContextMenu();
+            menuItem1 = new System.Windows.Forms.MenuItem();
+
+            contextMenu1.MenuItems.AddRange(
+                        new System.Windows.Forms.MenuItem[] { menuItem1 });
+
+            menuItem1.Index = 0;
+            menuItem1.Text = "退出(&E)";
+            menuItem1.Click += new EventHandler(TrayExitMenuItem_Click);
+
+
+
+            m_notifyIcon = new System.Windows.Forms.NotifyIcon();
+            m_notifyIcon.BalloonTipText = "SmartMe已最小化到托盘，双击此处恢复窗口";
+            m_notifyIcon.BalloonTipTitle = "SmartMe";
+            m_notifyIcon.Text = "SmartMe";
+            m_notifyIcon.Icon = new System.Drawing.Icon("icon.ico");
+            m_notifyIcon.DoubleClick += new EventHandler(m_notifyIcon_Click);
+            m_notifyIcon.ContextMenu = this.contextMenu1;
+            ShowTrayIcon(true);	// Always show the icon
+        }
         
         #region Hidden
         private void GrabButton_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -811,10 +841,51 @@ namespace SmartMe.Windows
         }
 		#endregion for Debug
 
+        #region MinimizeToIcon
+        private bool firstShowTip = true;
         private void MinimizeImage_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-        	// TODO: minimize to bar!
+            // TODO:here
+            Hide();
+            if (m_notifyIcon != null && firstShowTip)
+            {
+                firstShowTip = false;
+                m_notifyIcon.ShowBalloonTip(2000);
+            }
         }
+
+        private void m_notifyIcon_Click(object sender, EventArgs e)
+        {
+            if (IsVisible)
+            {
+                Hide();
+                if (m_notifyIcon != null && firstShowTip)
+                {
+                    firstShowTip = false;
+                    m_notifyIcon.ShowBalloonTip(2000);
+                }
+            }
+            else
+            {
+                Show();
+            }
+        }
+
+        private void ShowTrayIcon(bool show)
+        {
+            if (m_notifyIcon != null)
+                m_notifyIcon.Visible = show;
+        }
+
+        //TrayExitMenuItem_Click
+        private void TrayExitMenuItem_Click(object sender, EventArgs e)
+        {
+            _detailedInfoWindow.Close();
+            _historyWindow.Close();
+            m_notifyIcon.Dispose();
+            this.Close();
+        }
+        #endregion MinimizeToIcon
 
         #region HistoryWindow
 
@@ -847,6 +918,7 @@ namespace SmartMe.Windows
         {
             _detailedInfoWindow.Close();
             _historyWindow.Close();
+            m_notifyIcon.Dispose();
             this.Close();
         }
 
