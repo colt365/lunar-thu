@@ -26,6 +26,8 @@ namespace SmartMe.Windows
     {
         #region fields
 
+        private bool _isClosed = false;
+
         #endregion
 
         #region constructor
@@ -116,6 +118,17 @@ namespace SmartMe.Windows
             set;
         }
 
+        /// <summary>
+        /// 窗体是否关闭
+        /// </summary>
+        public bool IsClosed
+        {
+            get
+            {
+                return _isClosed;
+            }
+        }
+
         #endregion
 
         #region 读进历史记录
@@ -182,15 +195,6 @@ namespace SmartMe.Windows
         {
             DisplayQueryResult resultItem = new DisplayQueryResult(result);
             return resultItem;
-        }
-
-        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
-        {
-            // 取消关闭窗口，改为隐藏
-            //e.Cancel = true;   // BUG:  cancel close window event, but resources are unreleased when exit program!
-                                 //   FIXED! TT 09/12/28 21:59
-
-            this.Hide();
         }
 
         #endregion
@@ -264,11 +268,20 @@ namespace SmartMe.Windows
             dialog.ShowDialog();
             if (dialog.Ok)
             {
-                string timeSpanText = dialog.TimeSpanText;
-                int day = int.Parse(timeSpanText);
-                TimeSpan timeSpan = new TimeSpan(day, 0, 0, 0);
-                CleanHistoryRecord(DateTime.Today - timeSpan);
-                LoadHistoryRecord();
+                bool? cleanAllRecords = dialog.CleanAllRecordsCheckBox.IsChecked;
+                if (cleanAllRecords == true)
+                {
+                    CleanHistoryRecord();
+                    LoadHistoryRecord();
+                }
+                else
+                {
+                    string timeSpanText = dialog.TimeSpanText;
+                    int day = int.Parse(timeSpanText);
+                    TimeSpan timeSpan = new TimeSpan(day, 0, 0, 0);
+                    CleanHistoryRecord(DateTime.Today - timeSpan);
+                    LoadHistoryRecord();
+                }
             }
         }
 
@@ -278,5 +291,29 @@ namespace SmartMe.Windows
         }
 
         #endregion
+
+        private void RemoveRecordMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            // TO-DO: Remove current record
+            DisplayQueryResult displayQueryResult =
+                HistoryTreeView.SelectedItem as DisplayQueryResult;
+
+            // 选中的不是历史记录，则返回
+            if (displayQueryResult == null)
+            {
+                return;
+            }
+
+            DateTime date = displayQueryResult.QueryResult.Time.Date;
+            QueryResultRecordManager.RemoveResult(
+                displayQueryResult.QueryResult, date);
+            LoadHistoryRecord();
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            _isClosed = true;
+            base.OnClosed(e);
+        }
     }
 }

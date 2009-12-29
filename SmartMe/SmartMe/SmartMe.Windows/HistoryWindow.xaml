@@ -8,26 +8,9 @@
 	Width="640" Height="480" mc:Ignorable="d">
 
 	<Window.Resources>
-		<Storyboard x:Key="FileMenuMouseOverStoryboard">
-			<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="FileMenuItem" Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)">
-				<SplineColorKeyFrame KeyTime="00:00:00" Value="Black"/>
-				<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="White"/>
-			</ColorAnimationUsingKeyFrames>
-			<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="FileMenuItem" Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
-				<SplineColorKeyFrame KeyTime="00:00:00" Value="Transparent"/>
-				<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="#FF535353"/>
-			</ColorAnimationUsingKeyFrames>
-		</Storyboard>
+		<Storyboard x:Key="FileMenuMouseOverStoryboard"/>
 		<Storyboard x:Key="ViewMenuItemMouseOverStoryboard"/>
 	</Window.Resources>
-	<Window.Triggers>
-		<EventTrigger RoutedEvent="Mouse.MouseMove" SourceName="FileMenuItem">
-			<BeginStoryboard x:Name="FileMenuMouseOverStoryboard_BeginStoryboard" Storyboard="{StaticResource FileMenuMouseOverStoryboard}"/>
-		</EventTrigger>
-		<EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="FileMenuItem">
-			<RemoveStoryboard BeginStoryboardName="FileMenuMouseOverStoryboard_BeginStoryboard"/>
-		</EventTrigger>
-	</Window.Triggers>
 	<UniformGrid x:Name="LayoutRoot" Rows="2">
 		<VisualStateManager.CustomVisualStateManager>
 			<ic:ExtendedVisualStateManager/>
@@ -36,11 +19,9 @@
 			<VisualStateGroup x:Name="VisualStateGroup"/>
 		</VisualStateManager.VisualStateGroups>
 		<Menu x:Name="Menu" VerticalAlignment="Top" Height="24" Foreground="Black">
-			<MenuItem x:Name="FileMenuItem" Background="Transparent" BorderThickness="1" Header="文件">
-                <MenuItem x:Name="CleanAllRecordsMenuItem" Width="128" Height="24" Header="清除所有记录" Click="CleanAllRecordsMenuItem_Click"/>
-                <MenuItem x:Name="CleanRecordsFromDateMenuItem" Header="清除7天前的历史记录" Click="CleanRecordsFromDateMenuItem_Click"/>
-                <MenuItem x:Name="RefreshMenuItem" Header="刷新" Click="RefreshMenuItem_Click"/>
-			</MenuItem>
+			<MenuItem x:Name="RefreshMenuItem" Header="刷新" Click="RefreshMenuItem_Click" Margin="0"/>
+			<MenuItem x:Name="CleanRecordsFromDateMenuItem" Header="清除历史记录" Click="CleanRecordsFromDateMenuItem_Click" Margin="0"/>
+			<MenuItem x:Name="RemoveRecordMenuItem" Margin="0" Header="删除当前项" Click="RemoveRecordMenuItem_Click"/>
 		</Menu>
 		<Grid x:Name="Grid" Margin="0,-197,0,-23" d:LayoutOverrides="Width" Background="White">
             <TreeView x:Name="HistoryTreeView" HorizontalAlignment="Left" VerticalAlignment="Top" Width="624" Height="441" SelectedItemChanged="HistoryTreeView_SelectedItemChanged"/>

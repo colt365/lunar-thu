@@ -49,5 +49,15 @@ namespace SmartMe.Windows
             Ok = false;
             this.Close();
         }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            TimeSpanTextBlock.IsEnabled = false;
+        }
+
+        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            TimeSpanTextBlock.IsEnabled = true;
+        }
 	} 
 }
