@@ -72,7 +72,7 @@ namespace SmartMe.Windows
         private HistoryWindow _historyWindow = new HistoryWindow();
 
 		// NotifyIcon
-        private System.Windows.Forms.NotifyIcon m_notifyIcon;
+        private System.Windows.Forms.NotifyIcon notifyIcon;
         private System.Windows.Forms.ContextMenu contextMenu1;
         private System.Windows.Forms.MenuItem menuItem1;
 
@@ -129,15 +129,13 @@ namespace SmartMe.Windows
             menuItem1.Text = "退出(&E)";
             menuItem1.Click += new EventHandler(TrayExitMenuItem_Click);
 
-
-
-            m_notifyIcon = new System.Windows.Forms.NotifyIcon();
-            m_notifyIcon.BalloonTipText = "SmartMe已最小化到托盘，双击此处恢复窗口";
-            m_notifyIcon.BalloonTipTitle = "SmartMe";
-            m_notifyIcon.Text = "SmartMe";
-            m_notifyIcon.Icon = new System.Drawing.Icon("icon.ico");
-            m_notifyIcon.DoubleClick += new EventHandler(m_notifyIcon_Click);
-            m_notifyIcon.ContextMenu = this.contextMenu1;
+            notifyIcon = new System.Windows.Forms.NotifyIcon();
+            notifyIcon.BalloonTipText = "SmartMe已最小化到托盘，双击此处恢复窗口";
+            notifyIcon.BalloonTipTitle = "SmartMe";
+            notifyIcon.Text = "SmartMe";
+            notifyIcon.Icon = new System.Drawing.Icon("icon.ico");
+            notifyIcon.Click += new EventHandler(notifyIcon_DoubleClick);
+            notifyIcon.ContextMenu = this.contextMenu1;
             ShowTrayIcon(true);	// Always show the icon
         }
         
@@ -847,22 +845,22 @@ namespace SmartMe.Windows
         {
             // TODO:here
             Hide();
-            if (m_notifyIcon != null && firstShowTip)
+            if (notifyIcon != null && firstShowTip)
             {
                 firstShowTip = false;
-                m_notifyIcon.ShowBalloonTip(2000);
+                notifyIcon.ShowBalloonTip(2000);
             }
         }
 
-        private void m_notifyIcon_Click(object sender, EventArgs e)
+        private void notifyIcon_DoubleClick(object sender, EventArgs e)
         {
             if (IsVisible)
             {
                 Hide();
-                if (m_notifyIcon != null && firstShowTip)
+                if (notifyIcon != null && firstShowTip)
                 {
                     firstShowTip = false;
-                    m_notifyIcon.ShowBalloonTip(2000);
+                    notifyIcon.ShowBalloonTip(2000);
                 }
             }
             else
@@ -873,8 +871,8 @@ namespace SmartMe.Windows
 
         private void ShowTrayIcon(bool show)
         {
-            if (m_notifyIcon != null)
-                m_notifyIcon.Visible = show;
+            if (notifyIcon != null)
+                notifyIcon.Visible = show;
         }
 
         //TrayExitMenuItem_Click
@@ -882,7 +880,7 @@ namespace SmartMe.Windows
         {
             _detailedInfoWindow.Close();
             _historyWindow.Close();
-            m_notifyIcon.Dispose();
+            notifyIcon.Dispose();
             this.Close();
         }
         #endregion MinimizeToIcon
@@ -918,7 +916,7 @@ namespace SmartMe.Windows
         {
             _detailedInfoWindow.Close();
             _historyWindow.Close();
-            m_notifyIcon.Dispose();
+            notifyIcon.Dispose();
             this.Close();
         }
 
