@@ -732,8 +732,8 @@ namespace SmartMe.Windows
                                         break;
 
                                     case QueryResultItemType.SuggestionResult:
-                                        SuggestionResult suggestionItem= queryResultItem as SuggestionResult;
-                                        _parent._suggestionWindow.Show( suggestionItem );
+                                        //SuggestionResult suggestionItem= queryResultItem as SuggestionResult;
+                                        //_parent._suggestionWindow.Show( suggestionItem );
                                         
                                         
                                         break;
