@@ -83,6 +83,7 @@ namespace SmartMe.Windows
 		{
 			this.InitializeComponent();
 
+         
 			// Insert code required on object creation below this point.
             CreateListeners();
             InitNotifyIcon();
@@ -117,6 +118,8 @@ namespace SmartMe.Windows
             _webResourceManager.AddSearchEngine(new BaiduSearchEngine());
             _webResourceManager.AddSearchEngine(new SogouSearchEngine());
             _webResourceManager.AddSearchEngine(new WikipediaSearchEngine());
+            //_webResourceManager.AddSearchEngine( new GoogleSuggestion() );
+            _webResourceManager.AddSearchEngine( new DictCn() );
 
             InputQueryObsoletedTime = _defaultInputQueryObsoletedTime;
             //_inputQueryRecordManager = new InputQueryRecordManager(
@@ -199,6 +202,7 @@ namespace SmartMe.Windows
 		*/
         private void ShowDetailedInfoWindow(int left, int top)
         {
+            
             if (_detailedInfoWindow != null && !_detailedInfoWindow.IsClosed)
             {
                 // do nothing
@@ -371,12 +375,14 @@ namespace SmartMe.Windows
                 DoQuery(text, queryType);
             }
         }
-        private void DoQuery(string text, InputQueryType queryType)
+
+        internal void DoQuery(string text, InputQueryType queryType)
         {
             lock (_lastInputTimeLock)
             {
                 _lastInputTime = DateTime.Now;
             }
+            
             if (text == string.Empty)
             {
                 return;
@@ -689,28 +695,56 @@ namespace SmartMe.Windows
                     {
                         if (result != null && result.Items != null)
                         {
-                            foreach (SearchEngineResult searchEngineItem in result.Items)
+
+
+                            foreach ( IQueryResultItem queryResultItem in result.Items )
                             {
-                                if (searchEngineItem != null && searchEngineItem.Results != null) // TODO: Bug ASSERT(searchEngineItem != null)
+                                switch ( queryResultItem.ResultType )
                                 {
-                                    ListBox listBox = null; 
-                                    TabItem tabItem = null;
-                                    string engineName = null;
-                                    bool hasFound = FindUIElements(searchEngineItem, out listBox, out tabItem, out engineName);
-                                    
-                                    if (hasFound)
-                                    {
-                                        listBox.Items.Clear();
-                                        foreach (SearchEngineResult.ResultItem resultItem in searchEngineItem.Results)
+                                   
+                                    case QueryResultItemType.SearchEngineResult:
+                                        var searchEngineItem = queryResultItem as SearchEngineResult;
+                                        if ( searchEngineItem != null && searchEngineItem.Results != null ) // TODO: Bug ASSERT(searchEngineItem != null)
                                         {
-                                            listBox.Items.Add(new ListBoxItem() { Content = resultItem.Title });
+         
+                                            ListBox listBox = null;
+                                            TabItem tabItem = null;
+                                            string engineName = null;
+                                            bool hasFound = FindUIElements( searchEngineItem, out listBox, out tabItem, out engineName );
+
+                                            if ( hasFound )
+                                            {
+                                                listBox.Items.Clear();
+                                                foreach ( SearchEngineResult.ResultItem resultItem in searchEngineItem.Results )
+                                                {
+                                                    listBox.Items.Add( new ListBoxItem()
+                                                    {
+                                                        Content = resultItem.Title
+                                                    } );
+                                                }
+                                                tabItem.Header = string.Format( "{0}({1})", engineName, searchEngineItem.Results.Count );
+
+                                                listBox.InvalidateArrange();
+                                                tabItem.InvalidateArrange();
+                                            }
                                         }
-                                        tabItem.Header = string.Format("{0}({1})", engineName, searchEngineItem.Results.Count);
+                        
+                                        break;
+
+                                    case QueryResultItemType.SuggestionResult:
+                                        SuggestionResult suggestionItem= queryResultItem as SuggestionResult;
+                                        _parent._suggestionWindow.Show( suggestionItem );
                                         
-                                        listBox.InvalidateArrange();
-                                        tabItem.InvalidateArrange();
-                                    }
+                                        
+                                        break;
+
+                                    case QueryResultItemType.DictionaryResult:
+                                        break;
+
+                                    default:
+                                        break;
                                 }
+                               
                             }
                         }
                     })
@@ -786,9 +820,11 @@ namespace SmartMe.Windows
                 searchEngineResult = null;
                 if (queryResult != null)
                 {
-                    if (queryResult.Items != null)
+    
+                    if ( queryResult.SearchEngineResultItems != null )
                     {
-                        foreach (SearchEngineResult resultItem in queryResult.Items)
+
+                        foreach ( SearchEngineResult resultItem in queryResult.SearchEngineResultItems )
                         {
                             if (resultItem != null && resultItem.SearchEngineType == targetType)
                             {
@@ -879,6 +915,7 @@ namespace SmartMe.Windows
         private bool firstShowTip = true;
         private void MinimizeImage_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
+
             // TODO:here
             Hide();
             if (notifyIcon != null && firstShowTip)
