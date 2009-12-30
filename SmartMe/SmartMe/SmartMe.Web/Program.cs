@@ -10,15 +10,15 @@ namespace SmartMe.Web
     {
         static void Main(string[] args)
         {
-            //WebResourceManagerTester.Test();
+            WebResourceManagerTester.Test();
             //ExternelSearchEngineTest.Test();
             //GoogleSearchEngineTest.Test();
 			//BaiduSearchEngineTest.Test();
 			//SogouSearchEngineTest.Test();
             //WikipeidaSearchEngineTest.Test();
             //DictCnTest.Test();
-            GoogleSuggestionTest.Test();
-            BaiduSuggestionTest.Test();
+            //GoogleSuggestionTest.Test();
+            //BaiduSuggestionTest.Test();
         }
     }
 }

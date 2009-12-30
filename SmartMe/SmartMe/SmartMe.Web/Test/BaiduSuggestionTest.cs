@@ -13,7 +13,7 @@ namespace SmartMe.Web.Test
             BaiduSuggestion engine = new BaiduSuggestion();
             InputQuery query = new InputQuery( "baih" );
             query.QueryType = InputQueryType.Text;
-            SuggestionResult item = engine.Search( query );
+            SuggestionResult item = engine.Search( query ) as SuggestionResult;
             Console.WriteLine( item );
         }
 

@@ -21,7 +21,7 @@ namespace SmartMe.Web
         /// <summary>
         /// 搜索引擎列表
         /// </summary>
-        private List<ISearchEngine> _searchEngineList = new List<ISearchEngine>();
+        private List<ISearch> _searchEngineList = new List<ISearch>();
 
         /// <summary>
         /// 流水线
@@ -70,7 +70,7 @@ namespace SmartMe.Web
         private class SearchAndReturnPipe
         {
             #region fields
-            private ISearchEngine _searchEngine;
+            private ISearch _searchEngine;
             private InputQuery _inputQuery;
             private WebResourceManager _parent;
             private Thread _thread;
@@ -78,7 +78,7 @@ namespace SmartMe.Web
 
             #region constructor
             public SearchAndReturnPipe(WebResourceManager parent,
-                ISearchEngine engine, InputQuery query, Pipeline pipeline)
+                ISearch engine, InputQuery query, Pipeline pipeline)
             {
                 // Assert(engine!= null && query != null)
                 _parent = parent;
@@ -102,7 +102,7 @@ namespace SmartMe.Web
 
             private void SearchAndReturn()
             {
-                SearchEngineResult result = _searchEngine.Search(_inputQuery);
+                IQueryResultItem result = _searchEngine.Search( _inputQuery );
                 _parent.OnSearchResultDone(result, _inputQuery);
             }
             #endregion
@@ -117,7 +117,7 @@ namespace SmartMe.Web
             set { _deprecateQueryOption = value; }
         }
 
-        public List<ISearchEngine> SearchEngineList
+        public List<ISearch> SearchEngineList
         {
             get { return _searchEngineList; }
             set { _searchEngineList = value; }
@@ -126,7 +126,7 @@ namespace SmartMe.Web
 
         #region methods
 
-        public bool AddSearchEngine(ISearchEngine searchEngine)
+        public bool AddSearchEngine(ISearch searchEngine)
         {
             if (searchEngine == null)
             {
@@ -136,7 +136,7 @@ namespace SmartMe.Web
             return true;
         }
 
-        public bool RemoveSearchEngine(ISearchEngine searchEngine)
+        public bool RemoveSearchEngine(ISearch searchEngine)
         {
             return _searchEngineList.Remove(searchEngine);
         }
@@ -151,15 +151,35 @@ namespace SmartMe.Web
             return true;
         }
 
-        private void OnSearchResultDone(SearchEngineResult result, InputQuery query)
+        private void OnSearchResultDone ( IQueryResultItem result, InputQuery query )
         {
             if (query == _result.Query)
             {
                 lock (_result)
                 {
-                    _result.Items.Add(result);
+                   
+                    switch (result.ResultType)
+                    {
+                          
+                        case QueryResultItemType.SearchEngineResult:
+                            _result.SearchEngineResultItems.Add( result as SearchEngineResult );
+                            break;
+                        case QueryResultItemType.DictionaryResult:
+                            _result.DictResultItems.Add(result as DictResult);
+                            break;
+                        case QueryResultItemType.SuggestionResult:
+                            
+                            _result.SuggestionResultItems.Add(result as SuggestionResult);
+                            break;
+                        default:
+                            break;
+                    }
+                    
                     _handler.OnResultUpdate(_result);
-                    if (_result.Items.Count == _searchEngineList.Count)
+                    if ( (_result.SearchEngineResultItems.Count +
+                        _result.SuggestionResultItems.Count +
+                        _result.DictResultItems.Count) 
+                        == _searchEngineList.Count)
                     {
                         _handler.OnResultCompleted(_result);
                         _pipeline.OnQueryResultReady(_result);
@@ -198,7 +218,7 @@ namespace SmartMe.Web
                 _handler.OnResultNew(_result);
 
                 // Generate new queries               
-                foreach (ISearchEngine engine in _searchEngineList)
+                foreach (ISearch engine in _searchEngineList)
                 {
                     SearchAndReturnPipe pipe = new SearchAndReturnPipe(this, engine, query, _pipeline);
                 }

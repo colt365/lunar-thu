@@ -32,7 +32,7 @@ namespace SmartMe.Web.Test
             engine.LibraryPath.AddRange(_libPath);
 
             InputQuery query = new InputQuery(_queryString, InputQueryType.Text);
-            SearchEngineResult result = engine.Search(query);
+            SearchEngineResult result = engine.Search(query) as SearchEngineResult;
             Console.WriteLine(result);
         }
     }
