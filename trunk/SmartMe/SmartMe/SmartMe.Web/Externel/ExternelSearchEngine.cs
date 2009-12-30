@@ -15,7 +15,7 @@ namespace SmartMe.Web.Externel
     /// <summary>
     /// 从外部脚本进行处理的引擎
     /// </summary>
-    public class ExternelSearchEngine : ISearchEngine
+    public class ExternelSearchEngine : ISearch
     {
         #region fields
 
@@ -197,9 +197,9 @@ namespace SmartMe.Web.Externel
             isBrowserNavigating = false;
         }
 
-        #region ISearchEngine Members
+        #region ISearch Members
 
-        public SearchEngineResult Search(InputQuery query)
+        public IQueryResultItem Search ( InputQuery query )
         {
             string queryString = HttpUtility.UrlEncode(query.Text, _encoding);
             string urlString = string.Format(UrlPattern, queryString);
