@@ -177,7 +177,7 @@
 			<il:MouseDragElementBehavior ConstrainToParentBounds="False" X="1" Y="1"/>
 		</i:Interaction.Behaviors>
 		<Grid x:Name="DetailedGrid" Margin="-216,56,10,-24.67" Grid.Row="2" Grid.RowSpan="3" d:LayoutOverrides="VerticalAlignment, GridBox">
-			<Rectangle x:Name="DetailedBackgroundRectangle" Fill="Black" Stroke="Black" RadiusX="8" RadiusY="8" Margin="-2,-2,-2,-4" d:LayoutOverrides="HorizontalAlignment, VerticalAlignment" Opacity="0.8"/>
+			<Rectangle x:Name="DetailedBackgroundRectangle" Fill="Black" Stroke="Black" RadiusX="8" RadiusY="8" Margin="-2,-2,-2,-4" d:LayoutOverrides="HorizontalAlignment, VerticalAlignment" Opacity="0.6"/>
 			<Grid Margin="2">
 				<Grid.RowDefinitions>
 					<RowDefinition Height="0.087*"/>
@@ -192,16 +192,16 @@
 					<ColumnDefinition Width="0*"/>
 				</Grid.ColumnDefinitions>
 				<TextBlock Margin="2,2.742,114.67,1" Foreground="White" TextWrapping="Wrap" Grid.Column="1" d:LayoutOverrides="VerticalAlignment"><Run Text="详细"/><Run Text="信息"/><Run Text="："/></TextBlock>
-				<Image x:Name="DetailedCloseImageButton" HorizontalAlignment="Right" Margin="0,0.375,8.004,3.327" Width="16" Grid.Column="1" d:LayoutOverrides="GridBox" Height="16" Source="Images/button/x_red.png"/>
+				<Image x:Name="DetailedCloseImageButton" HorizontalAlignment="Right" Margin="0,0.375,8.004,3.327" Width="16" Grid.Column="1" d:LayoutOverrides="GridBox" Height="16" Source="Images/button/x_red.png" ToolTip="关闭" Cursor="Hand" Focusable="True"/>
 				<TextBox x:Name="DetailedTitleTextBox" Margin="8,2.67,8,1.666" Grid.Column="1" Grid.Row="1" TextWrapping="Wrap" d:LayoutOverrides="Width, HorizontalMargin"/>
 				<RichTextBox x:Name="DetailedDescriptionRichTextBox" Margin="8,4.447,8,1.242" Grid.Column="1" Grid.Row="2" d:LayoutOverrides="Width, HorizontalMargin">
 					<FlowDocument/>
 				</RichTextBox>
 				<Button x:Name="DetailedOpenLinkButton" HorizontalAlignment="Right" Margin="0,0,8,0" VerticalAlignment="Bottom" Width="88.67" Height="22" Content="打开链接" Grid.Column="1" Grid.Row="3" d:LayoutOverrides="HorizontalAlignment" Grid.RowSpan="2"/>
-				<Image x:Name="DetailedPinImageButton" HorizontalAlignment="Right" Margin="0,0.375,29.004,3.327" Width="16" Grid.Column="1" Height="16" Source="Images/button/pin.png" d:LayoutOverrides="GridBox"/>
+				<Image x:Name="DetailedPinImageButton" HorizontalAlignment="Right" Margin="0,0.375,29.004,3.327" Width="16" Grid.Column="1" Height="16" Source="Images/button/pin.png" d:LayoutOverrides="GridBox" ToolTip="悬停" Cursor="Hand" Focusable="True"/>
 			</Grid>
 		</Grid>
-		<Grid x:Name="DicardedGrid" HorizontalAlignment="Right" Margin="0,-243.605,-320,0" Width="264" Grid.Column="3" VerticalAlignment="Top" Height="227.605">
+		<Grid x:Name="DicardedGrid" HorizontalAlignment="Right" Margin="0,-264,-320,0" Width="264" Grid.Column="3" VerticalAlignment="Top" Height="227.605">
 			<ScrollViewer x:Name="ScrollViewer" Visibility="Collapsed" d:LayoutOverrides="HorizontalAlignment, GridBox">
 				<TextBox x:Name="ResultTextBox" TextWrapping="Wrap" Background="#FFFEFEFE" SpellCheck.IsEnabled="True" FontSize="10.667" RenderTransformOrigin="0.5,0.5">
 					<TextBox.RenderTransform>
@@ -219,7 +219,7 @@
 			</Grid>
 		</Grid>
 		<Grid x:Name="LayoutGrid" Margin="-2,-2,-247,-24.67" Grid.ColumnSpan="4" Grid.RowSpan="5">
-			<Rectangle x:Name="LayoutBackgroundRectangle" Fill="Black" RadiusX="8" RadiusY="8" Opacity="0.8" d:LayoutOverrides="HorizontalAlignment" Margin="-2"/>
+			<Rectangle x:Name="LayoutBackgroundRectangle" Fill="Black" RadiusX="8" RadiusY="8" Opacity="0.6" d:LayoutOverrides="HorizontalAlignment" Margin="-2"/>
 			<DockPanel x:Name="LayoutDockPanel" HorizontalAlignment="Right" Margin="2" d:LayoutOverrides="Height">
 				<DockPanel x:Name="MainDockPanel" d:LayoutOverrides="Height">
 					<Grid x:Name="InputGrid" VerticalAlignment="Top" Height="48" DockPanel.Dock="Top">
@@ -235,7 +235,7 @@
 						<Menu x:Name="OptionMenu" Margin="0,0,0.333,0" VerticalAlignment="Top" Height="14.334" Grid.Column="1" HorizontalAlignment="Right" Width="58.667" Background="{x:Null}">
 							<MenuItem x:Name="MinimizeMenuItem" Margin="0" Foreground="Silver" Header="" Width="26">
 								<MenuItem.Icon>
-									<Image x:Name="MinimizeImage" Width="16" Height="16" Source="Images/button/minus_yellow.png" ToolTip="最小化" MouseDown="MinimizeImage_MouseDown" ForceCursor="True" Cursor="Hand" RenderTransformOrigin="12.433,0.5">
+									<Image x:Name="MinimizeImage" Width="16" Height="16" Source="Images/button/minus_yellow.png" ToolTip="最小化" MouseDown="MinimizeImage_MouseDown" ForceCursor="True" Cursor="Hand" RenderTransformOrigin="12.433,0.5" Focusable="True">
 										<Image.ContextMenu>
 											<ContextMenu/>
 										</Image.ContextMenu>
@@ -245,7 +245,7 @@
 							<MenuItem x:Name="OptionMenuItem" Margin="0,0,0,-0.966000000000001" Header="" Width="25">
 								<MenuItem.Icon>
 									<StackPanel> 
-										<Image x:Name="ContextMenuImage" Width="16" Height="16" ToolTip="选项(关闭窗口！)" Source="Images/button/add_green.png" ForceCursor="True" Cursor="Hand" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1"/>
+										<Image x:Name="ContextMenuImage" Width="16" Height="16" ToolTip="选项(关闭窗口！)" Source="Images/button/add_green.png" ForceCursor="True" Cursor="Hand" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Focusable="True"/>
 									</StackPanel>
 								</MenuItem.Icon>
 								<MenuItem x:Name="ShowHistoryWindowMenuItem" Click="ShowHistoryWindowMenuItem_Click" Margin="0" Header="查看历史记录"/>
@@ -292,13 +292,13 @@
 				</DockPanel>
 			</DockPanel>
 		</Grid>
-		<Grid x:Name="SuggestionGrid" Margin="-147,-88,10,-40" Grid.RowSpan="2">
-			<Rectangle x:Name="SuggestionBackgroundRectangle" Fill="Black" Stroke="Black" Margin="-2,-2,-2,-4" RadiusX="8" RadiusY="8" Opacity="0.8"/>
+		<Grid x:Name="SuggestionGrid" Margin="-147,-82,10,-46" Grid.RowSpan="2">
+			<Rectangle x:Name="SuggestionBackgroundRectangle" Fill="Black" Stroke="Black" Margin="-2,-2,-2,-4" RadiusX="8" RadiusY="8" Opacity="0.6"/>
 			<Grid x:Name="SuggestionPanel" Margin="2" d:LayoutOverrides="HorizontalAlignment, VerticalAlignment">
 				<TextBlock x:Name="SuggestionLabel" VerticalAlignment="Top" Height="20" Foreground="White" Text="搜索建议：" TextWrapping="Wrap" d:LayoutOverrides="VerticalAlignment"/>
 				<ListBox x:Name="SuggestionListBox" Margin="6.5,20,6.5,0" Width="120" d:LayoutOverrides="Height"/>
-				<Image x:Name="SuggestionPinImageButton" HorizontalAlignment="Right" Margin="0,2.001,23.833,0" Width="16" Height="16" Source="Images\button\pin.png" VerticalAlignment="Top"/>
-				<Image x:Name="SuggestionCloseImageButton" HorizontalAlignment="Right" Margin="0,2.335,2.834,0" Width="16" Height="16" Source="Images/button/x_red.png" VerticalAlignment="Top"/>
+				<Image x:Name="SuggestionPinImageButton" HorizontalAlignment="Left" Margin="93.167,2.001,0,0" Width="16" Height="16" Source="Images\button\pin.png" VerticalAlignment="Top" ToolTip="悬停" Cursor="Hand" Focusable="True"/>
+				<Image x:Name="SuggestionCloseImageButton" HorizontalAlignment="Right" Margin="0,2.335,2.834,0" Width="16" Height="16" Source="Images/button/x_red.png" VerticalAlignment="Top" ToolTip="关闭" Cursor="Hand" Focusable="True"/>
 			</Grid>
 		</Grid>
 	</Grid>
