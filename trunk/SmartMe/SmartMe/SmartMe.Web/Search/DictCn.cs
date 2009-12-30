@@ -8,10 +8,10 @@ using System.Web;
 
 namespace SmartMe.Web.Search
 {
-    public class DictCn
+    public class DictCn:ISearch
     {
-        #region ISearchEngine Members
-        public DictResult Search ( InputQuery query )
+        #region ISearch Members
+        public IQueryResultItem Search ( InputQuery query )
         {
 
             SmartMe.Core.Data.DictResult emptyResult = new SmartMe.Core.Data.DictResult();
