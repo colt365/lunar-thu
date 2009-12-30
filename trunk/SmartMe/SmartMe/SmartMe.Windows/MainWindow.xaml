@@ -8,7 +8,7 @@
 	xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" xmlns:il="clr-namespace:Microsoft.Expression.Interactivity.Layout;assembly=Microsoft.Expression.Interactions"
 	x:Class="SmartMe.Windows.MainWindow"
 	x:Name="Window"
-	Title="MainWindow" Topmost="True" WindowStartupLocation="Manual" ResizeMode="NoResize" AllowDrop="True" Drop="Window_Drop" PreviewDragEnter="Window_PreviewDragEnter" PreviewDrop="Window_PreviewDrop" PreviewDragLeave="Window_PreviewDragLeave" PreviewDragOver="Window_PreviewDragOver" Closing="Window_Closing" WindowStyle="None" Background="{x:Null}" Foreground="{x:Null}" AllowsTransparency="True" HorizontalAlignment="Center" VerticalAlignment="Center" WindowState="Maximized" ShowInTaskbar="False">
+	Title="MainWindow" Topmost="True" WindowStartupLocation="Manual" ResizeMode="NoResize" AllowDrop="True" Drop="Window_Drop" PreviewDragEnter="Window_PreviewDragEnter" PreviewDrop="Window_PreviewDrop" PreviewDragLeave="Window_PreviewDragLeave" PreviewDragOver="Window_PreviewDragOver" Closing="Window_Closing" WindowStyle="None" Background="{x:Null}" Foreground="{x:Null}" AllowsTransparency="True" HorizontalAlignment="Center" VerticalAlignment="Center" WindowState="Maximized" ShowInTaskbar="False" Loaded="Window_Loaded">
 	<Window.Resources>
 		<SmartMe_Core_Data:SearchEngineResult x:Key="SearchEngineResultDataSource" d:IsDataSource="True"/>
 		<AlternationConverter x:Key="AlternationConverter"/>
@@ -192,7 +192,8 @@
 					<ColumnDefinition Width="0*"/>
 				</Grid.ColumnDefinitions>
 				<TextBlock Margin="2,2.742,114.67,1" Foreground="White" TextWrapping="Wrap" Grid.Column="1" d:LayoutOverrides="VerticalAlignment"><Run Text="详细"/><Run Text="信息"/><Run Text="："/></TextBlock>
-				<Image x:Name="DetailedCloseImageButton" HorizontalAlignment="Right" Margin="0,0.375,8.004,3.327" Width="16" Grid.Column="1" d:LayoutOverrides="GridBox" Height="16" Source="Images/button/x_red.png" ToolTip="关闭" Cursor="Hand" Focusable="True"/>
+				<Image x:Name="DetailedCloseImageButton" HorizontalAlignment="Right" Margin="0,0.375,8.004,3.327" Width="16" Grid.Column="1" d:LayoutOverrides="GridBox" Height="16" Source="Images/button/x_red.png" ToolTip="关闭" Cursor="Hand" Focusable="True" 
+                     MouseLeftButtonDown="onMouseLeftButtonDown"  />
 				<TextBox x:Name="DetailedTitleTextBox" Margin="8,2.67,8,1.666" Grid.Column="1" Grid.Row="1" TextWrapping="Wrap" d:LayoutOverrides="Width, HorizontalMargin"/>
 				<RichTextBox x:Name="DetailedDescriptionRichTextBox" Margin="8,4.447,8,1.242" Grid.Column="1" Grid.Row="2" d:LayoutOverrides="Width, HorizontalMargin">
 					<FlowDocument/>
@@ -288,7 +289,17 @@
 								<ListBox x:Name="WikipediaOutputListBox" Background="White" BorderBrush="Black" Foreground="Black" IsSynchronizedWithCurrentItem="True" ItemTemplate="{DynamicResource ItemTemplate}" DataContext="{Binding Results, Converter={StaticResource AlternationConverter}, Mode=TwoWay, Source={StaticResource SearchEngineResultDataSource}, UpdateSourceTrigger=Explicit}" ItemsSource="{Binding Mode=OneWay}" ItemContainerStyle="{DynamicResource ListBoxItemStyle}" MouseDoubleClick="WikipediaOutputListBox_MouseDoubleClick" HorizontalAlignment="Left" VerticalAlignment="Top" Width="235" Height="158.04" RenderTransformOrigin="0.5,0.5" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="1"/>
 							</Grid>
 						</TabItem>
-					</TabControl>
+                        <TabItem x:Name="DictcnTabItem" Header="电子辞典">
+                            <Grid x:Name="DictcnOutputGrid">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0*"/>
+                                    <ColumnDefinition Width="0*"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <ListBox x:Name="DictcnOutputListBox" Background="White" Foreground="Black" IsSynchronizedWithCurrentItem="True" ItemTemplate="{DynamicResource ItemTemplate}" DataContext="{Binding Results, Converter={StaticResource AlternationConverter}, Mode=TwoWay, Source={StaticResource SearchEngineResultDataSource}, UpdateSourceTrigger=Explicit}" ItemsSource="{Binding [0].Title, Mode=OneWay}" ItemContainerStyle="{DynamicResource ListBoxItemStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="235" Height="158.04" RenderTransformOrigin="0.5,0.5" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="2" PreviewMouseWheel="DictcnOutputListBox_PreviewMouseWheel" MouseDoubleClick="DictcnOutputListBox_MouseDoubleClick" BorderBrush="{x:Null}" SelectionChanged="DictcnOutputListBox_SelectionChanged"/>
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
 				</DockPanel>
 			</DockPanel>
 		</Grid>
