@@ -15,7 +15,7 @@ namespace SmartMe.Web.Test
             GoogleSuggestion engine = new GoogleSuggestion();
             InputQuery query = new InputQuery( "baim" );
             query.QueryType = InputQueryType.Text;
-            SuggestionResult item = engine.Search( query );
+            SuggestionResult item = engine.Search( query ) as SuggestionResult;
             Console.WriteLine( item );
         }
 

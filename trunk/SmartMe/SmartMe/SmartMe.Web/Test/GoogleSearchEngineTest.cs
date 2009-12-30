@@ -12,7 +12,7 @@ namespace SmartMe.Web.Test
     {
         public static void Test()
         {
-            ISearchEngine engine = new GoogleSearchEngine();
+            ISearch engine = new GoogleSearchEngine();
             InputQuery query = new InputQuery("时间");
             query.QueryType = InputQueryType.Text;
             IQueryResultItem item = engine.Search(query);

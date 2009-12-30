@@ -12,8 +12,8 @@ namespace SmartMe.Web.Test
     {
         public static void Test()
         {
-            ISearchEngine engine = new BaiduSearchEngine();
-            InputQuery query = new InputQuery("时间");
+            ISearch engine = new BaiduSearchEngine();
+            InputQuery query = new InputQuery("渚");
             query.QueryType = InputQueryType.Text;
             IQueryResultItem item = engine.Search(query);
             Console.WriteLine(item);

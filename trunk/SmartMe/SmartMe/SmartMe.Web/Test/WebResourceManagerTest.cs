@@ -17,17 +17,19 @@ namespace SmartMe.Web.Test
             Pipeline pipeline = new Pipeline();
             pipeline.QueryResultItemSubscriberManager.AddSubscriber(new ResultItemSubscriber(500));
             WebResourceManager manager = new WebResourceManager(pipeline, new QueryResultHandler());
-            InputQuery query = new InputQuery("LinTian");
+            InputQuery query = new InputQuery("Ba");
             Console.WriteLine(query.Text);
-            manager.SearchEngineList.Add(new SearchEngine(2000));
-            manager.SearchEngineList.Add(new SearchEngine(1000));
-            //manager.SearchEngineList.Add(new GoogleSearchEngine());
-            //manager.SearchEngineList.Add(new BaiduSearchEngine());
+            //manager.SearchEngineList.Add(new SearchEngine(2000));
+           // manager.SearchEngineList.Add(new SearchEngine(1000));
+            manager.SearchEngineList.Add(new GoogleSearchEngine());
+            manager.SearchEngineList.Add(new BaiduSearchEngine());
+            manager.SearchEngineList.Add( new GoogleSuggestion() );
+            manager.SearchEngineList.Add(new DictCn());
             manager.Handle(query);
-            Thread.Sleep(5000);
+            Thread.Sleep(8000);
         }
 
-        public class SearchEngine : ISearchEngine
+        public class SearchEngine : ISearch
         {
             private int _waitTime;
             private static int _count = 0;
@@ -35,9 +37,9 @@ namespace SmartMe.Web.Test
             {
                 _waitTime = waitTime;
             }
-            #region ISearchEngine Members
+            #region ISearch Members
 
-            public SearchEngineResult Search(InputQuery query)
+            public IQueryResultItem Search ( InputQuery query )
             {
                 SearchEngineResult result = new SearchEngineResult();
                 result.SearchEngineType = SearchEngineType.Other;
@@ -77,7 +79,39 @@ namespace SmartMe.Web.Test
 
             public void OnResultCompleted(QueryResult result)
             {
+
                 Console.WriteLine("Complete Result!");
+                Console.WriteLine( result.Items.Count );
+                foreach ( IQueryResultItem item in result.Items)
+                {
+                    switch(item.ResultType)
+                    {
+                        case QueryResultItemType.SearchEngineResult:
+                            var searchEngineItem = item as SearchEngineResult;
+                            if ( searchEngineItem != null && searchEngineItem.Results != null ) // TODO: Bug ASSERT(searchEngineItem != null)
+                            {
+                                Console.WriteLine( searchEngineItem.ToString() );
+                            }
+                            break;
+                        case QueryResultItemType.DictionaryResult:
+                            var dictItem = item as DictResult;
+                            if ( dictItem != null && dictItem.SearchUrl != null ) // TODO: Bug ASSERT(searchEngineItem != null)
+                            {
+                                Console.WriteLine( dictItem.ToString() );
+                            }
+                            break;
+                        case QueryResultItemType.SuggestionResult:
+                            var suggestionItem = item as SuggestionResult;
+                            if ( suggestionItem != null && suggestionItem.Results != null ) // TODO: Bug ASSERT(searchEngineItem != null)
+                            {
+                                Console.WriteLine( suggestionItem.ToString() );
+                            }
+                            break;
+                        default:
+                            break;
+
+                    }
+                }
             }
 
             #endregion

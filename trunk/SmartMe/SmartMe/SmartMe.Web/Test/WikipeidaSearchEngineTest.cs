@@ -12,7 +12,7 @@ namespace SmartMe.Web.Test
     {
         public static void Test()
         {
-            ISearchEngine engine = new WikipediaSearchEngine();
+            ISearch engine = new WikipediaSearchEngine();
             InputQuery query = new InputQuery("王菲");
             query.QueryType = InputQueryType.Text;
             IQueryResultItem item = engine.Search(query);
