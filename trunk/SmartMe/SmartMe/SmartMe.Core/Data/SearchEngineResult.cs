@@ -28,10 +28,18 @@ namespace SmartMe.Core.Data
     [Serializable]
     public class SearchEngineResult : IQueryResultItem, IXMLSerializable
     {
+
+        public SearchEngineResult()
+        {
+            _type = QueryResultItemType.SearchEngineResult;
+        }
+
         #region fields
         private List<ResultItem> _results = new List<ResultItem>();
         private string _searchUrl = string.Empty;
         private SearchEngineType _searchEngine = SearchEngineType.Other;
+        private QueryResultItemType _resultType;
+        private MessageType _messageType;
         #endregion
 
         #region nested
@@ -102,6 +110,10 @@ namespace SmartMe.Core.Data
             {
                 return QueryResultItemType.SearchEngineResult;
             }
+            set
+            {
+                _resultType=value;
+            }
         }
 
         public MessageType MessageType
@@ -109,6 +121,9 @@ namespace SmartMe.Core.Data
             get
             {
                 return MessageType.QueryResultItem;
+            }
+            set{
+                _messageType=value;
             }
         }
 

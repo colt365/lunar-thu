@@ -13,10 +13,40 @@ namespace SmartMe.Core.Data
         SuggestionResult
     }
 
-    public interface IQueryResultItem : IMessage
+    public class IQueryResultItem : IMessage
     {
-        #region properties
-        QueryResultItemType ResultType { get; }
+        #region
+        internal QueryResultItemType _type;
+        MessageType _messageType= MessageType.QueryResultItem;
         #endregion
+
+        #region properties
+        public QueryResultItemType ResultType 
+        { 
+            get
+        {
+            return _type;
+        }
+            set
+            {
+                _type=value;
+            }
+        }
+        #endregion
+    
+#region IMessage Members
+
+public MessageType  MessageType
+{
+    get
+    {
+        return _messageType;
     }
+    set{
+        _messageType = value;
+    }
+}
+
+#endregion
+}
 }
