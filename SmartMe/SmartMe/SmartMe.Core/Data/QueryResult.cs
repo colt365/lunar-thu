@@ -5,6 +5,7 @@ using System.Text;
 using System.Collections;
 using System.Collections.ObjectModel;
 using SmartMe.Core.Pipeline;
+using System.Xml.Serialization;
 
 namespace SmartMe.Core.Data
 {
@@ -15,8 +16,11 @@ namespace SmartMe.Core.Data
     {
 		#region fields
         private InputQuery _query;
-        private List<SearchEngineResult> _items = new List<SearchEngineResult>();
-		#endregion
+        private List<SearchEngineResult> _searchEngineResultItems = new List<SearchEngineResult>();
+        private List<SuggestionResult> _suggestionResultItems = new List<SuggestionResult>();
+        private List<DictResult> _dictResultItems = new List<DictResult>();
+        private List<IQueryResultItem> _items = new List<IQueryResultItem>();
+        #endregion
         
         #region constructor
 
@@ -45,10 +49,58 @@ namespace SmartMe.Core.Data
                 _query = value;
             }
         }
-
-        public List<SearchEngineResult> Items
+    
+        public List<IQueryResultItem> Items
         {
-            get { return _items; }
+            get {
+                _items.Clear();
+                foreach ( IQueryResultItem item in _searchEngineResultItems )
+                {
+                    _items.Add( item );
+                }
+
+                
+                foreach ( IQueryResultItem item in _suggestionResultItems )
+                {
+                    _items.Add( item );
+                }
+
+                
+                foreach ( IQueryResultItem item in _dictResultItems )
+                {
+                    _items.Add( item );
+                }
+
+                return _items;
+
+                
+            }
+        }
+
+        public List<SearchEngineResult> SearchEngineResultItems
+        {
+            get
+            {
+                return _searchEngineResultItems;
+            }
+        }
+
+        [XmlIgnore]
+        public List<SuggestionResult> SuggestionResultItems
+        {
+            get
+            {
+                return _suggestionResultItems;
+            }
+        }
+
+
+        public List<DictResult> DictResultItems
+        {
+            get
+            {
+                return _dictResultItems;
+            }
         }
 
 
@@ -71,11 +123,25 @@ namespace SmartMe.Core.Data
         public override string ToString()
         {
             StringBuilder stringBuilder = new StringBuilder(_query.ToString());
-            stringBuilder.Append("\n" + Items.Count);
-            foreach (IQueryResultItem item in _items)
+            stringBuilder.Append( "\n" + _searchEngineResultItems.Count );
+            foreach ( IQueryResultItem item in _searchEngineResultItems )
             {
                 stringBuilder.Append("\n").Append(item);
             }
+
+            stringBuilder.Append( "\n" + _suggestionResultItems.Count );
+            foreach ( IQueryResultItem item in _suggestionResultItems )
+            {
+                stringBuilder.Append( "\n" ).Append( item );
+            }
+
+            stringBuilder.Append( "\n" + _dictResultItems.Count );
+            foreach ( IQueryResultItem item in _dictResultItems )
+            {
+                stringBuilder.Append( "\n" ).Append( item );
+            }
+
+
             return stringBuilder.ToString();
         }
 

@@ -6,6 +6,7 @@ using System.Text;
 using SmartMe.Core.Data;
 using SmartMe.Core.Pipeline;
 using SmartMe.Core.Record;
+
 using System.Threading;
 
 namespace SmartMe.Core.Test
@@ -31,7 +32,17 @@ namespace SmartMe.Core.Test
             item.Description = "Who cares?";
             resultItem.Results.Add(item);
 
-            result.Items.Add(resultItem);
+            SuggestionResult resultItem1 = new SuggestionResult();
+            resultItem1.SuggestionType = SuggestionType.Google;
+            resultItem1.SearchUrl = "json";
+            SuggestionResult.ResultItem item1 = new SuggestionResult.ResultItem();
+            item1.Index = "1";
+            item1.Number = "2";
+            item1.Suggestion = "haha";
+            resultItem1.Results.Add( item1 );
+
+            result.SearchEngineResultItems.Add(resultItem);
+            result.SuggestionResultItems.Add(resultItem1);
 
             pipeline.OnQueryResultReady(result);
 

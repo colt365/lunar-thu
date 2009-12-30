@@ -12,9 +12,14 @@ namespace SmartMe.Core.Data
         Dict_cn,
         Other
     }
-
+    [Serializable]
     public class DictResult:IQueryResultItem
     {
+
+        public DictResult()
+        {
+            _type = QueryResultItemType.DictionaryResult;
+        }
 
         #region IQueryResultItem Members
 
@@ -23,6 +28,10 @@ namespace SmartMe.Core.Data
             get
             {
                 return QueryResultItemType.DictionaryResult;
+            }
+            set
+            {
+                _resultType = value;
             }
         }
         public override string ToString ( )
@@ -45,6 +54,11 @@ namespace SmartMe.Core.Data
             {
                 return MessageType.QueryResultItem;
             }
+            set
+            {
+                _messageType = value;
+            }
+
         }
 
         #endregion
@@ -60,7 +74,9 @@ namespace SmartMe.Core.Data
         private string _chineseExplanations="";
         private string _fromEncyclopedia="";
         private string _pronunciation="";
-        private string _variations = ""; 
+        private string _variations = "";
+        private QueryResultItemType _resultType;
+        private MessageType _messageType;
         #endregion
 
         #region properties

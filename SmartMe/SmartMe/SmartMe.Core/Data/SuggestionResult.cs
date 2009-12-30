@@ -13,9 +13,13 @@ namespace SmartMe.Core.Data
         Other
     }
 
-    
+    [Serializable]
     public class SuggestionResult:IQueryResultItem
     {
+        public SuggestionResult()
+        {
+            _type = QueryResultItemType.SuggestionResult;
+        }
 
         #region nested
         public class ResultItem
@@ -100,17 +104,12 @@ namespace SmartMe.Core.Data
         private List<ResultItem> _results = new List<ResultItem>();
         private string _searchUrl = string.Empty;
         private SuggestionType _suggestionType = SuggestionType.Other;
+        
         #endregion
 
 
         #region properties
-        public QueryResultItemType ResultType
-        {
-            get
-            {
-                return QueryResultItemType.SuggestionResult;
-            }
-        }
+       
 
       public SuggestionType SuggestionType
       {
