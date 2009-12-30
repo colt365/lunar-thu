@@ -7,11 +7,11 @@ using System.Web;
 
 namespace SmartMe.Web.Search
 {
-	public class BaiduSearchEngine: ISearchEngine
+	public class BaiduSearchEngine: ISearch
 	{
-		#region ISearchEngine Members
+		#region ISearch Members
 
-		public SmartMe.Core.Data.SearchEngineResult Search(SmartMe.Core.Data.InputQuery query)
+        public SmartMe.Core.Data.IQueryResultItem Search ( SmartMe.Core.Data.InputQuery query )
 		{
             SmartMe.Core.Data.SearchEngineResult emptyResult = new SmartMe.Core.Data.SearchEngineResult();
             emptyResult.SearchEngineType = SmartMe.Core.Data.SearchEngineType.Baidu;

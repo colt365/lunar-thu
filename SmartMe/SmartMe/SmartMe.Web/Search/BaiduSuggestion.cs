@@ -12,11 +12,11 @@ using SmartMe.Core.Data;
 
 namespace SmartMe.Web.Search
 {
-    public class BaiduSuggestion
+    public class BaiduSuggestion : ISearch
     {
         #region  members
 
-        public SuggestionResult Search(InputQuery query)
+        public IQueryResultItem Search ( InputQuery query )
         {
             SuggestionResult finalResult = new SuggestionResult();
             finalResult.SuggestionType = SuggestionType.Baidu;

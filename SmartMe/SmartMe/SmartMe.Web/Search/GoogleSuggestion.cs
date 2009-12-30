@@ -11,11 +11,11 @@ using SmartMe.Core.Data;
 
 namespace SmartMe.Web.Search
 {
-    public class GoogleSuggestion
+    public class GoogleSuggestion : ISearch
     {
         #region members
 
-        public SuggestionResult Search(InputQuery query)
+        public IQueryResultItem Search ( InputQuery query )
         {
             SuggestionResult finalResult = new SuggestionResult();
             finalResult.SuggestionType = SuggestionType.Google;
