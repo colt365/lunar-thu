@@ -739,7 +739,61 @@ namespace SmartMe.Windows
                                         break;
 
                                     case QueryResultItemType.DictionaryResult:
+                                        var dictItem = queryResultItem as DictResult;
+                                        if ( dictItem != null && dictItem.Word != null ) // TODO: Bug ASSERT(searchEngineItem != null)
+                                        {
 
+                                            ListBox listBox = null;
+                                            TabItem tabItem = null;
+                                            string dictname = null;
+                                            bool hasFound = FindUIElements( dictItem, out listBox, out tabItem, out dictname );
+
+                                            if ( hasFound )
+                                            {
+                                                listBox.Items.Clear();
+                                                /*foreach ( SearchEngineResult.ResultItem resultItem in searchEngineItem.Results )
+                                                {
+                                                    listBox.Items.Add( new ListBoxItem()
+                                                    {
+                                                        Content = resultItem.Title
+                                                    } );
+                                                }*/
+                                                listBox.Items.Add( new ListBoxItem()
+                                                {
+                                                    Content= dictItem.Word
+                                                } );
+                                                listBox.Items.Add( new ListBoxItem()
+                                                {
+                                                    Content = dictItem.Pronunciation
+                                                } );
+                                                listBox.Items.Add( new ListBoxItem()
+                                                {
+                                                    Content = dictItem.Variations
+                                                } );
+                                                listBox.Items.Add( new ListBoxItem()
+                                                {
+                                                    Content = dictItem.EnglishExplanations
+                                                } );
+                                                listBox.Items.Add( new ListBoxItem()
+                                                {
+                                                    Content = dictItem.ChineseExplanations
+                                                } );
+                                                listBox.Items.Add( new ListBoxItem()
+                                                {
+                                                    Content = dictItem.Examples
+                                                } );
+                                                listBox.Items.Add( new ListBoxItem()
+                                                {
+                                                    Content = dictItem.FromEncyclopedia
+                                                } );
+             
+
+                                                tabItem.Header = string.Format( "{0}({1})", dictname, 1 );
+
+                                                listBox.InvalidateArrange();
+                                                tabItem.InvalidateArrange();
+                                            }
+                                        }
 
 
                                         break;
@@ -925,6 +979,31 @@ namespace SmartMe.Windows
                             engineName = "维基";
                             break;
                         }
+                    default:
+                        {
+                            hasFound = false;
+                            listBox = null;
+                            tabItem = null;
+                            engineName = "Unknown";
+                            break;
+                        }
+                }
+                return hasFound;
+            }
+            private bool FindUIElements ( DictResult dictResult, out ListBox listBox, out TabItem tabItem, out string engineName )
+            {
+                bool hasFound = false;
+                switch ( dictResult.DictionaryType )
+                {
+                    case DictionaryType.Dict_cn:
+                        {
+                            hasFound = true;
+                            listBox = _parent.DictcnOutputListBox;
+                            tabItem = _parent.DictcnTabItem;
+                            engineName = "Dictcn";
+                            break;
+                        }
+                   
                     default:
                         {
                             hasFound = false;
