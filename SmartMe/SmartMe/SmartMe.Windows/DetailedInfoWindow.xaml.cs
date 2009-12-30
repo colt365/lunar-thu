@@ -31,20 +31,38 @@ namespace SmartMe.Windows
 	    private string _linkedUrl = string.Empty;
         public string LinkedUrl
         {
-            get { return _linkedUrl; }
-            set { _linkedUrl = (value != null) ? value : string.Empty; }
+            get
+            {
+                return _linkedUrl;
+            }
+            set
+            {
+                _linkedUrl = (value != null) ? value : string.Empty;
+            }
         }
-        private string _title = string.Empty;
+        
         public string Title
         {
-            get { return _title; }
-            set { _title = (value != null) ? value : string.Empty; }
+            get
+            {
+                return TitleTextBlock.Text;
+            }
+            set
+            {
+                TitleTextBlock.Text = (value != null) ? value : string.Empty;
+            }
         }
-        private string _desciprtion = string.Empty;
+
         public string Desciprtion
         {
-            get { return _desciprtion; }
-            set { _desciprtion = (value != null) ? value : string.Empty; }
+            get
+            {
+                return DescriptionTextBlock.Text;
+            }
+            set
+            {
+                DescriptionTextBlock.Text = (value != null) ? value : string.Empty;
+            }
         }
 	
         public DetailedInfoWindow()

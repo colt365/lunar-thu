@@ -67,6 +67,7 @@ namespace SmartMe.Windows
 
         // Detailed Window
         private DetailedInfoWindow _detailedInfoWindow = null;
+        private string _selectedItemUri = string.Empty;
 
         // History Window
         private HistoryWindow _historyWindow = null;
@@ -200,9 +201,14 @@ namespace SmartMe.Windows
             ShowDetailedInfoWindow((int)p.X, (int)p.Y);
         }
 		*/
-        private void ShowDetailedInfoWindow(int left, int top)
+
+        /*
+        private void ShowDetailedInfoWindow(int left,
+                                            int top,
+                                            string title,
+                                            string description,
+                                            string uri)
         {
-            
             if (_detailedInfoWindow != null && !_detailedInfoWindow.IsClosed)
             {
                 // do nothing
@@ -214,7 +220,10 @@ namespace SmartMe.Windows
                 _detailedInfoWindow.Left = left;
                 _detailedInfoWindow.Top = top;
             }
-            MessageBox.Show(""+ left + "," + top);
+            _detailedInfoWindow.Title = title;
+            _detailedInfoWindow.Desciprtion = description;
+            _detailedInfoWindow.LinkedUrl = uri;
+            
             this.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Render, new Action(
                 delegate()
                 {
@@ -234,9 +243,36 @@ namespace SmartMe.Windows
                 })
             );
         }
+        */
+
+        private void ShowDetailedGrid(string title, string description, string url)
+        {
+            //Title
+            DetailedTitleTextBox.Text = title;
+
+            //Description
+            DetailedDescriptionRichTextBox.Document.Blocks.Clear();
+            Paragraph paragraph = new Paragraph();
+            paragraph.Inlines.Add(description);
+            DetailedDescriptionRichTextBox.Document.Blocks.Add(paragraph);
+
+            //Url
+            _selectedItemUri = url;
+
+            //Show Detail Grid
+            DetailedGrid.Visibility = Visibility.Visible;
+        }
+
+        private void HideDetailedGrid()
+        {
+            DetailedGrid.Visibility = Visibility.Hidden;
+            _selectedItemUri = string.Empty;
+        }
+
         #endregion DetailedInfoWindow
 
         #region 打开 Detailed Window
+
         private void GoogleOutputListBox_PreviewMouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
         {
             int count = GoogleOutputListBox.Items.Count;
@@ -254,6 +290,7 @@ namespace SmartMe.Windows
                 GoogleOutputListBox.SelectedIndex = selectedIndex;
             }
         }
+        /*
         private void GoogleOutputListBox_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             int index = GoogleOutputListBox.SelectedIndex;
@@ -282,13 +319,39 @@ namespace SmartMe.Windows
                 HideDetailedInfoWindow();
             }
         }
+        */
+
         private void GoogleOutputListBox_SelectionChanged(object sender, 
                                         System.Windows.Controls.SelectionChangedEventArgs e)
         {
             int index = GoogleOutputListBox.SelectedIndex;
+            DispalySearchEngineResultDetailedGrid(sender, index);
+        }
+
+
+        private void BaiduOutputListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int index = BaiduOutputListBox.SelectedIndex;
+            DispalySearchEngineResultDetailedGrid(sender, index);
+        }
+
+        private void SougouOutputListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int index = SougouOutputListBox.SelectedIndex;
+            DispalySearchEngineResultDetailedGrid(sender, index);
+        }
+
+        private void WikipediaOutputListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int index = WikipediaOutputListBox.SelectedIndex;
+            DispalySearchEngineResultDetailedGrid(sender, index);
+        }  
+
+        private void DispalySearchEngineResultDetailedGrid(object resultListBox, int index)
+        {
             if (index >= 0)
             {
-                SearchEngineResult result = _resultHandler.GetSearchEngineResult(sender);
+                SearchEngineResult result = _resultHandler.GetSearchEngineResult(resultListBox);
                 if (result != null)
                 {
                     if (0 <= index && index < result.Results.Count)
@@ -296,18 +359,38 @@ namespace SmartMe.Windows
                         string title = string.Format("{0}", result.Results[index].Title);
                         string uri = string.Format("{0}", result.Results[index].Url);
                         string description = string.Format("{0}", result.Results[index].Description);
-                        string cachedUri = string.Format("{0}", result.Results[index].CacheUrl);
-                        string similarUri = string.Format("{0}", result.Results[index].SimilarUrl);
-                        _detailedInfoWindow.TitleTextBlock.Text = title;
-                        _detailedInfoWindow.DescriptionTextBlock.Text = description;
-                        //Point p = GetDetailedInfoScreenPosition(e);
-                        //ShowDetailedInfoWindow((int)p.X, (int)p.Y);
+                        ShowDetailedGrid(title, description, uri);
                     }
                 }
             }
-            else 
+            else
             {
-                HideDetailedInfoWindow();
+                HideDetailedGrid();
+            }
+        }
+
+        private void ShowDetailWindow_Click(object sender, RoutedEventArgs e)
+        {
+            int index = -1;
+            if (GoogleTabItem.IsSelected)
+            {
+                index = GoogleOutputListBox.SelectedIndex;
+                DispalySearchEngineResultDetailedGrid(GoogleOutputListBox, index);
+            }
+            if (BaiduTabItem.IsSelected)
+            {
+                index = GoogleOutputListBox.SelectedIndex;
+                DispalySearchEngineResultDetailedGrid(BaiduOutputListBox, index);
+            }
+            if (SougouTabItem.IsSelected)
+            {
+                index = GoogleOutputListBox.SelectedIndex;
+                DispalySearchEngineResultDetailedGrid(SougouOutputListBox, index);
+            }
+            if (WikipediaTabItem.IsSelected)
+            {
+                index = GoogleOutputListBox.SelectedIndex;
+                DispalySearchEngineResultDetailedGrid(WikipediaOutputListBox, index);
             }
         }
 
@@ -1141,6 +1224,15 @@ namespace SmartMe.Windows
             }
         }
 
+        private void DetailedOpenLinkButton_Click(object sender, RoutedEventArgs e)
+        {
+            Shell shell = new Shell();
+            if (_selectedItemUri != null && _selectedItemUri != string.Empty)
+            {
+                shell.DoOpenWebBrowser(_selectedItemUri);
+            }
+        }     
+
         private void DetailedCloseImageButton_ImageFailed ( object sender, ExceptionRoutedEventArgs e )
         {
             
@@ -1196,7 +1288,5 @@ namespace SmartMe.Windows
         {
 
         }
-
-       
     }
 }

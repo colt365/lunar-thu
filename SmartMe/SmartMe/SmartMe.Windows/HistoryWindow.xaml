@@ -4,7 +4,7 @@
 	xmlns:ic="clr-namespace:Microsoft.Expression.Interactivity.Core;assembly=Microsoft.Expression.Interactions" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	x:Class="SmartMe.Windows.HistoryWindow"
 	x:Name="Window"
-	Title="HistoryWindow"
+	Title="历史记录"
 	Width="640" Height="480" mc:Ignorable="d">
 
 	<Window.Resources>
