@@ -739,6 +739,9 @@ namespace SmartMe.Windows
                                         break;
 
                                     case QueryResultItemType.DictionaryResult:
+
+
+
                                         break;
 
                                     default:
@@ -785,8 +788,31 @@ namespace SmartMe.Windows
                 }
                 return searchEngineResult;
             }
+            public DictResult GetDictcnResult ( object sender )
+            {
+                DictResult dictResult = null;
+                if ( sender != null )
+                {
+                    bool hasFound = FindDictcnResult( sender, out dictResult );
+                }
+                return dictResult;
+            }
 
             #region private
+
+            private bool FindDictcnResult ( object sender, out DictResult dictResult )
+            {
+                bool hasFound = false;
+                DictResult result = null;
+                if ( sender is ListBox )
+                {
+                    ListBox sourceListBox = sender as ListBox;
+                    hasFound = FindDictcnResult( _currentQueryResult, DictionaryType.Dict_cn, out result );
+                }
+                dictResult = result;
+                return hasFound;
+            }
+
             private bool FindSearchEngineResult(object sender, out SearchEngineResult searchEngineResult)
             {
                 bool hasFound = false;
@@ -814,6 +840,31 @@ namespace SmartMe.Windows
                 searchEngineResult = result;
                 return hasFound;
             }
+
+            private bool FindDictcnResult ( QueryResult queryResult, DictionaryType targetType, out DictResult dictResult )
+            {
+                bool hasFound = false;
+                dictResult = null;
+                if ( queryResult != null )
+                {
+
+                    if ( queryResult.DictResultItems != null )
+                    {
+
+                        foreach ( DictResult resultItem in queryResult.DictResultItems )
+                        {
+                            if ( resultItem != null && resultItem.DictionaryType == targetType )
+                            {
+                                dictResult = resultItem;
+                                hasFound = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                return hasFound;
+            }
+
             private bool FindSearchEngineResult(QueryResult queryResult, SearchEngineType targetType, out SearchEngineResult searchEngineResult)
             {
                 bool hasFound = false;
@@ -1009,6 +1060,62 @@ namespace SmartMe.Windows
             {
                 DoQuery(InputTextBox.Text, InputQueryType.Text);
             }
+        }
+
+        private void DetailedCloseImageButton_ImageFailed ( object sender, ExceptionRoutedEventArgs e )
+        {
+            
+        }
+
+        private void onMouseLeftButtonDown ( object sender, MouseButtonEventArgs e )
+        {
+            DetailedGrid.Visibility = Visibility.Hidden;
+        }
+
+        private void Window_Loaded ( object sender, RoutedEventArgs e )
+        {
+
+        }
+
+        private void DictcnOutputListBox_PreviewMouseWheel ( object sender, MouseWheelEventArgs e )
+        {
+            int count = DictcnOutputListBox.Items.Count;
+            int selectedIndex = DictcnOutputListBox.SelectedIndex;
+            if ( 0 <= selectedIndex && selectedIndex < count )
+            {
+                if ( e.Delta < 0 )
+                {
+                    selectedIndex = Math.Min( selectedIndex + 1, count );
+                }
+                else
+                {
+                    selectedIndex = Math.Max( selectedIndex - 1, 0 );
+                }
+                DictcnOutputListBox.SelectedIndex = selectedIndex;
+            }
+        }
+
+        private void DictcnOutputListBox_MouseDoubleClick ( object sender, MouseButtonEventArgs e )
+        {
+            if ( e.LeftButton == MouseButtonState.Pressed )
+            {
+                int index = DictcnOutputListBox.SelectedIndex;
+                DictResult result = _resultHandler.GetDictcnResult(sender);
+                //SearchEngineResult result = _resultHandler.GetSearchEngineResult( sender );
+                if ( result != null )
+                {
+                    
+                        string uri = string.Format( "{0}", result.SearchUrl );
+                        Shell shell = new Shell();
+                        shell.DoOpenWebBrowser( uri );
+                 
+                }
+            }
+        }
+
+        private void DictcnOutputListBox_SelectionChanged ( object sender, SelectionChangedEventArgs e )
+        {
+
         }
 
        
