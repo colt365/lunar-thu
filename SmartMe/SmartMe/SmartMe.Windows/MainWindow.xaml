@@ -8,7 +8,7 @@
 	xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" xmlns:il="clr-namespace:Microsoft.Expression.Interactivity.Layout;assembly=Microsoft.Expression.Interactions"
 	x:Class="SmartMe.Windows.MainWindow"
 	x:Name="Window"
-	Title="MainWindow" Topmost="True" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" AllowDrop="True" Drop="Window_Drop" PreviewDragEnter="Window_PreviewDragEnter" PreviewDrop="Window_PreviewDrop" PreviewDragLeave="Window_PreviewDragLeave" PreviewDragOver="Window_PreviewDragOver" Closing="Window_Closing" WindowStyle="None" Background="{x:Null}" Foreground="{x:Null}" AllowsTransparency="True" Opacity="0.7" HorizontalAlignment="Center" VerticalAlignment="Center" WindowState="Maximized">
+	Title="MainWindow" Topmost="True" WindowStartupLocation="Manual" ResizeMode="NoResize" AllowDrop="True" Drop="Window_Drop" PreviewDragEnter="Window_PreviewDragEnter" PreviewDrop="Window_PreviewDrop" PreviewDragLeave="Window_PreviewDragLeave" PreviewDragOver="Window_PreviewDragOver" Closing="Window_Closing" WindowStyle="None" Background="{x:Null}" Foreground="{x:Null}" AllowsTransparency="True" HorizontalAlignment="Center" VerticalAlignment="Center" WindowState="Maximized" ShowInTaskbar="False">
 	<Window.Resources>
 		<SmartMe_Core_Data:SearchEngineResult x:Key="SearchEngineResultDataSource" d:IsDataSource="True"/>
 		<AlternationConverter x:Key="AlternationConverter"/>
@@ -122,24 +122,41 @@
 				</Setter.Value>
 			</Setter>
 		</Style>
+		<Storyboard x:Key="WindowGotFocusStoryboard">
+			<ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.0010000" Storyboard.TargetName="MainDockPanel" Storyboard.TargetProperty="(UIElement.Visibility)">
+				<DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Visible}"/>
+			</ObjectAnimationUsingKeyFrames>
+		</Storyboard>
+		<Storyboard x:Key="WindowLoseFocusStoryboard">
+			<ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="MainDockPanel" Storyboard.TargetProperty="(UIElement.Visibility)" Duration="00:00:00.0010000">
+				<DiscreteObjectKeyFrame KeyTime="00:00:00">
+					<DiscreteObjectKeyFrame.Value>
+						<Visibility>Collapsed</Visibility>
+					</DiscreteObjectKeyFrame.Value>
+				</DiscreteObjectKeyFrame>
+			</ObjectAnimationUsingKeyFrames>
+		</Storyboard>
 	</Window.Resources>
 	<Window.Triggers>
 		<EventTrigger RoutedEvent="DragDrop.PreviewDragEnter">
 			<BeginStoryboard x:Name="DragEnterStoryboard_BeginStoryboard" Storyboard="{StaticResource DragEnterStoryboard}"/>
 		</EventTrigger>
+		<EventTrigger RoutedEvent="FrameworkElement.Loaded"/>
 	</Window.Triggers>
 
 	<Grid x:Name="LayoutRoot" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="将文本拖拽到这里">
 		<Grid.RowDefinitions>
+			<RowDefinition Height="0*"/>
+			<RowDefinition Height="0*"/>
 			<RowDefinition/>
 			<RowDefinition Height="0*"/>
 			<RowDefinition Height="0*"/>
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="0*"/>
-			<ColumnDefinition Width="0*"/>
-			<ColumnDefinition Width="0*"/>
 			<ColumnDefinition/>
+			<ColumnDefinition Width="0*"/>
+			<ColumnDefinition Width="0*"/>
 		</Grid.ColumnDefinitions>
 		<VisualStateManager.VisualStateGroups>
 			<VisualStateGroup x:Name="LoadingImageVisualStateGroup">
@@ -159,89 +176,130 @@
 		<i:Interaction.Behaviors>
 			<il:MouseDragElementBehavior ConstrainToParentBounds="False" X="1" Y="1"/>
 		</i:Interaction.Behaviors>
-		<ScrollViewer x:Name="ScrollViewer" Margin="8,71,-272,12.725" Grid.Column="3" Visibility="Collapsed">
-			<TextBox x:Name="ResultTextBox" TextWrapping="Wrap" Background="#FFFEFEFE" SpellCheck.IsEnabled="True" FontSize="10.667" RenderTransformOrigin="0.5,0.5">
-				<TextBox.RenderTransform>
-					<TransformGroup>
-						<ScaleTransform/>
-						<SkewTransform/>
-						<RotateTransform/>
-						<TranslateTransform/>
-					</TransformGroup>
-				</TextBox.RenderTransform>
-			</TextBox>
-		</ScrollViewer>
-		<Grid x:Name="GrabGrid" Margin="8,0,-40,0" VerticalAlignment="Top" Height="32" Visibility="Hidden" Grid.Column="3">
-			<Button x:Name="GrabButton" Margin="0,8,0,0" Content="Grab Screen" ClickMode="Press" Click="GrabButton_Click" Foreground="Black" RenderTransformOrigin="0.5,0.5" Visibility="Collapsed" d:IsHidden="True" d:LayoutOverrides="GridBox"/>
-		</Grid>
-		<DockPanel x:Name="LayoutDockPanel" Margin="0" Grid.Column="3" Background="Black" Width="245" Height="238">
-			<Grid x:Name="InputGrid" VerticalAlignment="Top" Height="48" DockPanel.Dock="Top">
+		<Grid x:Name="DetailedGrid" Margin="-216,56,10,-24.67" Grid.Row="2" Grid.RowSpan="3" d:LayoutOverrides="VerticalAlignment, GridBox">
+			<Rectangle x:Name="DetailedBackgroundRectangle" Fill="Black" Stroke="Black" RadiusX="8" RadiusY="8" Margin="-2,-2,-2,-4" d:LayoutOverrides="HorizontalAlignment, VerticalAlignment" Opacity="0.8"/>
+			<Grid Margin="2">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="0.087*"/>
+					<RowDefinition Height="0.143*"/>
+					<RowDefinition Height="0.607*"/>
+					<RowDefinition Height="0.163*"/>
+					<RowDefinition Height="0*"/>
+				</Grid.RowDefinitions>
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="0*"/>
 					<ColumnDefinition/>
+					<ColumnDefinition Width="0*"/>
 				</Grid.ColumnDefinitions>
-				<TextBox x:Name="InputTextBox" Text="搜索栏" TextWrapping="Wrap" GotKeyboardFocus="InputTextBox_GotKeyboardFocus" Background="White" Margin="3,17,8,4" LostKeyboardFocus="InputTextBox_LostKeyboardFocus" PreviewKeyUp="InputTextBox_PreviewKeyUp" Grid.Column="1" ToolTip="请输入搜索内容"/>
-				<Image x:Name="LoadingImage" HorizontalAlignment="Right" Margin="0,19,35,5" Width="24" Height="24" Grid.Column="1" Source="Images/loading/big.gif" Stretch="Fill" Visibility="Hidden"/>
-				<Button x:Name="SearchButton" Margin="210.75,18.334,9.25,4.666" Grid.Column="1" d:LayoutOverrides="GridBox" BorderBrush="{x:Null}" Foreground="{x:Null}" Width="25" Height="25" ClickMode="Press">
-					<Image x:Name="SearchImage" Source="Images/button/search.png" MouseDown="SearchImage_MouseDown"/>
-				</Button>
-				<Menu x:Name="OptionMenu" Margin="0,0,0.333,0" VerticalAlignment="Top" Height="14.334" Grid.Column="1" Background="#FF0E0E0E" HorizontalAlignment="Right" Width="58.667">
-					<MenuItem x:Name="MinimizeMenuItem" Margin="0" Foreground="Silver" Header="" Width="26">
-						<MenuItem.Icon>
-							<Image x:Name="MinimizeImage" Width="15" Height="15" Source="Images/button/minus_yellow.png" ToolTip="最小化" MouseDown="MinimizeImage_MouseDown" ForceCursor="True" Cursor="Hand" RenderTransformOrigin="12.433,0.5">
-								<Image.ContextMenu>
-									<ContextMenu/>
-								</Image.ContextMenu>
-							</Image>
-						</MenuItem.Icon>
-					</MenuItem>
-					<MenuItem x:Name="OptionMenuItem" Margin="0,0,0,-0.966000000000001" Header="" Width="25">
-						<MenuItem.Icon>
-							<StackPanel> 
-								<Image x:Name="ContextMenuImage" Width="15" Height="15" ToolTip="选项(关闭窗口！)" Source="Images/button/add_green.png" ForceCursor="True" Cursor="Hand" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1"/>
-							</StackPanel>
-						</MenuItem.Icon>
-						<MenuItem x:Name="ShowHistoryWindowMenuItem" Click="ShowHistoryWindowMenuItem_Click" Margin="0" Header="查看历史记录"/>
-						<MenuItem x:Name="ExitMenuItem" Click="ExitMenuItem_Click" Header="退出" Visibility="Collapsed"/>
-					</MenuItem>
-				</Menu>
+				<TextBlock Margin="2,2.742,114.67,1" Foreground="White" TextWrapping="Wrap" Grid.Column="1" d:LayoutOverrides="VerticalAlignment"><Run Text="详细"/><Run Text="信息"/><Run Text="："/></TextBlock>
+				<Image x:Name="DetailedCloseImageButton" HorizontalAlignment="Right" Margin="0,0.375,8.004,3.327" Width="16" Grid.Column="1" d:LayoutOverrides="GridBox" Height="16" Source="Images/button/x_red.png"/>
+				<TextBox x:Name="DetailedTitleTextBox" Margin="8,2.67,8,1.666" Grid.Column="1" Grid.Row="1" TextWrapping="Wrap" d:LayoutOverrides="Width, HorizontalMargin"/>
+				<RichTextBox x:Name="DetailedDescriptionRichTextBox" Margin="8,4.447,8,1.242" Grid.Column="1" Grid.Row="2" d:LayoutOverrides="Width, HorizontalMargin">
+					<FlowDocument/>
+				</RichTextBox>
+				<Button x:Name="DetailedOpenLinkButton" HorizontalAlignment="Right" Margin="0,0,8,0" VerticalAlignment="Bottom" Width="88.67" Height="22" Content="打开链接" Grid.Column="1" Grid.Row="3" d:LayoutOverrides="HorizontalAlignment" Grid.RowSpan="2"/>
+				<Image x:Name="DetailedPinImageButton" HorizontalAlignment="Right" Margin="0,0.375,29.004,3.327" Width="16" Grid.Column="1" Height="16" Source="Images/button/pin.png" d:LayoutOverrides="GridBox"/>
 			</Grid>
-			<TabControl x:Name="OutputTabControl" Margin="0" DockPanel.Dock="Bottom" Background="Black">
-				<TabItem x:Name="GoogleTabItem" Header="谷歌">
-					<Grid x:Name="GoogleOutputGrid">
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="0*"/>
-							<ColumnDefinition Width="0*"/>
-							<ColumnDefinition/>
-						</Grid.ColumnDefinitions>
-						<ListBox x:Name="GoogleOutputListBox" Background="White" BorderBrush="Black" Foreground="Black" IsSynchronizedWithCurrentItem="True" ItemTemplate="{DynamicResource ItemTemplate}" DataContext="{Binding Results, Converter={StaticResource AlternationConverter}, Mode=TwoWay, Source={StaticResource SearchEngineResultDataSource}, UpdateSourceTrigger=Explicit}" ItemsSource="{Binding [0].Title, Mode=OneWay}" ItemContainerStyle="{DynamicResource ListBoxItemStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="235" Height="158.04" RenderTransformOrigin="0.5,0.5" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="2" PreviewMouseWheel="GoogleOutputListBox_PreviewMouseWheel" MouseDoubleClick="GoogleOutputListBox_MouseDoubleClick"/>
-					</Grid>
-				</TabItem>
-				<TabItem x:Name="BaiduTabItem" Header="百度">
-					<Grid x:Name="BaiduOutputGrid">
-						<ListBox x:Name="BaiduOutputListBox" Background="White" BorderBrush="Black" Foreground="Black" IsSynchronizedWithCurrentItem="True" ItemTemplate="{DynamicResource ItemTemplate}" DataContext="{Binding Results, Converter={StaticResource AlternationConverter}, Mode=TwoWay, Source={StaticResource SearchEngineResultDataSource}, UpdateSourceTrigger=Explicit}" ItemsSource="{Binding Mode=OneWay}" ItemContainerStyle="{DynamicResource ListBoxItemStyle}" MouseDoubleClick="BaiduOutputListBox_MouseDoubleClick" HorizontalAlignment="Left" VerticalAlignment="Top" Width="235" Height="158.04" RenderTransformOrigin="0.5,0.5" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
-					</Grid>
-				</TabItem>
-				<TabItem x:Name="SougouTabItem" Header="搜狗">
-					<Grid x:Name="SougouOutputGrid">
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="0*"/>
-							<ColumnDefinition Width="0*"/>
-							<ColumnDefinition/>
-						</Grid.ColumnDefinitions>
-						<ListBox x:Name="SougouOutputListBox" Background="White" BorderBrush="Black" Foreground="Black" IsSynchronizedWithCurrentItem="True" ItemTemplate="{DynamicResource ItemTemplate}" DataContext="{Binding Results, Converter={StaticResource AlternationConverter}, Mode=TwoWay, Source={StaticResource SearchEngineResultDataSource}, UpdateSourceTrigger=Explicit}" ItemsSource="{Binding Mode=OneWay}" ItemContainerStyle="{DynamicResource ListBoxItemStyle}" MouseDoubleClick="SougouOutputListBox_MouseDoubleClick" HorizontalAlignment="Left" VerticalAlignment="Top" Width="235" Height="158.04" RenderTransformOrigin="0.5,0.5" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="2"/>
-					</Grid>
-				</TabItem>
-				<TabItem x:Name="WikipediaTabItem" Header="维基">
-					<Grid x:Name="WikipediaOutputGrid">
+		</Grid>
+		<Grid x:Name="DicardedGrid" HorizontalAlignment="Right" Margin="0,-243.605,-320,0" Width="264" Grid.Column="3" VerticalAlignment="Top" Height="227.605">
+			<ScrollViewer x:Name="ScrollViewer" Visibility="Collapsed" d:LayoutOverrides="HorizontalAlignment, GridBox">
+				<TextBox x:Name="ResultTextBox" TextWrapping="Wrap" Background="#FFFEFEFE" SpellCheck.IsEnabled="True" FontSize="10.667" RenderTransformOrigin="0.5,0.5">
+					<TextBox.RenderTransform>
+						<TransformGroup>
+							<ScaleTransform/>
+							<SkewTransform/>
+							<RotateTransform/>
+							<TranslateTransform/>
+						</TransformGroup>
+					</TextBox.RenderTransform>
+				</TextBox>
+			</ScrollViewer>
+			<Grid x:Name="GrabGrid" Margin="0,25,232,202.605" Visibility="Hidden" d:LayoutOverrides="GridBox">
+				<Button x:Name="GrabButton" Margin="0,8,0,0" Content="Grab Screen" ClickMode="Press" Click="GrabButton_Click" Foreground="Black" RenderTransformOrigin="0.5,0.5" Visibility="Collapsed" d:IsHidden="True" d:LayoutOverrides="GridBox"/>
+			</Grid>
+		</Grid>
+		<Grid x:Name="LayoutGrid" Margin="-2,-2,-247,-24.67" Grid.ColumnSpan="4" Grid.RowSpan="5">
+			<Rectangle x:Name="LayoutBackgroundRectangle" Fill="Black" RadiusX="8" RadiusY="8" Opacity="0.8" d:LayoutOverrides="HorizontalAlignment" Margin="-2"/>
+			<DockPanel x:Name="LayoutDockPanel" HorizontalAlignment="Right" Margin="2" d:LayoutOverrides="Height">
+				<DockPanel x:Name="MainDockPanel" d:LayoutOverrides="Height">
+					<Grid x:Name="InputGrid" VerticalAlignment="Top" Height="48" DockPanel.Dock="Top">
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="0*"/>
 							<ColumnDefinition/>
 						</Grid.ColumnDefinitions>
-						<ListBox x:Name="WikipediaOutputListBox" Background="White" BorderBrush="Black" Foreground="Black" IsSynchronizedWithCurrentItem="True" ItemTemplate="{DynamicResource ItemTemplate}" DataContext="{Binding Results, Converter={StaticResource AlternationConverter}, Mode=TwoWay, Source={StaticResource SearchEngineResultDataSource}, UpdateSourceTrigger=Explicit}" ItemsSource="{Binding Mode=OneWay}" ItemContainerStyle="{DynamicResource ListBoxItemStyle}" MouseDoubleClick="WikipediaOutputListBox_MouseDoubleClick" HorizontalAlignment="Left" VerticalAlignment="Top" Width="235" Height="158.04" RenderTransformOrigin="0.5,0.5" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="1"/>
+						<TextBox x:Name="InputTextBox" Text="搜索栏" TextWrapping="Wrap" GotKeyboardFocus="InputTextBox_GotKeyboardFocus" Background="White" Margin="3,17,8,4" LostKeyboardFocus="InputTextBox_LostKeyboardFocus" PreviewKeyUp="InputTextBox_PreviewKeyUp" Grid.Column="1" ToolTip="请输入搜索内容"/>
+						<Image x:Name="LoadingImage" HorizontalAlignment="Right" Margin="0,19,35,5" Width="24" Height="24" Grid.Column="1" Source="Images/loading/big.gif" Stretch="Fill" Visibility="Hidden"/>
+						<Button x:Name="SearchButton" Margin="210.75,18.334,9.25,4.666" Grid.Column="1" d:LayoutOverrides="GridBox" BorderBrush="{x:Null}" Foreground="{x:Null}" Width="25" Height="25" ClickMode="Press" Click="SearchButton_Click">
+							<Image x:Name="SearchImage" MouseDown="SearchImage_MouseDown" Source="Images/button/search.png"/>
+						</Button>
+						<Menu x:Name="OptionMenu" Margin="0,0,0.333,0" VerticalAlignment="Top" Height="14.334" Grid.Column="1" HorizontalAlignment="Right" Width="58.667" Background="{x:Null}">
+							<MenuItem x:Name="MinimizeMenuItem" Margin="0" Foreground="Silver" Header="" Width="26">
+								<MenuItem.Icon>
+									<Image x:Name="MinimizeImage" Width="16" Height="16" Source="Images/button/minus_yellow.png" ToolTip="最小化" MouseDown="MinimizeImage_MouseDown" ForceCursor="True" Cursor="Hand" RenderTransformOrigin="12.433,0.5">
+										<Image.ContextMenu>
+											<ContextMenu/>
+										</Image.ContextMenu>
+									</Image>
+								</MenuItem.Icon>
+							</MenuItem>
+							<MenuItem x:Name="OptionMenuItem" Margin="0,0,0,-0.966000000000001" Header="" Width="25">
+								<MenuItem.Icon>
+									<StackPanel> 
+										<Image x:Name="ContextMenuImage" Width="16" Height="16" ToolTip="选项(关闭窗口！)" Source="Images/button/add_green.png" ForceCursor="True" Cursor="Hand" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1"/>
+									</StackPanel>
+								</MenuItem.Icon>
+								<MenuItem x:Name="ShowHistoryWindowMenuItem" Click="ShowHistoryWindowMenuItem_Click" Margin="0" Header="查看历史记录"/>
+								<MenuItem x:Name="ExitMenuItem" Click="ExitMenuItem_Click" Header="退出" Visibility="Collapsed"/>
+							</MenuItem>
+						</Menu>
 					</Grid>
-				</TabItem>
-			</TabControl>
-		</DockPanel>
+					<TabControl x:Name="OutputTabControl" Margin="0" DockPanel.Dock="Bottom" Background="{x:Null}" BorderBrush="{x:Null}">
+						<TabItem x:Name="GoogleTabItem" Header="谷歌">
+							<Grid x:Name="GoogleOutputGrid">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="0*"/>
+									<ColumnDefinition Width="0*"/>
+									<ColumnDefinition/>
+								</Grid.ColumnDefinitions>
+								<ListBox x:Name="GoogleOutputListBox" Background="White" Foreground="Black" IsSynchronizedWithCurrentItem="True" ItemTemplate="{DynamicResource ItemTemplate}" DataContext="{Binding Results, Converter={StaticResource AlternationConverter}, Mode=TwoWay, Source={StaticResource SearchEngineResultDataSource}, UpdateSourceTrigger=Explicit}" ItemsSource="{Binding [0].Title, Mode=OneWay}" ItemContainerStyle="{DynamicResource ListBoxItemStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="235" Height="158.04" RenderTransformOrigin="0.5,0.5" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="2" PreviewMouseWheel="GoogleOutputListBox_PreviewMouseWheel" MouseDoubleClick="GoogleOutputListBox_MouseDoubleClick" BorderBrush="{x:Null}" SelectionChanged="GoogleOutputListBox_SelectionChanged"/>
+							</Grid>
+						</TabItem>
+						<TabItem x:Name="BaiduTabItem" Header="百度">
+							<Grid x:Name="BaiduOutputGrid">
+								<ListBox x:Name="BaiduOutputListBox" Background="White" BorderBrush="Black" Foreground="Black" IsSynchronizedWithCurrentItem="True" ItemTemplate="{DynamicResource ItemTemplate}" DataContext="{Binding Results, Converter={StaticResource AlternationConverter}, Mode=TwoWay, Source={StaticResource SearchEngineResultDataSource}, UpdateSourceTrigger=Explicit}" ItemsSource="{Binding Mode=OneWay}" ItemContainerStyle="{DynamicResource ListBoxItemStyle}" MouseDoubleClick="BaiduOutputListBox_MouseDoubleClick" HorizontalAlignment="Left" VerticalAlignment="Top" Width="235" Height="158.04" RenderTransformOrigin="0.5,0.5" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+							</Grid>
+						</TabItem>
+						<TabItem x:Name="SougouTabItem" Header="搜狗">
+							<Grid x:Name="SougouOutputGrid">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="0*"/>
+									<ColumnDefinition Width="0*"/>
+									<ColumnDefinition/>
+								</Grid.ColumnDefinitions>
+								<ListBox x:Name="SougouOutputListBox" Background="White" BorderBrush="Black" Foreground="Black" IsSynchronizedWithCurrentItem="True" ItemTemplate="{DynamicResource ItemTemplate}" DataContext="{Binding Results, Converter={StaticResource AlternationConverter}, Mode=TwoWay, Source={StaticResource SearchEngineResultDataSource}, UpdateSourceTrigger=Explicit}" ItemsSource="{Binding Mode=OneWay}" ItemContainerStyle="{DynamicResource ListBoxItemStyle}" MouseDoubleClick="SougouOutputListBox_MouseDoubleClick" HorizontalAlignment="Left" VerticalAlignment="Top" Width="235" Height="158.04" RenderTransformOrigin="0.5,0.5" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="2"/>
+							</Grid>
+						</TabItem>
+						<TabItem x:Name="WikipediaTabItem" Header="维基">
+							<Grid x:Name="WikipediaOutputGrid">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="0*"/>
+									<ColumnDefinition/>
+								</Grid.ColumnDefinitions>
+								<ListBox x:Name="WikipediaOutputListBox" Background="White" BorderBrush="Black" Foreground="Black" IsSynchronizedWithCurrentItem="True" ItemTemplate="{DynamicResource ItemTemplate}" DataContext="{Binding Results, Converter={StaticResource AlternationConverter}, Mode=TwoWay, Source={StaticResource SearchEngineResultDataSource}, UpdateSourceTrigger=Explicit}" ItemsSource="{Binding Mode=OneWay}" ItemContainerStyle="{DynamicResource ListBoxItemStyle}" MouseDoubleClick="WikipediaOutputListBox_MouseDoubleClick" HorizontalAlignment="Left" VerticalAlignment="Top" Width="235" Height="158.04" RenderTransformOrigin="0.5,0.5" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="1"/>
+							</Grid>
+						</TabItem>
+					</TabControl>
+				</DockPanel>
+			</DockPanel>
+		</Grid>
+		<Grid x:Name="SuggestionGrid" Margin="-147,-88,10,-40" Grid.RowSpan="2">
+			<Rectangle x:Name="SuggestionBackgroundRectangle" Fill="Black" Stroke="Black" Margin="-2,-2,-2,-4" RadiusX="8" RadiusY="8" Opacity="0.8"/>
+			<Grid x:Name="SuggestionPanel" Margin="2" d:LayoutOverrides="HorizontalAlignment, VerticalAlignment">
+				<TextBlock x:Name="SuggestionLabel" VerticalAlignment="Top" Height="20" Foreground="White" Text="搜索建议：" TextWrapping="Wrap" d:LayoutOverrides="VerticalAlignment"/>
+				<ListBox x:Name="SuggestionListBox" Margin="6.5,20,6.5,0" Width="120" d:LayoutOverrides="Height"/>
+				<Image x:Name="SuggestionPinImageButton" HorizontalAlignment="Right" Margin="0,2.001,23.833,0" Width="16" Height="16" Source="Images\button\pin.png" VerticalAlignment="Top"/>
+				<Image x:Name="SuggestionCloseImageButton" HorizontalAlignment="Right" Margin="0,2.335,2.834,0" Width="16" Height="16" Source="Images/button/x_red.png" VerticalAlignment="Top"/>
+			</Grid>
+		</Grid>
 	</Grid>
 </Window>

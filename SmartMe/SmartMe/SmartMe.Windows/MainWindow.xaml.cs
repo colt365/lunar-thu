@@ -522,20 +522,31 @@ namespace SmartMe.Windows
         #endregion 鼠标拖拽
 
         #region 搜索栏
+		private string GetSearchTextBoxQuery()
+		{
+			string text = InputTextBox.Text;
+            string trimedText = text.Trim(new char[] { ' ', '\t', '\r', '\n' });
+			return trimedText;
+		}
+		
+		private void SearchButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+			string query = GetSearchTextBoxQuery();
+        	DoQuery(query, InputQueryType.Text);
+        }
+		
 		private void InputTextBox_PreviewKeyUp(object sender, System.Windows.Input.KeyEventArgs e)
         {
-        	string text = InputTextBox.Text;
-            string trimedText = text.Trim(new char[] { ' ', '\t', '\r', '\n' });
-
+			string query = GetSearchTextBoxQuery(); 
             if (e.Key == Key.Return)
             {
-                DoQuery(trimedText, InputQueryType.Text);
+                DoQuery(query, InputQueryType.Text);
             }
             else // DoWaitedQuery
             {
                 int milliSecondsTimedOut = 500; // 500 毫秒
                 ThreadStart threadStart = delegate {
-                    this.DoDelayedQuery(trimedText, InputQueryType.Text, milliSecondsTimedOut);
+                    this.DoDelayedQuery(query, InputQueryType.Text, milliSecondsTimedOut);
                 };
                 Thread thread = new Thread(threadStart);
                 thread.IsBackground = true;
@@ -547,7 +558,7 @@ namespace SmartMe.Windows
             if (InputTextBox.Text == "")
             {
                 InputTextBox.Text = "搜索栏";
-                InputTextBox.Opacity = 0.5;
+                InputTextBox.Opacity = 0.8;
                 _hasInputText = false;
             }
             else
@@ -962,5 +973,7 @@ namespace SmartMe.Windows
                 DoQuery(InputTextBox.Text, InputQueryType.Text);
             }
         }
+
+       
     }
 }
