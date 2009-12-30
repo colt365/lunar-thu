@@ -75,7 +75,7 @@ namespace SmartMe.Windows
         private System.Windows.Forms.NotifyIcon notifyIcon;
         private System.Windows.Forms.ContextMenu trayContextMenu;
         private System.Windows.Forms.MenuItem trayExitMenuItem;
-        private System.Windows.Forms.MenuItem menuItem2;
+        private System.Windows.Forms.MenuItem trayViewHistorymenuItem;
 
         #endregion
 		
@@ -132,12 +132,16 @@ namespace SmartMe.Windows
         private void InitNotifyIcon(){
             trayContextMenu = new System.Windows.Forms.ContextMenu();
             trayExitMenuItem = new System.Windows.Forms.MenuItem();
-            menuItem2 = new System.Windows.Forms.MenuItem();
+            trayViewHistorymenuItem = new System.Windows.Forms.MenuItem();
 
             trayContextMenu.MenuItems.AddRange(
-                        new System.Windows.Forms.MenuItem[] { trayExitMenuItem });
+                        new System.Windows.Forms.MenuItem[] { trayViewHistorymenuItem, trayExitMenuItem });
 
-            trayExitMenuItem.Index = 0;
+            trayViewHistorymenuItem.Index = 0;
+            trayViewHistorymenuItem.Text = "查看历史记录(&H)";
+            trayViewHistorymenuItem.Click += new EventHandler(TrayViewHistoryMenuItem_Click);
+
+            trayExitMenuItem.Index = 1;
             trayExitMenuItem.Text = "退出(&E)";
             trayExitMenuItem.Click += new EventHandler(TrayExitMenuItem_Click);
 
@@ -900,6 +904,11 @@ namespace SmartMe.Windows
         private void TrayExitMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void TrayViewHistoryMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowHistoryWindow(this.Top, this.Left);
         }
         #endregion MinimizeToIcon
 
