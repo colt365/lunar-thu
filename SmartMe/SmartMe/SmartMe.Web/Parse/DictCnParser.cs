@@ -12,6 +12,7 @@ namespace SmartMe.Web.Parse
 
         #region IParser Members
         DictResult dictResult;
+        int divCount = 0;
         public SmartMe.Core.Data.DictResult Parse ( string html, Encoding encoding )
         {
             dictResult = new DictResult();
@@ -70,27 +71,43 @@ namespace SmartMe.Web.Parse
                     switch ( oChunk.cParamChars[i] )
                     {
                         default:
-                            if ( oChunk.sValues[i] == "mutti" && oChunk.sParams[i] == "class" && state == 0 )
+                            if ( oChunk.sValues[i] == "main_right_left" && oChunk.sParams[i] == "id" && state == 0 )
                             {
                                 state = 1;
 
                             }
-                            else if ( oChunk.sValues[i] == "pronounce" && oChunk.sParams[i] == "class" )
+                            else if ( oChunk.sValues[i] == "word" && oChunk.sParams[i] == "id" && state > 0 )
                             {
-                                state = 5;
+                                state = 2;
                             }
-                            else if ( oChunk.sValues[i] == "mut_jies" && oChunk.sParams[i] == "class" )
+                            else if ( oChunk.sValues[i] == "pron" && oChunk.sParams[i] == "id" && state ==3 )
                             {
-                                state = 7;
+                                state = 4;
                             }
-                            else if ( oChunk.sValues[i] == "mut_ol" && oChunk.sParams[i] == "class" && ( state == 12 || state == 20 ) )
+                            else if ( oChunk.sValues[i] == "exp_exp" && oChunk.sParams[i] == "id" && state>2 )
                             {
-                                state += 1;
+                                state =6;
+                                divCount = 1;
                             }
-                            else if ( oChunk.sValues[i] == "more" && oChunk.sParams[i] == "class" && state == 17 )
+                            else if ( oChunk.sValues[i] == "exp_eg" && oChunk.sParams[i] == "id" && state>2 )
                             {
-                                state = 18;
+                                state = 8;
                             }
+                            else if ( oChunk.sValues[i] == "exp_tran" && oChunk.sParams[i] == "id" && state > 2 )
+                            {
+                                state = 11;
+                            }
+                            else if ( oChunk.sValues[i] == "exp_eee" && oChunk.sParams[i] == "id" && state > 2 )
+                            {
+                                state = 14;
+                                divCount = 1;
+                            }
+                            else if ( oChunk.sValues[i] == "exp_baike" && oChunk.sParams[i] == "id" && state > 2 )
+                            {
+                                state = 16;
+                                divCount = 1;
+                            }
+                            
                             break;
                     }
                 }
@@ -101,110 +118,87 @@ namespace SmartMe.Web.Parse
 
         private void HandleOpenTag ( HTMLchunk oChunk, ref int state )
         {
-
-            if ( oChunk.sTag == "td" && ( state == 1 || state == 10 ) )
+            
+            if ( oChunk.sTag == "ol" && state==8 )
             {
-                state += 1;
+                state =9;
             }
-            else if ( oChunk.sTag == "ul" && state == 6 )
+            else if ( oChunk.sTag == "table" && state == 11 )
             {
-                state = 7;
-            }
-            else if ( oChunk.sTag == "span" && state == 3 )
+                state = 12;
+            }else if( oChunk.sTag== "div" && ( state==6 || state== 14 || state ==16) )
             {
-                state = 4;
+                ++divCount;
             }
-            else if ( oChunk.sTag == "strong" && state == 7 )
-            {
-                state = 8;
-            }
-            else if ( oChunk.sTag == "li" && ( state == 13 || state == 21 ) )
-            {
-                state += 1;
-            }
-            else if ( oChunk.sTag == "div" && state == 16 )
-            {
-                state += 1;
-            }
+            
+           
         }
         private void HandleCloseTag ( HTMLchunk oChunk, ref int state )
         {
-            if ( oChunk.sTag == "td" && ( state == 2 ) )
+
+            if (   state == 2  )
             {
                 state += 1;
             }
-            else if ( oChunk.sTag == "span" && state == 5 )
+            else if ( state ==4 )
             {
-                state = 6;
+                state = 5;
             }
-            else if ( state == 8 && oChunk.sTag == "strong" )
-            {
-                state = 9;
-            }
-            else if ( oChunk.sTag == "td" && ( state == 11 ) )
+            
+            else if ( oChunk.sTag == "ol" && ( state == 9 ) )
             {
                 state = 10;
             }
-            else if ( oChunk.sTag == "li" && state == 14 )
+            else if ( oChunk.sTag == "table" && state == 12 )
             {
-                state -= 1;
+                state = 13;
             }
-            else if ( oChunk.sTag == "div" && ( state == 18 ) )
+            else if ( oChunk.sTag == "div" && ( state==6 || state == 14 || state == 16 ) )
             {
-                state += 1;
+                if(--divCount==0)
+                {
+                    state +=1;
+                }
             }
-            else if ( oChunk.sTag == "ol" && ( state == 22 ) )
-            {
-                state += 1;
-            }
+            
+           
 
         }
         private void HandleText ( HTMLchunk oChunk, ref int state )
         {
             if ( state == 2 )
             {
-                dictResult.Word += ( oChunk.oHTML );
+                dictResult.Word += ( oChunk.oHTML.Trim(new char[] { ' ', '\t', '\r', '\n' }) );
             }
-            else if ( state == 5 )
+            else if ( state == 4 )
             {
-                dictResult.Pronunciation += ( oChunk.oHTML );
+                dictResult.Pronunciation += ( System.Web.HttpUtility.HtmlDecode( oChunk.oHTML ) );
             }
-            else if ( state == 8 )
+            else if ( state == 6 )
             {
-                dictResult.ChineseExplanations += ( oChunk.oHTML );
+               
+                dictResult.ChineseExplanations += ( oChunk.oHTML.Trim(new char[] { ' ', '\t', '\r', '\n' }) );
             }
-            else if ( oChunk.oHTML == "词形变化:" )
+           
+            else if ( state == 12 )
             {
-                state = 10;
+                dictResult.Variations += ( oChunk.oHTML.Trim( new char[] { ' ', '\t', '\r', '\n' } ) );
             }
-            else if ( state == 11 )
-            {
-                dictResult.Variations += ( oChunk.oHTML );
-            }
-            else if ( oChunk.oHTML == "英英解释:" )
-            {
-                state = 12;
-            }
+           
             else if ( state == 14 )
             {
-                dictResult.EnglishExplanations += ( oChunk.oHTML );
+                dictResult.EnglishExplanations += ( oChunk.oHTML.Trim( new char[] { ' ', '\t', '\r', '\n' } ) );
             }
-            else if ( state == 22 )
+            else if ( state == 9 )
             {
-                dictResult.Examples += ( oChunk.oHTML );
+                dictResult.Examples += ( (oChunk.oHTML.Trim( new char[] { ' ', '\t', '\r', '\n' } ) ));
             }
-            else if ( oChunk.oHTML == "互动百科:" )
+            else if ( state == 16 )
             {
-                state = 16;
+                dictResult.FromEncyclopedia += ( oChunk.oHTML.Trim( new char[] { ' ', '\t', '\r', '\n' } ) );
             }
-            else if ( state == 18 )
-            {
-                dictResult.FromEncyclopedia += ( oChunk.oHTML );
-            }
-            else if ( oChunk.oHTML == "例句与用法:" )
-            {
-                state = 20;
-            }
+           
+           
 
         }
 
