@@ -1126,10 +1126,22 @@ namespace SmartMe.Windows
 
         #region MinimizeToIcon
         private bool firstShowTip = true;
+        /*
         private void MinimizeImage_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
 
             // TODO:here
+            Hide();
+            if (notifyIcon != null && firstShowTip)
+            {
+                firstShowTip = false;
+                notifyIcon.ShowBalloonTip(2000);
+            }
+        }
+        */
+
+        private void MinimizeMenuItem_Click(object sender, RoutedEventArgs e)
+        {
             Hide();
             if (notifyIcon != null && firstShowTip)
             {
@@ -1288,5 +1300,7 @@ namespace SmartMe.Windows
         {
 
         }
+
+
     }
 }

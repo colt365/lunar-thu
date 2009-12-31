@@ -233,9 +233,9 @@
 							<Image x:Name="SearchImage" MouseDown="SearchImage_MouseDown" Source="Images/button/search.png" RenderTransformOrigin="2.074,0.157" HorizontalAlignment="Right" VerticalAlignment="Top"/>
 						</Button>
 						<Menu x:Name="OptionMenu" Margin="0,0,0.333,0" VerticalAlignment="Top" Height="14.334" Grid.Column="1" HorizontalAlignment="Right" Width="58.667" Background="{x:Null}">
-							<MenuItem x:Name="MinimizeMenuItem" Margin="0" Foreground="Silver" Header="" Width="26">
+							<MenuItem x:Name="MinimizeMenuItem" Margin="0" Foreground="Silver" Header="" Width="26" Click="MinimizeMenuItem_Click" ToolTip="最小化">
 								<MenuItem.Icon>
-									<Image x:Name="MinimizeImage" Width="16" Height="16" Source="Images/button/minus_yellow.png" ToolTip="最小化" MouseDown="MinimizeImage_MouseDown" ForceCursor="True" Cursor="Hand" RenderTransformOrigin="12.433,0.5" Focusable="True">
+									<Image x:Name="MinimizeImage" Width="16" Height="16" Source="Images/button/minus_yellow.png" ForceCursor="True" Cursor="Hand" RenderTransformOrigin="12.433,0.5" Focusable="True">
 										<Image.ContextMenu>
 											<ContextMenu/>
 										</Image.ContextMenu>
