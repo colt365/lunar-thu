@@ -51,7 +51,10 @@ namespace SmartMe.Core.Record
             catch (InvalidOperationException e)
             {
                 Console.WriteLine(e);
-                throw;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
             }
             finally
             {
@@ -74,6 +77,10 @@ namespace SmartMe.Core.Record
                     Console.WriteLine(e);
                     throw;
                 }
+                catch (Exception e)
+                {
+                    throw;
+                }
                 finally
                 {
                     fileReader.Close();
@@ -88,6 +95,10 @@ namespace SmartMe.Core.Record
                 return null;
             }
             catch (IOException)
+            {
+                return null;
+            }
+            catch (Exception e)
             {
                 return null;
             }
