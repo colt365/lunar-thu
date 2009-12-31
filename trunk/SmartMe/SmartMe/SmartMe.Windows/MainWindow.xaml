@@ -296,7 +296,7 @@
                                     <ColumnDefinition Width="0*"/>
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
-                                <ListBox x:Name="DictcnOutputListBox" Background="White" Foreground="Black" IsSynchronizedWithCurrentItem="True" ItemTemplate="{DynamicResource ItemTemplate}"  ItemContainerStyle="{DynamicResource ListBoxItemStyle}" VerticalAlignment="Top" Height="158.04" RenderTransformOrigin="0.5,0.5" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="2" PreviewMouseWheel="DictcnOutputListBox_PreviewMouseWheel" MouseDoubleClick="DictcnOutputListBox_MouseDoubleClick" BorderBrush="{x:Null}" SelectionChanged="DictcnOutputListBox_SelectionChanged" d:LayoutOverrides="Width"/>
+                                <ListBox x:Name="DictcnOutputListBox" Background="White" Foreground="Black" IsSynchronizedWithCurrentItem="True" ItemTemplate="{DynamicResource ItemTemplate}"  ItemContainerStyle="{DynamicResource ListBoxItemStyle}" VerticalAlignment="Top" Height="158.04" RenderTransformOrigin="0.5,0.5" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="2" PreviewMouseWheel="DictcnOutputListBox_PreviewMouseWheel" MouseDoubleClick="DictcnOutputListBox_MouseDoubleClick" BorderBrush="{x:Null}" SelectionChanged="DictcnOutputListBox_SelectionChanged" d:LayoutOverrides="Width"/>
                             </Grid>
                         </TabItem>
                     </TabControl>

@@ -831,7 +831,7 @@ namespace SmartMe.Windows
                                             string dictname = null;
                                             bool hasFound = FindUIElements( dictItem, out listBox, out tabItem, out dictname );
 
-                                            if ( hasFound )
+                                            if ( hasFound && dictItem.Word!=string.Empty )
                                             {
                                                 listBox.Items.Clear();
                                                 /*foreach ( SearchEngineResult.ResultItem resultItem in searchEngineItem.Results )

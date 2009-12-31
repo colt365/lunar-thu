@@ -16,7 +16,7 @@ namespace SmartMe.Web.Search
 
             SmartMe.Core.Data.DictResult emptyResult = new SmartMe.Core.Data.DictResult();
             emptyResult.DictionaryType = SmartMe.Core.Data.DictionaryType.Dict_cn;
-            string url = "http://www.dict.cn/search?q=" + HttpUtility.UrlEncode( query.Text, Encoding.GetEncoding( "gb2312" ) );
+            string url = "http://dict.cn/search?q=" + HttpUtility.UrlEncode( query.Text, Encoding.GetEncoding( "gb2312" ) );
             emptyResult.SearchUrl = url;
             if ( query == null || query.QueryType != SmartMe.Core.Data.InputQueryType.Text || query.Text == null || query.Text == "" )
             {
