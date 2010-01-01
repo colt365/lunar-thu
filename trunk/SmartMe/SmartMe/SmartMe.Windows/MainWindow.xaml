@@ -255,23 +255,23 @@
 						</Menu>
 					</Grid>
 					<TabControl x:Name="OutputTabControl" Margin="0" DockPanel.Dock="Bottom" Background="{x:Null}" BorderBrush="{x:Null}">
-						<TabItem x:Name="GoogleTabItem" Header="谷歌">
+						<TabItem x:Name="GoogleTabItem" Header="谷歌" Width="90" Height="28">
 							<Grid x:Name="GoogleOutputGrid">
 								<Grid.ColumnDefinitions>
 									<ColumnDefinition Width="0*"/>
 									<ColumnDefinition Width="0*"/>
 									<ColumnDefinition/>
 								</Grid.ColumnDefinitions>
-								<ListBox x:Name="GoogleOutputListBox" Background="White" Foreground="Black" IsSynchronizedWithCurrentItem="True" ItemTemplate="{DynamicResource ItemTemplate}" DataContext="{Binding Results, Converter={StaticResource AlternationConverter}, Mode=TwoWay, Source={StaticResource SearchEngineResultDataSource}, UpdateSourceTrigger=Explicit}" ItemsSource="{Binding [0].Title, Mode=OneWay}" ItemContainerStyle="{DynamicResource ListBoxItemStyle}" VerticalAlignment="Top" Height="158.04" RenderTransformOrigin="0.5,0.5" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="2" PreviewMouseWheel="GoogleOutputListBox_PreviewMouseWheel" MouseDoubleClick="GoogleOutputListBox_MouseDoubleClick" BorderBrush="{x:Null}" SelectionChanged="GoogleOutputListBox_SelectionChanged" d:LayoutOverrides="Width"/>
+								<ListBox x:Name="GoogleOutputListBox" Background="White" Foreground="Black" IsSynchronizedWithCurrentItem="True" ItemTemplate="{DynamicResource ItemTemplate}" DataContext="{Binding Results, Converter={StaticResource AlternationConverter}, Mode=TwoWay, Source={StaticResource SearchEngineResultDataSource}, UpdateSourceTrigger=Explicit}" ItemsSource="{Binding [0].Title, Mode=OneWay}" ItemContainerStyle="{DynamicResource ListBoxItemStyle}" VerticalAlignment="Bottom" Height="160" RenderTransformOrigin="0.5,0.5" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="2" PreviewMouseWheel="GoogleOutputListBox_PreviewMouseWheel" MouseDoubleClick="GoogleOutputListBox_MouseDoubleClick" BorderBrush="{x:Null}" SelectionChanged="GoogleOutputListBox_SelectionChanged" Width="480"/>
 							</Grid>
 						</TabItem>
-						<TabItem x:Name="BaiduTabItem" Header="百度">
-							<Grid x:Name="BaiduOutputGrid">
+						<TabItem x:Name="BaiduTabItem" Header="百度" Width="90" Height="28">
+							<Grid x:Name="BaiduOutputGrid" Width="480" Height="160">
 								<ListBox x:Name="BaiduOutputListBox" Background="White" BorderBrush="Black" Foreground="Black" IsSynchronizedWithCurrentItem="True" ItemTemplate="{DynamicResource ItemTemplate}" DataContext="{Binding Results, Converter={StaticResource AlternationConverter}, Mode=TwoWay, Source={StaticResource SearchEngineResultDataSource}, UpdateSourceTrigger=Explicit}" ItemsSource="{Binding Mode=OneWay}" ItemContainerStyle="{DynamicResource ListBoxItemStyle}" MouseDoubleClick="BaiduOutputListBox_MouseDoubleClick" VerticalAlignment="Top" Height="158.04" RenderTransformOrigin="0.5,0.5" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" SelectionChanged="BaiduOutputListBox_SelectionChanged" d:LayoutOverrides="Width"/>
 							</Grid>
 						</TabItem>
-						<TabItem x:Name="SougouTabItem" Header="搜狗">
-							<Grid x:Name="SougouOutputGrid">
+						<TabItem x:Name="SougouTabItem" Header="搜狗" Width="90" Height="28">
+							<Grid x:Name="SougouOutputGrid" Width="480" Height="160">
 								<Grid.ColumnDefinitions>
 									<ColumnDefinition Width="0*"/>
 									<ColumnDefinition Width="0*"/>
@@ -280,8 +280,8 @@
 								<ListBox x:Name="SougouOutputListBox" Background="White" BorderBrush="Black" Foreground="Black" IsSynchronizedWithCurrentItem="True" ItemTemplate="{DynamicResource ItemTemplate}" DataContext="{Binding Results, Converter={StaticResource AlternationConverter}, Mode=TwoWay, Source={StaticResource SearchEngineResultDataSource}, UpdateSourceTrigger=Explicit}" ItemsSource="{Binding Mode=OneWay}" ItemContainerStyle="{DynamicResource ListBoxItemStyle}" MouseDoubleClick="SougouOutputListBox_MouseDoubleClick" VerticalAlignment="Top" Height="158.04" RenderTransformOrigin="0.5,0.5" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="2" SelectionChanged="SougouOutputListBox_SelectionChanged" d:LayoutOverrides="Width"/>
 							</Grid>
 						</TabItem>
-						<TabItem x:Name="WikipediaTabItem" Header="维基">
-							<Grid x:Name="WikipediaOutputGrid">
+						<TabItem x:Name="WikipediaTabItem" Header="维基" Width="90" Height="28">
+							<Grid x:Name="WikipediaOutputGrid" Width="480" Height="160">
 								<Grid.ColumnDefinitions>
 									<ColumnDefinition Width="0*"/>
 									<ColumnDefinition/>
@@ -289,8 +289,8 @@
 								<ListBox x:Name="WikipediaOutputListBox" Background="White" BorderBrush="Black" Foreground="Black" IsSynchronizedWithCurrentItem="True" ItemTemplate="{DynamicResource ItemTemplate}" DataContext="{Binding Results, Converter={StaticResource AlternationConverter}, Mode=TwoWay, Source={StaticResource SearchEngineResultDataSource}, UpdateSourceTrigger=Explicit}" ItemsSource="{Binding Mode=OneWay}" ItemContainerStyle="{DynamicResource ListBoxItemStyle}" MouseDoubleClick="WikipediaOutputListBox_MouseDoubleClick" VerticalAlignment="Top" Height="158.04" RenderTransformOrigin="0.5,0.5" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="1" SelectionChanged="WikipediaOutputListBox_SelectionChanged" d:LayoutOverrides="Width"/>
 							</Grid>
 						</TabItem>
-                        <TabItem x:Name="DictcnTabItem" Header="电子辞典">
-                            <Grid x:Name="DictcnOutputGrid">
+                        <TabItem x:Name="DictcnTabItem" Header="电子辞典" Width="120" Height="28">
+                            <Grid x:Name="DictcnOutputGrid" Width="480" Height="160">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="0*"/>
                                     <ColumnDefinition Width="0*"/>
