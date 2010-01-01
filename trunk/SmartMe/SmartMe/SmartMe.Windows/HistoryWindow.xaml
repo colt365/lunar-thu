@@ -5,7 +5,7 @@
 	x:Class="SmartMe.Windows.HistoryWindow"
 	x:Name="Window"
 	Title="历史记录"
-	Width="640" Height="480" mc:Ignorable="d">
+	Width="283" Height="447" mc:Ignorable="d" MinWidth="283" MinHeight="447">
 
 	<Window.Resources>
 		<Storyboard x:Key="FileMenuMouseOverStoryboard"/>
@@ -23,8 +23,12 @@
 			<MenuItem x:Name="CleanRecordsFromDateMenuItem" Header="清除历史记录" Click="CleanRecordsFromDateMenuItem_Click" Margin="0"/>
 			<MenuItem x:Name="RemoveRecordMenuItem" Margin="0" Header="删除当前项" Click="RemoveRecordMenuItem_Click"/>
 		</Menu>
-		<Grid x:Name="Grid" Margin="0,-197,0,-23" d:LayoutOverrides="Width" Background="White">
-            <TreeView x:Name="HistoryTreeView" HorizontalAlignment="Left" VerticalAlignment="Top" Width="624" Height="441" SelectedItemChanged="HistoryTreeView_SelectedItemChanged"/>
+		<Grid x:Name="Grid" Margin="0,-182.5,0,-5" d:LayoutOverrides="Width" Background="White" MinHeight="390" MinWidth="272" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="0*"/>
+				<ColumnDefinition/>
+			</Grid.ColumnDefinitions>
+            <TreeView x:Name="HistoryTreeView" SelectedItemChanged="HistoryTreeView_SelectedItemChanged" MinHeight="390" MinWidth="272" FontSize="16" Grid.Column="1" d:LayoutOverrides="GridBox" Margin="0,0,0,4"/>
         </Grid>
 	</UniformGrid>
 </Window>
