@@ -844,31 +844,74 @@ namespace SmartMe.Windows
                                                 listBox.Items.Add( new ListBoxItem()
                                                 {
                                                     Content= dictItem.Word
+                                                    
                                                 } );
-                                                listBox.Items.Add( new ListBoxItem()
+                                                if ( dictItem.Pronunciation != string.Empty )
                                                 {
-                                                    Content = dictItem.Pronunciation
-                                                } );
-                                                listBox.Items.Add( new ListBoxItem()
+                                                    listBox.Items.Add( new ListBoxItem()
+                                                    {
+                                                        Content =" "
+                                                    } );
+                                                    listBox.Items.Add( new ListBoxItem()
+                                                    {
+                                                        Content = dictItem.Pronunciation
+                                                    } );
+                                                }
+                                                if ( dictItem.Variations != string.Empty )
                                                 {
-                                                    Content = dictItem.Variations
-                                                } );
-                                                listBox.Items.Add( new ListBoxItem()
+                                                    listBox.Items.Add( new ListBoxItem()
+                                                    {
+                                                        Content = " "
+                                                    } );
+                                                    listBox.Items.Add( new ListBoxItem()
+                                                    {
+                                                        Content = dictItem.Variations
+                                                    } );
+                                                }
+                                                if ( dictItem.EnglishExplanations != string.Empty )
                                                 {
-                                                    Content = dictItem.EnglishExplanations
-                                                } );
-                                                listBox.Items.Add( new ListBoxItem()
+                                                    listBox.Items.Add( new ListBoxItem()
+                                                    {
+                                                        Content = " "
+                                                    } );
+                                                    listBox.Items.Add( new ListBoxItem()
+                                                    {
+                                                        Content = dictItem.EnglishExplanations
+                                                    } );
+                                                }
+                                                if ( dictItem.ChineseExplanations != string.Empty )
                                                 {
-                                                    Content = dictItem.ChineseExplanations
-                                                } );
-                                                listBox.Items.Add( new ListBoxItem()
+                                                    listBox.Items.Add( new ListBoxItem()
+                                                    {
+                                                        Content = " "
+                                                    } );
+                                                    listBox.Items.Add( new ListBoxItem()
+                                                    {
+                                                        Content = dictItem.ChineseExplanations
+                                                    } );
+                                                }
+                                                if ( dictItem.Examples != string.Empty )
                                                 {
-                                                    Content = dictItem.Examples
-                                                } );
-                                                listBox.Items.Add( new ListBoxItem()
+                                                    listBox.Items.Add( new ListBoxItem()
+                                                    {
+                                                        Content = " "
+                                                    } );
+                                                    listBox.Items.Add( new ListBoxItem()
+                                                    {
+                                                        Content =dictItem.Examples
+                                                    } );
+                                                }
+                                                if ( dictItem.FromEncyclopedia != string.Empty )
                                                 {
-                                                    Content = dictItem.FromEncyclopedia
-                                                } );
+                                                    listBox.Items.Add( new ListBoxItem()
+                                                    {
+                                                        Content = " "
+                                                    } );
+                                                    listBox.Items.Add( new ListBoxItem()
+                                                    {
+                                                        Content = dictItem.FromEncyclopedia
+                                                    } );
+                                                }
              
 
                                                 tabItem.Header = string.Format( "{0}({1})", dictname, 1 );
@@ -1285,7 +1328,7 @@ namespace SmartMe.Windows
                 int index = DictcnOutputListBox.SelectedIndex;
                 DictResult result = _resultHandler.GetDictcnResult(sender);
                 //SearchEngineResult result = _resultHandler.GetSearchEngineResult( sender );
-                if ( result != null )
+                if ( result != null && ((index & 1 )==0))
                 {
                     
                         string uri = string.Format( "{0}", result.SearchUrl );
