@@ -228,11 +228,11 @@
 							<ColumnDefinition Width="0*"/>
 							<ColumnDefinition/>
 						</Grid.ColumnDefinitions>
-						<TextBox x:Name="InputTextBox" Text="搜索栏" TextWrapping="Wrap" GotKeyboardFocus="InputTextBox_GotKeyboardFocus" Background="White" Margin="3,17,8,4" LostKeyboardFocus="InputTextBox_LostKeyboardFocus" PreviewKeyUp="InputTextBox_PreviewKeyUp" Grid.Column="1" ToolTip="请输入搜索内容"/>
-						<Image x:Name="LoadingImage" HorizontalAlignment="Right" Margin="0,19,35,5" Width="24" Height="24" Grid.Column="1" Source="Images/loading/big.gif" Stretch="Fill" Visibility="Hidden"/>
+						<TextBox x:Name="InputTextBox" Text="搜索栏" GotKeyboardFocus="InputTextBox_GotKeyboardFocus" Background="White" Margin="3,17,8,4" LostKeyboardFocus="InputTextBox_LostKeyboardFocus" PreviewKeyUp="InputTextBox_PreviewKeyUp" Grid.Column="1" ToolTip="请输入搜索内容" Width="480" Height="27" MaxLines="1"/>
 						<Button x:Name="SearchButton" Margin="248,18.334,10,4.666" Grid.Column="1" d:LayoutOverrides="GridBox" BorderBrush="{x:Null}" Foreground="{x:Null}" Width="25" Height="25" ClickMode="Press" Click="SearchButton_Click" HorizontalAlignment="Right" RenderTransformOrigin="0.24,0.468">
 							<Image x:Name="SearchImage" MouseDown="SearchImage_MouseDown" Source="Images/button/search.png" RenderTransformOrigin="2.074,0.157" HorizontalAlignment="Right" VerticalAlignment="Top"/>
 						</Button>
+						<Image x:Name="LoadingImage" HorizontalAlignment="Right" Margin="0,19,35,5" Width="24" Height="24" Grid.Column="1" Source="Images/loading/big.gif" Stretch="Fill" Visibility="Hidden"/>
 						<Menu x:Name="OptionMenu" Margin="0,0,0.333,0" VerticalAlignment="Top" Height="14.334" Grid.Column="1" HorizontalAlignment="Right" Width="58.667" Background="{x:Null}">
 							<MenuItem x:Name="MinimizeMenuItem" Margin="0" Foreground="Silver" Header="" Width="26" Click="MinimizeMenuItem_Click" ToolTip="最小化">
 								<MenuItem.Icon>
