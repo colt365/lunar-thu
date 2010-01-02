@@ -506,56 +506,57 @@ namespace SmartMe.Windows
             Thread.Sleep(milliSecondsTimedOut);
             if (_lastInputTime == curInputTime)
             {
-                DoQuery(text, queryType);
+                if (text == _lastQueryText)
+                {
+                    return;
+                }
+                _DoQuery(text, queryType);
             }
         }
-
-        internal void DoQuery(string text, InputQueryType queryType)
+        internal void DoDirectQuery(string text, InputQueryType queryType)
         {
             lock (_lastInputTimeLock)
             {
                 _lastInputTime = DateTime.Now;
             }
-            
+            _DoQuery(text, queryType);
+        }
+        private void _DoQuery(string text, InputQueryType queryType)
+        {
             if (text == string.Empty)
             {
                 return;
             }
-			if (text == _lastQueryText)
-			{
-				return;
-			}
-
             switch (queryType)
             {
                 case InputQueryType.Text:
-                {
-                    InputQuery query = new InputQuery(text);
-                    query.QueryType = InputQueryType.Text;
-					
-					_lastQueryText = text;
-                    AddQueryHistory(text);
+                    {
+                        InputQuery query = new InputQuery(text);
+                        query.QueryType = InputQueryType.Text;
 
-                    this.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(
-                        delegate()
-                        {
-                            _pipeline.OnInputTextReady(query);
-                        })
-                    );
+                        _lastQueryText = text;
+                        AddQueryHistory(text);
 
-                    break;
-                }
+                        this.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(
+                            delegate()
+                            {
+                                _pipeline.OnInputTextReady(query);
+                            })
+                        );
+
+                        break;
+                    }
                 case InputQueryType.FtpUri:
                 case InputQueryType.HttpUri:
-                {
-                    Shell shell = new Shell();
-                    shell.DoOpenWebBrowser(text);
-                    break;
-                }
+                    {
+                        Shell shell = new Shell();
+                        shell.DoOpenWebBrowser(text);
+                        break;
+                    }
                 case InputQueryType.FileName:
-                {
-                    break;
-                }
+                    {
+                        break;
+                    }
             }
         }
         #endregion Functional
@@ -582,7 +583,7 @@ namespace SmartMe.Windows
                 sb.AppendLine("Text:" + e.Data.GetData("Text", true));
                 string text = e.Data.GetData("Text", true).ToString();
                 InputTextBox.Text = text;
-                DoQuery(InputTextBox.Text, InputQueryType.Text);
+                DoDirectQuery(InputTextBox.Text, InputQueryType.Text);
             }
 			if (e.Data.GetDataPresent("text/html", true))
             {
@@ -672,7 +673,7 @@ namespace SmartMe.Windows
 		private void SearchButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
 			string query = GetSearchTextBoxQuery();
-        	DoQuery(query, InputQueryType.Text);
+        	DoDirectQuery(query, InputQueryType.Text);
         }
 		
 		private void InputTextBox_PreviewKeyUp(object sender, System.Windows.Input.KeyEventArgs e)
@@ -680,7 +681,7 @@ namespace SmartMe.Windows
 			string query = GetSearchTextBoxQuery(); 
             if (e.Key == Key.Return)
             {
-                DoQuery(query, InputQueryType.Text);
+                DoDirectQuery(query, InputQueryType.Text);
             }
             else // DoWaitedQuery
             {
@@ -1321,7 +1322,7 @@ namespace SmartMe.Windows
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                DoQuery(InputTextBox.Text, InputQueryType.Text);
+                DoDirectQuery(InputTextBox.Text, InputQueryType.Text);
             }
         }
 
