@@ -672,16 +672,7 @@ namespace SmartMe.Windows
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 int index = GoogleOutputListBox.SelectedIndex;
-                SearchEngineResult result = _resultHandler.GetSearchEngineResult(sender);
-                if (result != null)
-                {
-                    if (0 <= index && index < result.Results.Count)
-                    {
-                        string uri = string.Format("{0}", result.Results[index].Url);
-                        Shell shell = new Shell();
-                        shell.DoOpenWebBrowser(uri);
-                    }
-                }
+                OpenSearchEngineResult(sender, index);
             }
         }
 		
@@ -690,16 +681,7 @@ namespace SmartMe.Windows
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 int index = BaiduOutputListBox.SelectedIndex;
-                SearchEngineResult result = _resultHandler.GetSearchEngineResult(sender);
-                if (result != null)
-                {
-                    if (0 <= index && index < result.Results.Count)
-                    {
-                        string uri = string.Format("{0}", result.Results[index].Url);
-                        Shell shell = new Shell();
-                        shell.DoOpenWebBrowser(uri);
-                    }
-                }
+                OpenSearchEngineResult(sender, index);
             }
         }
 		private void SougouOutputListBox_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -707,16 +689,7 @@ namespace SmartMe.Windows
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 int index = SougouOutputListBox.SelectedIndex;
-                SearchEngineResult result = _resultHandler.GetSearchEngineResult(sender);
-                if (result != null)
-                {
-                    if (0 <= index && index < result.Results.Count)
-                    {
-                        string uri = string.Format("{0}", result.Results[index].Url);
-                        Shell shell = new Shell();
-                        shell.DoOpenWebBrowser(uri);
-                    }
-                }
+                OpenSearchEngineResult(sender, index);
             }
         }
 
@@ -725,18 +698,29 @@ namespace SmartMe.Windows
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 int index = WikipediaOutputListBox.SelectedIndex;
-                SearchEngineResult result = _resultHandler.GetSearchEngineResult(sender);
-                if (result != null)
+                OpenSearchEngineResult(sender, index);
+            }
+        }
+
+        private void OpenSearchEngineResult(object sender, int index)
+        {
+            SearchEngineResult result = _resultHandler.GetSearchEngineResult(sender);
+            if (result != null)
+            {
+                if (0 <= index && index < result.Results.Count)
                 {
-                    if (0 <= index && index < result.Results.Count)
-                    {
-                        string uri = string.Format("{0}", result.Results[index].Url);
-                        Shell shell = new Shell();
-                        shell.DoOpenWebBrowser(uri);
-                    }
+                    string uri = string.Format("{0}", result.Results[index].Url);
+                    Shell shell = new Shell();
+                    shell.DoOpenWebBrowser(uri);
+                }
+                else if (index == -1)
+                {
+                    string uri = string.Format("{0}", result.SearchUrl);
+                    Shell shell = new Shell();
+                    shell.DoOpenWebBrowser(uri);
                 }
             }
-        }   
+        }
         #endregion 结果栏
 
         #region QueryResultHandler
@@ -1292,10 +1276,11 @@ namespace SmartMe.Windows
 
         private void DetailedOpenLinkButton_Click(object sender, RoutedEventArgs e)
         {
+            string uri = string.Format("{0}", _selectedItemUri);
             Shell shell = new Shell();
             if (_selectedItemUri != null && _selectedItemUri != string.Empty)
             {
-                shell.DoOpenWebBrowser(_selectedItemUri);
+                shell.DoOpenWebBrowser(uri);
             }
         }     
 
@@ -1355,6 +1340,14 @@ namespace SmartMe.Windows
 
         }
 
-
+        private void OutputListBox_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            ListBox listBox = sender as ListBox;
+            if (listBox == null)
+            {
+                // do nothing
+            }
+            listBox.SelectedIndex = -1;
+        }
     }
 }
