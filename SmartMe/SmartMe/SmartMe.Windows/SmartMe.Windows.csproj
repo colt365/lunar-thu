@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{A087D166-CD63-45E0-A773-38E4425400BF}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -181,7 +181,6 @@
     <Compile Include="MiniWindow.xaml.cs">
       <DependentUpon>MiniWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MiniWindow.xaml.P1.cs" />
     <Compile Include="PopupWindow.xaml.cs">
       <DependentUpon>PopupWindow.xaml</DependentUpon>
     </Compile>
@@ -313,6 +312,8 @@
     <Resource Include="Images\button\x_red.png" />
     <Resource Include="Images\button\pin.png" />
     <Resource Include="Images\button\pin_ed.png" />
+    <Resource Include="Images\SmartMeLogo\logo_mini.png" />
+    <Resource Include="Images\SmartMeLogo\logo_title.png" />
     <Content Include="Lib\Microsoft.Expression.Interactions.dll" />
     <Content Include="Lib\System.Windows.Controls.DataVisualization.Toolkit.Design.dll" />
     <Content Include="Lib\System.Windows.Controls.DataVisualization.Toolkit.dll" />

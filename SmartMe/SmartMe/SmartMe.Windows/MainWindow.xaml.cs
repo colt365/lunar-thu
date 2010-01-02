@@ -714,6 +714,10 @@ namespace SmartMe.Windows
 			{
 				InputTextBox.Text = "";
 			}
+			else
+			{
+				InputTextBox.SelectAll();
+			}
 			InputTextBox.Opacity = 1.0;
         }
         #endregion 搜索栏
