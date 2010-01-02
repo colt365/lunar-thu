@@ -290,6 +290,57 @@ namespace SmartMe.Windows
                 GoogleOutputListBox.SelectedIndex = selectedIndex;
             }
         }
+        private void BaiduOutputListBox_PreviewMouseWheel ( object sender, System.Windows.Input.MouseWheelEventArgs e )
+        {
+            int count = BaiduOutputListBox.Items.Count;
+            int selectedIndex = BaiduOutputListBox.SelectedIndex;
+            if ( 0 <= selectedIndex && selectedIndex < count )
+            {
+                if ( e.Delta < 0 )
+                {
+                    selectedIndex = Math.Min( selectedIndex + 1, count );
+                }
+                else
+                {
+                    selectedIndex = Math.Max( selectedIndex - 1, 0 );
+                }
+                BaiduOutputListBox.SelectedIndex = selectedIndex;
+            }
+        }
+        private void SougouOutputListBox_PreviewMouseWheel ( object sender, System.Windows.Input.MouseWheelEventArgs e )
+        {
+            int count = SougouOutputListBox.Items.Count;
+            int selectedIndex = SougouOutputListBox.SelectedIndex;
+            if ( 0 <= selectedIndex && selectedIndex < count )
+            {
+                if ( e.Delta < 0 )
+                {
+                    selectedIndex = Math.Min( selectedIndex + 1, count );
+                }
+                else
+                {
+                    selectedIndex = Math.Max( selectedIndex - 1, 0 );
+                }
+                SougouOutputListBox.SelectedIndex = selectedIndex;
+            }
+        }
+        private void WikipediaOutputListBox_PreviewMouseWheel ( object sender, System.Windows.Input.MouseWheelEventArgs e )
+        {
+            int count = WikipediaOutputListBox.Items.Count;
+            int selectedIndex = WikipediaOutputListBox.SelectedIndex;
+            if ( 0 <= selectedIndex && selectedIndex < count )
+            {
+                if ( e.Delta < 0 )
+                {
+                    selectedIndex = Math.Min( selectedIndex + 1, count );
+                }
+                else
+                {
+                    selectedIndex = Math.Max( selectedIndex - 1, 0 );
+                }
+                WikipediaOutputListBox.SelectedIndex = selectedIndex;
+            }
+        }
         /*
         private void GoogleOutputListBox_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
