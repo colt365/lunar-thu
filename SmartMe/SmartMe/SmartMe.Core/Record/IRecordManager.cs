@@ -23,7 +23,8 @@ namespace SmartMe.Core.Record
         /// </summary>
         /// <param name="result">修改的记录</param>
         /// <param name="date">修改的日期</param>
-        void ModifyRecord(QueryResult result, DateTime date);
+        /// <param name="appendIfNotExist">如果不存在，是否添加</param>
+        void ModifyRecord(QueryResult result, DateTime date, bool appendIfNotExist);
 
         /// <summary>
         /// 得到一段时间的历史记录

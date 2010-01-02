@@ -93,18 +93,28 @@ namespace SmartMe.Core.Record
             SetResultList(date, resultList);
         }
 
-        public void ModifyRecord(QueryResult result, DateTime date)
+        public void ModifyRecord(QueryResult result, DateTime date, bool appendIfNotExist)
         {
             List<QueryResult> resultList = GetResultList(date);
             foreach (QueryResult existResult in resultList)
             {
-                if (result.Query.Equals(result.Query))
+                if (result.Query.Equals(existResult.Query))
                 {
                     int i = resultList.IndexOf(existResult);
-                    resultList.RemoveAt(i);
-                    resultList.Insert(i, result);
-                    break;
+                    //resultList.RemoveAt(i);
+                    //resultList.Insert(i, result);
+                    if (existResult.Items.Count <= result.Items.Count)
+                    {
+                        existResult.Items.Clear();
+                        existResult.Items.AddRange(result.Items);
+                        SetResultList(date, resultList);
+                    }
+                    return;
                 }
+            }
+            if (appendIfNotExist)
+            {
+                AppendRecord(result, date);
             }
         }
 
@@ -203,18 +213,24 @@ namespace SmartMe.Core.Record
             string directoryPath = GetDirectoryPath(date);
             string filePath = GetFilePath(date);
 
-            if (!Directory.Exists(directoryPath))
+            lock (_fileManager)
             {
-                Directory.CreateDirectory(directoryPath);
+                if (!Directory.Exists(directoryPath))
+                {
+                    Directory.CreateDirectory(directoryPath);
+                }
+                _fileManager.SaveToFile(resultList, filePath);
             }
-            _fileManager.SaveToFile(resultList, filePath);
         }
 
         public List<QueryResult> GetResultList(DateTime date)
         {
             string filePath = GetFilePath(date);
-            List<QueryResult> resultList =
-                _fileManager.ReadFromFile(filePath) as List<QueryResult>;
+            List<QueryResult> resultList = null;
+            lock (_fileManager)
+            {
+                resultList = _fileManager.ReadFromFile(filePath) as List<QueryResult>;
+            }
             if (resultList == null)
             {
                 return new List<QueryResult>();
@@ -251,6 +267,11 @@ namespace SmartMe.Core.Record
             return date;
         }
 
+        public void UpdateRecord(QueryResult result)
+        {
+            ModifyRecord(result, DateTime.Today, true);
+        }
+
         #endregion
 
         #region ISubScriber Members
@@ -264,7 +285,7 @@ namespace SmartMe.Core.Record
                 {
                     return;
                 }
-                AppendRecord(result, DateTime.Today);
+                UpdateRecord(result);
             }
         }
 
