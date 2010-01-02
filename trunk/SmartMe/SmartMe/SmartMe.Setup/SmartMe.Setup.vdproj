@@ -21,86 +21,86 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_1E332DB4109FB3E9D5A15E47B94856D5"
+        "OwnerKey" = "8:_786AEB36F37AB61D99B7760CC704276C"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_1E332DB4109FB3E9D5A15E47B94856D5"
+        "OwnerKey" = "8:_22BC50DAFA0A4925A94AF01A2E9C24CE"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_22BC50DAFA0A4925A94AF01A2E9C24CE"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_4D8FCEC59B5B2F62A2959C1272649316"
+        "MsmKey" = "8:_37F39CCDBAEBF63BFE77453EDEAAD96F"
         "OwnerKey" = "8:_22BC50DAFA0A4925A94AF01A2E9C24CE"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_4D8FCEC59B5B2F62A2959C1272649316"
-        "OwnerKey" = "8:_81FD861A679EA214234DFD1E5B2A3939"
+        "MsmKey" = "8:_37F39CCDBAEBF63BFE77453EDEAAD96F"
+        "OwnerKey" = "8:_3B8424084D158EA0BC782DF54CAC3825"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_632428E74737CA9CA4B8C7ED01ACB6E2"
-        "OwnerKey" = "8:_B28CCDF5B9BD2A1934AB99E04C63618C"
+        "MsmKey" = "8:_37F39CCDBAEBF63BFE77453EDEAAD96F"
+        "OwnerKey" = "8:_7EBC00C0CDFB007C11D22D32F637BC2B"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_632428E74737CA9CA4B8C7ED01ACB6E2"
+        "MsmKey" = "8:_3B8424084D158EA0BC782DF54CAC3825"
         "OwnerKey" = "8:_22BC50DAFA0A4925A94AF01A2E9C24CE"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_81FD861A679EA214234DFD1E5B2A3939"
+        "MsmKey" = "8:_6FC55944F9843EB8AA02E35D795BF24A"
         "OwnerKey" = "8:_22BC50DAFA0A4925A94AF01A2E9C24CE"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_938A1C27369E4FFBA9F12D1A7468F1F4"
+        "MsmKey" = "8:_786AEB36F37AB61D99B7760CC704276C"
         "OwnerKey" = "8:_22BC50DAFA0A4925A94AF01A2E9C24CE"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_938A1C27369E4FFBA9F12D1A7468F1F4"
-        "OwnerKey" = "8:_81FD861A679EA214234DFD1E5B2A3939"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_938A1C27369E4FFBA9F12D1A7468F1F4"
-        "OwnerKey" = "8:_F473F4CFD2DD22860EA0551983A92987"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_A6EAA0A025D32FAA10ED7AB83A4E5433"
-        "OwnerKey" = "8:_B28CCDF5B9BD2A1934AB99E04C63618C"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_A6EAA0A025D32FAA10ED7AB83A4E5433"
+        "MsmKey" = "8:_7EBC00C0CDFB007C11D22D32F637BC2B"
         "OwnerKey" = "8:_22BC50DAFA0A4925A94AF01A2E9C24CE"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_B28CCDF5B9BD2A1934AB99E04C63618C"
+        "MsmKey" = "8:_CC4754BE42AC48D8B495ED20563D2CF0"
+        "OwnerKey" = "8:_786AEB36F37AB61D99B7760CC704276C"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_CC4754BE42AC48D8B495ED20563D2CF0"
         "OwnerKey" = "8:_22BC50DAFA0A4925A94AF01A2E9C24CE"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_C0F0BD79D5275B75A7A90319BEA7692F"
+        "MsmKey" = "8:_FE04D691011D7468D9B8CB4346D5C5BC"
         "OwnerKey" = "8:_22BC50DAFA0A4925A94AF01A2E9C24CE"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_F473F4CFD2DD22860EA0551983A92987"
-        "OwnerKey" = "8:_22BC50DAFA0A4925A94AF01A2E9C24CE"
+        "MsmKey" = "8:_FE04D691011D7468D9B8CB4346D5C5BC"
+        "OwnerKey" = "8:_3B8424084D158EA0BC782DF54CAC3825"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -112,49 +112,49 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_C0F0BD79D5275B75A7A90319BEA7692F"
+        "OwnerKey" = "8:_6FC55944F9843EB8AA02E35D795BF24A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_B28CCDF5B9BD2A1934AB99E04C63618C"
+        "OwnerKey" = "8:_786AEB36F37AB61D99B7760CC704276C"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_A6EAA0A025D32FAA10ED7AB83A4E5433"
+        "OwnerKey" = "8:_CC4754BE42AC48D8B495ED20563D2CF0"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_632428E74737CA9CA4B8C7ED01ACB6E2"
+        "OwnerKey" = "8:_1E332DB4109FB3E9D5A15E47B94856D5"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_81FD861A679EA214234DFD1E5B2A3939"
+        "OwnerKey" = "8:_3B8424084D158EA0BC782DF54CAC3825"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_4D8FCEC59B5B2F62A2959C1272649316"
+        "OwnerKey" = "8:_FE04D691011D7468D9B8CB4346D5C5BC"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_F473F4CFD2DD22860EA0551983A92987"
+        "OwnerKey" = "8:_7EBC00C0CDFB007C11D22D32F637BC2B"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_938A1C27369E4FFBA9F12D1A7468F1F4"
+        "OwnerKey" = "8:_37F39CCDBAEBF63BFE77453EDEAAD96F"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -219,6 +219,19 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Net.Framework.3.5"
+                    {
+                    "Name" = "8:.NET Framework 3.5"
+                    "ProductCode" = "8:Microsoft.Net.Framework.3.5"
+                    }
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Windows.Installer.3.1"
+                    {
+                    "Name" = "8:Windows Installer 3.1"
+                    "ProductCode" = "8:Microsoft.Windows.Installer.3.1"
+                    }
+                }
             }
         }
     }
@@ -269,45 +282,14 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_4D8FCEC59B5B2F62A2959C1272649316"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:HTMLparserLibDotNet20, Version=3.1.4.37526, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_4D8FCEC59B5B2F62A2959C1272649316"
-                    {
-                    "Name" = "8:HTMLparserLibDotNet20.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:HTMLparserLibDotNet20.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_E3976EFAF5D9425C97FDA4CD39701853"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_632428E74737CA9CA4B8C7ED01ACB6E2"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_1E332DB4109FB3E9D5A15E47B94856D5"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:System.Windows.Interactivity, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_632428E74737CA9CA4B8C7ED01ACB6E2"
+                    "_1E332DB4109FB3E9D5A15E47B94856D5"
                     {
                     "Name" = "8:System.Windows.Interactivity.dll"
                     "Attributes" = "3:512"
@@ -331,45 +313,14 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_81FD861A679EA214234DFD1E5B2A3939"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:SmartMe.Web, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_81FD861A679EA214234DFD1E5B2A3939"
-                    {
-                    "Name" = "8:SmartMe.Web.exe"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:SmartMe.Web.exe"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_E3976EFAF5D9425C97FDA4CD39701853"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_938A1C27369E4FFBA9F12D1A7468F1F4"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_37F39CCDBAEBF63BFE77453EDEAAD96F"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:SmartMe.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_938A1C27369E4FFBA9F12D1A7468F1F4"
+                    "_37F39CCDBAEBF63BFE77453EDEAAD96F"
                     {
                     "Name" = "8:SmartMe.Core.exe"
                     "Attributes" = "3:512"
@@ -393,20 +344,20 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A6EAA0A025D32FAA10ED7AB83A4E5433"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_3B8424084D158EA0BC782DF54CAC3825"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:WPFToolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:SmartMe.Web, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_A6EAA0A025D32FAA10ED7AB83A4E5433"
+                    "_3B8424084D158EA0BC782DF54CAC3825"
                     {
-                    "Name" = "8:WPFToolkit.dll"
+                    "Name" = "8:SmartMe.Web.exe"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:WPFToolkit.dll"
+            "SourcePath" = "8:SmartMe.Web.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_E3976EFAF5D9425C97FDA4CD39701853"
@@ -424,45 +375,14 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_B28CCDF5B9BD2A1934AB99E04C63618C"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Microsoft.Expression.Interactions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_B28CCDF5B9BD2A1934AB99E04C63618C"
-                    {
-                    "Name" = "8:Microsoft.Expression.Interactions.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Microsoft.Expression.Interactions.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_E3976EFAF5D9425C97FDA4CD39701853"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_C0F0BD79D5275B75A7A90319BEA7692F"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_6FC55944F9843EB8AA02E35D795BF24A"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:SmartMe, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_C0F0BD79D5275B75A7A90319BEA7692F"
+                    "_6FC55944F9843EB8AA02E35D795BF24A"
                     {
                     "Name" = "8:SmartMe.exe"
                     "Attributes" = "3:512"
@@ -486,20 +406,113 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_F473F4CFD2DD22860EA0551983A92987"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_786AEB36F37AB61D99B7760CC704276C"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Microsoft.Expression.Interactions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_786AEB36F37AB61D99B7760CC704276C"
+                    {
+                    "Name" = "8:Microsoft.Expression.Interactions.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Microsoft.Expression.Interactions.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_E3976EFAF5D9425C97FDA4CD39701853"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_7EBC00C0CDFB007C11D22D32F637BC2B"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:SmartMe.Input, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_F473F4CFD2DD22860EA0551983A92987"
+                    "_7EBC00C0CDFB007C11D22D32F637BC2B"
                     {
                     "Name" = "8:SmartMe.Input.exe"
                     "Attributes" = "3:512"
                     }
                 }
             "SourcePath" = "8:SmartMe.Input.exe"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_E3976EFAF5D9425C97FDA4CD39701853"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_CC4754BE42AC48D8B495ED20563D2CF0"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:WPFToolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_CC4754BE42AC48D8B495ED20563D2CF0"
+                    {
+                    "Name" = "8:WPFToolkit.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:WPFToolkit.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_E3976EFAF5D9425C97FDA4CD39701853"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_FE04D691011D7468D9B8CB4346D5C5BC"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:HTMLparserLibDotNet20, Version=3.1.4.37526, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_FE04D691011D7468D9B8CB4346D5C5BC"
+                    {
+                    "Name" = "8:HTMLparserLibDotNet20.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:HTMLparserLibDotNet20.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_E3976EFAF5D9425C97FDA4CD39701853"
@@ -577,7 +590,7 @@
                         {
                             "{9EF0B969-E518-4E46-987F-47570745A589}:_E3976EFAF5D9425C97FDA4CD39701853"
                             {
-                            "Name" = "8:Alpha_09_12_7_v0.1"
+                            "Name" = "8:Beta_100103"
                             "AlwaysCreate" = "11:FALSE"
                             "Condition" = "8:"
                             "Transitive" = "11:FALSE"
@@ -607,7 +620,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:SmartMe"
         "ProductCode" = "8:{51F468DC-35D1-4119-81A0-E2F12813CD87}"
-        "PackageCode" = "8:{2B55F474-99B0-4D91-8869-69CB4D1FE56E}"
+        "PackageCode" = "8:{7C7D7AF7-0A81-4B84-B836-01C4E99D755F}"
         "UpgradeCode" = "8:{2208C85F-1F5E-4F11-9307-BF0212666D0B}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
@@ -728,7 +741,7 @@
         {
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_4E4941E79A5D4D69899A1F3871E0DF46"
             {
-            "Name" = "8:SmartMe.exe"
+            "Name" = "8:SmartMe"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
@@ -756,7 +769,7 @@
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_C314866170E0407DA232FE5C7F032A4F"
             {
-            "Name" = "8:SmartMe.exe"
+            "Name" = "8:SmartMe"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
