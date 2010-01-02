@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Threading;
 
 namespace SmartMe.Windows
 {
@@ -16,62 +17,70 @@ namespace SmartMe.Windows
 	/// Interaction logic for MiniWindow.xaml
 	/// </summary>
 	public partial class MiniWindow : Window
-    {
-        #region UI field
-        private bool _isDragging = false;
-        private Point _previousMousePoint = new Point();
-        #endregion
-
+	{
+		private MainWindow _mainWindow = new MainWindow();
         public MiniWindow()
 		{
 			this.InitializeComponent();
 			
 			// Insert code required on object creation below this point.
+            HideMainWindow();
 		}
+		
+		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+        	_mainWindow.Close();
+        }
+		
+        public void ShowMainWindow()
+        {
+            _mainWindow.Visibility = Visibility.Visible;
+			// make it top most
+			_mainWindow.Topmost = true;
+			Thread.Sleep(1);
+			this.Topmost = true;
+            Thread.Sleep(1);
+			_mainWindow.Topmost = false;
+        }
+        public void HideMainWindow()
+        {
+            _mainWindow.Visibility = Visibility.Collapsed;
+        }
 
 
-		private void Window_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
-		{
-			_isDragging = false;
-		}
+        private void MiniGrid_PreviewDragOver(object sender, System.Windows.DragEventArgs e)
+        {
+        	MessageBox.Show("MiniGrid_PreviewDragOver! TODO: Please Add animation storyboard to shrink window -- TT!");
+        }
 
-		private void Window_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
-		{
-			if (_isDragging)
+        private void MiniGrid_Drop(object sender, System.Windows.DragEventArgs e)
+        {
+        	MessageBox.Show("MiniGrid_Drop! TODO: Please do query -- TT!");
+        }
+		
+        private void MiniGrid_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+        	// double clicked            
+            if (e.ClickCount >= 2)
             {
-                Point previousPoint = _previousMousePoint;
-                Point currentPoint = e.GetPosition(this);
-                
-                double deltaX = currentPoint.X - previousPoint.X;
-                double deltaY = currentPoint.Y - previousPoint.Y;
-
-                //MessageBox.Show("" + previousPoint);
-                //MessageBox.Show("" + currentPoint);
-
-                this.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Render, new Action(
-                    delegate {
-                         //MessageBox.Show("" + deltaX + "," +  deltaY + "," + this.Margin.Left + deltaX + "," + this.Margin.Top + deltaY);
-                        this.Left = this.Left + deltaX;
-                        this.Top = this.Top + deltaY;
-                    })
-                );
-
-                _previousMousePoint = e.GetPosition(this);
+                // Just toggle disply mainWindow
+				// TODO: Please make it more friendly to user -- TT
+                // My Suggestion: 
+                //      If mainWindow is not visible, make it visiable and bring to top;
+                //      if visible but not on top, just bring it to top;
+                //      if visible and on top, hide it
+                if (_mainWindow.IsVisible)
+                {
+                    HideMainWindow();
+                }
+                else
+                {
+                    ShowMainWindow();
+                }
             }
-            else
-            {
-            }
-		}
+        }
 
-		private void Window_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-		{
-			_isDragging = true;
-            _previousMousePoint = e.GetPosition(this);
-		}
+        
 
-		private void Window_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
-		{
-			_isDragging = false;
-		}
 	}
 }

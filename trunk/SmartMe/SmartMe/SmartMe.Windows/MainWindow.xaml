@@ -8,7 +8,7 @@
 	xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" xmlns:il="clr-namespace:Microsoft.Expression.Interactivity.Layout;assembly=Microsoft.Expression.Interactions"
 	x:Class="SmartMe.Windows.MainWindow"
 	x:Name="Window"
-	Title="MainWindow" Topmost="True" WindowStartupLocation="Manual" ResizeMode="NoResize" AllowDrop="True" Drop="Window_Drop" PreviewDragEnter="Window_PreviewDragEnter" PreviewDrop="Window_PreviewDrop" PreviewDragLeave="Window_PreviewDragLeave" PreviewDragOver="Window_PreviewDragOver" Closing="Window_Closing" WindowStyle="None" Background="{x:Null}" Foreground="{x:Null}" AllowsTransparency="True" HorizontalAlignment="Center" VerticalAlignment="Center" WindowState="Maximized" ShowInTaskbar="False" Loaded="Window_Loaded">
+	Title="MainWindow" WindowStartupLocation="Manual" ResizeMode="NoResize" AllowDrop="True" Drop="Window_Drop" PreviewDragEnter="Window_PreviewDragEnter" PreviewDrop="Window_PreviewDrop" PreviewDragLeave="Window_PreviewDragLeave" PreviewDragOver="Window_PreviewDragOver" Closing="Window_Closing" WindowStyle="None" Background="{x:Null}" Foreground="{x:Null}" AllowsTransparency="True" HorizontalAlignment="Center" VerticalAlignment="Center" WindowState="Maximized" ShowInTaskbar="False" Loaded="Window_Loaded">
 	<Window.Resources>
 		<SmartMe_Core_Data:SearchEngineResult x:Key="SearchEngineResultDataSource" d:IsDataSource="True"/>
 		<AlternationConverter x:Key="AlternationConverter"/>
@@ -181,9 +181,9 @@
 			<Rectangle x:Name="DetailedBackgroundRectangle" Fill="Black" Stroke="Black" RadiusX="8" RadiusY="8" Margin="-2,-2,-2,0" d:LayoutOverrides="HorizontalAlignment" Opacity="0.6" VerticalAlignment="Top" Height="189.727"/>
 			<Grid Margin="2,2,2,6">
 				<Grid.RowDefinitions>
-					<RowDefinition Height="0.087*"/>
-					<RowDefinition Height="0.143*"/>
-					<RowDefinition Height="0.607*"/>
+					<RowDefinition Height="0.105*"/>
+					<RowDefinition Height="0.133*"/>
+					<RowDefinition Height="0.599*"/>
 					<RowDefinition Height="0.163*"/>
 					<RowDefinition Height="0*"/>
 				</Grid.RowDefinitions>
@@ -192,14 +192,14 @@
 					<ColumnDefinition/>
 					<ColumnDefinition Width="0*"/>
 				</Grid.ColumnDefinitions>
-				<TextBlock Margin="2,2.742,114.67,1" Foreground="White" TextWrapping="Wrap" Grid.Column="1" d:LayoutOverrides="VerticalAlignment"><Run Text="详细"/><Run Text="信息"/><Run Text="："/></TextBlock>
-				<Image x:Name="DetailedCloseImageButton" HorizontalAlignment="Right" Margin="0,0.375,8.004,3.327" Width="16" Grid.Column="1" d:LayoutOverrides="GridBox" Height="16" Source="Images/button/x_red.png" ToolTip="关闭" Cursor="Hand" Focusable="True" 
+				<TextBlock Margin="2,2.742,114.67,4.235" Foreground="White" TextWrapping="Wrap" Grid.Column="1" d:LayoutOverrides="VerticalAlignment"><Run Text="详细"/><Run Text="信息"/><Run Text="："/></TextBlock>
+				<Image x:Name="DetailedCloseImageButton" HorizontalAlignment="Right" Margin="0,0.375,8.004,2.495" Width="16" Grid.Column="1" d:LayoutOverrides="GridBox, VerticalMargin" Height="16" Source="Images/button/x_red.png" ToolTip="关闭" Cursor="Hand" Focusable="True" 
                      MouseLeftButtonDown="onMouseLeftButtonDown"  />
-				<TextBox x:Name="DetailedTitleTextBox" Margin="8,2.67,8,1.666" Grid.Column="1" Grid.Row="1" TextWrapping="Wrap" d:LayoutOverrides="Width, HorizontalMargin"/>
-				<RichTextBox x:Name="DetailedDescriptionRichTextBox" Margin="8,4.447,8,1.242" Grid.Column="1" Grid.Row="2" d:LayoutOverrides="Width, HorizontalMargin">
+				<TextBox x:Name="DetailedTitleTextBox" Margin="8,0.771,8,1.772" Grid.Column="1" Grid.Row="1" TextWrapping="Wrap" d:LayoutOverrides="Width, HorizontalMargin"/>
+				<RichTextBox x:Name="DetailedDescriptionRichTextBox" Margin="8,3.009,8,1.242" Grid.Column="1" Grid.Row="2" d:LayoutOverrides="Width, HorizontalMargin">
 				</RichTextBox>
-				<Button x:Name="DetailedOpenLinkButton" HorizontalAlignment="Right" Margin="0,0,8,0" VerticalAlignment="Bottom" Width="88.67" Height="22" Content="打开链接" Grid.Column="1" Grid.Row="3" d:LayoutOverrides="HorizontalAlignment" Grid.RowSpan="2" Click="DetailedOpenLinkButton_Click"/>
-				<Image x:Name="DetailedPinImageButton" HorizontalAlignment="Right" Margin="0,0.375,29.004,3.327" Width="16" Grid.Column="1" Height="16" Source="Images/button/pin.png" d:LayoutOverrides="GridBox" ToolTip="悬停" Cursor="Hand" Focusable="True"/>
+				<Button x:Name="DetailedOpenLinkButton" HorizontalAlignment="Right" Margin="0,0,8,0" VerticalAlignment="Bottom" Width="88.67" Height="22" Content="打开链接" Grid.Column="1" Grid.Row="3" d:LayoutOverrides="HorizontalAlignment" Click="DetailedOpenLinkButton_Click"/>
+				<Image x:Name="DetailedPinImageButton" HorizontalAlignment="Right" Margin="0,0.375,29.004,2.495" Width="16" Grid.Column="1" Height="16" Source="Images/button/pin.png" d:LayoutOverrides="GridBox, VerticalMargin" ToolTip="悬停" Cursor="Hand" Focusable="True"/>
 			</Grid>
 		</Grid>
 		<Grid x:Name="DicardedGrid" HorizontalAlignment="Right" Margin="0,-264,-320,0" Width="264" Grid.Column="3" VerticalAlignment="Top" Height="227.605">
@@ -303,6 +303,7 @@
                     </TabControl>
 				</DockPanel>
 			</DockPanel>
+			<Image HorizontalAlignment="Left" Margin="4,1,0,0" VerticalAlignment="Top" Width="104" Height="32" Source="Images/SmartMeLogo/logo_title.png"/>
 		</Grid>
 		<Grid x:Name="SuggestionGrid" Margin="-147,-82,10,-46" Grid.RowSpan="2" Visibility="Collapsed">
 			<Rectangle x:Name="SuggestionBackgroundRectangle" Fill="Black" Stroke="Black" Margin="-2,-2,-2,-4" RadiusX="8" RadiusY="8" Opacity="0.6"/>
