@@ -1173,7 +1173,7 @@ namespace SmartMe.Windows
 		#endregion for Debug
 
         #region MinimizeToIcon
-        private bool firstShowTip = true;
+        // private bool firstShowTip = true;
         /*
         private void MinimizeImage_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
@@ -1183,7 +1183,7 @@ namespace SmartMe.Windows
             if (notifyIcon != null && firstShowTip)
             {
                 firstShowTip = false;
-                notifyIcon.ShowBalloonTip(2000);
+                notifyIcon.ShowBalloonTip(500);
             }
         }
         */
@@ -1191,10 +1191,10 @@ namespace SmartMe.Windows
         private void MinimizeMenuItem_Click(object sender, RoutedEventArgs e)
         {
             Hide();
-            if (notifyIcon != null && firstShowTip)
+            if (notifyIcon != null )// && firstShowTip)
             {
-                firstShowTip = false;
-                notifyIcon.ShowBalloonTip(2000);
+                // firstShowTip = false;
+                notifyIcon.ShowBalloonTip(500);
             }
         }
 
@@ -1203,10 +1203,10 @@ namespace SmartMe.Windows
             if (IsVisible)
             {
                 Hide();
-                if (notifyIcon != null && firstShowTip)
+                if (notifyIcon != null )// && firstShowTip)
                 {
-                    firstShowTip = false;
-                    notifyIcon.ShowBalloonTip(2000);
+                    // firstShowTip = false;
+                    notifyIcon.ShowBalloonTip(500);
                 }
             }
             else
