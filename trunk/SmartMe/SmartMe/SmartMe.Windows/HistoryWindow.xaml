@@ -5,7 +5,7 @@
 	x:Class="SmartMe.Windows.HistoryWindow"
 	x:Name="Window"
 	Title="历史记录"
-	Width="283" Height="447" mc:Ignorable="d" MinWidth="283" MinHeight="447">
+	Width="283" Height="447" mc:Ignorable="d" MinWidth="283" MinHeight="447" ResizeMode="CanMinimize">
 
 	<Window.Resources>
 		<Storyboard x:Key="FileMenuMouseOverStoryboard"/>
