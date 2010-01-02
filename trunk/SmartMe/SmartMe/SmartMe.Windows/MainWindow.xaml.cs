@@ -918,6 +918,11 @@ namespace SmartMe.Windows
 
                                                 listBox.InvalidateArrange();
                                                 tabItem.InvalidateArrange();
+                                            }else{
+                                                tabItem.Header = string.Format( "{0}({1})", dictname, 0 );
+
+                                                listBox.InvalidateArrange();
+                                                tabItem.InvalidateArrange();
                                             }
                                         }
 
