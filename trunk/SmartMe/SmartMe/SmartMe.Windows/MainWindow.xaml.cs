@@ -778,161 +778,167 @@ namespace SmartMe.Windows
                     {
                         if (result != null && result.Items != null)
                         {
-
-
-                            foreach ( IQueryResultItem queryResultItem in result.Items )
+                            try
                             {
-                                switch ( queryResultItem.ResultType )
+                                foreach (IQueryResultItem queryResultItem in result.Items)
                                 {
-                                   
-                                    case QueryResultItemType.SearchEngineResult:
-                                        var searchEngineItem = queryResultItem as SearchEngineResult;
-                                        if ( searchEngineItem != null && searchEngineItem.Results != null ) // TODO: Bug ASSERT(searchEngineItem != null)
-                                        {
-         
-                                            ListBox listBox = null;
-                                            TabItem tabItem = null;
-                                            string engineName = null;
-                                            bool hasFound = FindUIElements( searchEngineItem, out listBox, out tabItem, out engineName );
-
-                                            if ( hasFound )
+                                    #region dealwithqueryitem
+                                    switch (queryResultItem.ResultType)
+                                    {
+                                        case QueryResultItemType.SearchEngineResult:
+                                            var searchEngineItem = queryResultItem as SearchEngineResult;
+                                            if (searchEngineItem != null && searchEngineItem.Results != null) // TODO: Bug ASSERT(searchEngineItem != null)
                                             {
-                                                listBox.Items.Clear();
-                                                foreach ( SearchEngineResult.ResultItem resultItem in searchEngineItem.Results )
+                                                ListBox listBox = null;
+                                                TabItem tabItem = null;
+                                                string engineName = null;
+                                                bool hasFound = FindUIElements(searchEngineItem, out listBox, out tabItem, out engineName);
+
+                                                if (hasFound)
                                                 {
-                                                    listBox.Items.Add( new ListBoxItem()
+                                                    listBox.Items.Clear();
+                                                    foreach (SearchEngineResult.ResultItem resultItem in searchEngineItem.Results)
                                                     {
-                                                        Content = resultItem.Title
-                                                    } );
+                                                        listBox.Items.Add(new ListBoxItem()
+                                                        {
+                                                            Content = resultItem.Title
+                                                        });
+                                                    }
+                                                    tabItem.Header = string.Format("{0}({1})", engineName, searchEngineItem.Results.Count);
+
+                                                    listBox.InvalidateArrange();
+                                                    tabItem.InvalidateArrange();
                                                 }
-                                                tabItem.Header = string.Format( "{0}({1})", engineName, searchEngineItem.Results.Count );
-
-                                                listBox.InvalidateArrange();
-                                                tabItem.InvalidateArrange();
                                             }
-                                        }
-                        
-                                        break;
 
-                                    case QueryResultItemType.SuggestionResult:
-                                        //SuggestionResult suggestionItem= queryResultItem as SuggestionResult;
-                                        //_parent._suggestionWindow.Show( suggestionItem );
-                                        
-                                        
-                                        break;
+                                            break;
 
-                                    case QueryResultItemType.DictionaryResult:
-                                        var dictItem = queryResultItem as DictResult;
-                                        if ( dictItem != null && dictItem.Word != null ) // TODO: Bug ASSERT(searchEngineItem != null)
-                                        {
+                                        case QueryResultItemType.SuggestionResult:
+                                            //SuggestionResult suggestionItem= queryResultItem as SuggestionResult;
+                                            //_parent._suggestionWindow.Show( suggestionItem );
 
-                                            ListBox listBox = null;
-                                            TabItem tabItem = null;
-                                            string dictname = null;
-                                            bool hasFound = FindUIElements( dictItem, out listBox, out tabItem, out dictname );
 
-                                            if ( hasFound && dictItem.Word!=string.Empty )
+                                            break;
+
+                                        case QueryResultItemType.DictionaryResult:
+                                            var dictItem = queryResultItem as DictResult;
+                                            if (dictItem != null && dictItem.Word != null) // TODO: Bug ASSERT(searchEngineItem != null)
                                             {
-                                                listBox.Items.Clear();
-                                                /*foreach ( SearchEngineResult.ResultItem resultItem in searchEngineItem.Results )
-                                                {
-                                                    listBox.Items.Add( new ListBoxItem()
-                                                    {
-                                                        Content = resultItem.Title
-                                                    } );
-                                                }*/
-                                                listBox.Items.Add( new ListBoxItem()
-                                                {
-                                                    Content= dictItem.Word
-                                                    
-                                                } );
-                                                if ( dictItem.Pronunciation != string.Empty )
-                                                {
-                                                    listBox.Items.Add( new ListBoxItem()
-                                                    {
-                                                        Content =" "
-                                                    } );
-                                                    listBox.Items.Add( new ListBoxItem()
-                                                    {
-                                                        Content = dictItem.Pronunciation
-                                                    } );
-                                                }
-                                                if ( dictItem.Variations != string.Empty )
-                                                {
-                                                    listBox.Items.Add( new ListBoxItem()
-                                                    {
-                                                        Content = " "
-                                                    } );
-                                                    listBox.Items.Add( new ListBoxItem()
-                                                    {
-                                                        Content = dictItem.Variations
-                                                    } );
-                                                }
-                                                if ( dictItem.EnglishExplanations != string.Empty )
-                                                {
-                                                    listBox.Items.Add( new ListBoxItem()
-                                                    {
-                                                        Content = " "
-                                                    } );
-                                                    listBox.Items.Add( new ListBoxItem()
-                                                    {
-                                                        Content = dictItem.EnglishExplanations
-                                                    } );
-                                                }
-                                                if ( dictItem.ChineseExplanations != string.Empty )
-                                                {
-                                                    listBox.Items.Add( new ListBoxItem()
-                                                    {
-                                                        Content = " "
-                                                    } );
-                                                    listBox.Items.Add( new ListBoxItem()
-                                                    {
-                                                        Content = dictItem.ChineseExplanations
-                                                    } );
-                                                }
-                                                if ( dictItem.Examples != string.Empty )
-                                                {
-                                                    listBox.Items.Add( new ListBoxItem()
-                                                    {
-                                                        Content = " "
-                                                    } );
-                                                    listBox.Items.Add( new ListBoxItem()
-                                                    {
-                                                        Content =dictItem.Examples
-                                                    } );
-                                                }
-                                                if ( dictItem.FromEncyclopedia != string.Empty )
-                                                {
-                                                    listBox.Items.Add( new ListBoxItem()
-                                                    {
-                                                        Content = " "
-                                                    } );
-                                                    listBox.Items.Add( new ListBoxItem()
-                                                    {
-                                                        Content = dictItem.FromEncyclopedia
-                                                    } );
-                                                }
-             
 
-                                                tabItem.Header = string.Format( "{0}({1})", dictname, 1 );
+                                                ListBox listBox = null;
+                                                TabItem tabItem = null;
+                                                string dictname = null;
+                                                bool hasFound = FindUIElements(dictItem, out listBox, out tabItem, out dictname);
 
-                                                listBox.InvalidateArrange();
-                                                tabItem.InvalidateArrange();
-                                            }else{
-                                                tabItem.Header = string.Format( "{0}({1})", dictname, 0 );
+                                                if (hasFound && dictItem.Word != string.Empty)
+                                                {
+                                                    listBox.Items.Clear();
+                                                    /*foreach ( SearchEngineResult.ResultItem resultItem in searchEngineItem.Results )
+                                                    {
+                                                        listBox.Items.Add( new ListBoxItem()
+                                                        {
+                                                            Content = resultItem.Title
+                                                        } );
+                                                    }*/
+                                                    listBox.Items.Add(new ListBoxItem()
+                                                    {
+                                                        Content = dictItem.Word
 
-                                                listBox.InvalidateArrange();
-                                                tabItem.InvalidateArrange();
+                                                    });
+                                                    if (dictItem.Pronunciation != string.Empty)
+                                                    {
+                                                        listBox.Items.Add(new ListBoxItem()
+                                                        {
+                                                            Content = " "
+                                                        });
+                                                        listBox.Items.Add(new ListBoxItem()
+                                                        {
+                                                            Content = dictItem.Pronunciation
+                                                        });
+                                                    }
+                                                    if (dictItem.Variations != string.Empty)
+                                                    {
+                                                        listBox.Items.Add(new ListBoxItem()
+                                                        {
+                                                            Content = " "
+                                                        });
+                                                        listBox.Items.Add(new ListBoxItem()
+                                                        {
+                                                            Content = dictItem.Variations
+                                                        });
+                                                    }
+                                                    if (dictItem.EnglishExplanations != string.Empty)
+                                                    {
+                                                        listBox.Items.Add(new ListBoxItem()
+                                                        {
+                                                            Content = " "
+                                                        });
+                                                        listBox.Items.Add(new ListBoxItem()
+                                                        {
+                                                            Content = dictItem.EnglishExplanations
+                                                        });
+                                                    }
+                                                    if (dictItem.ChineseExplanations != string.Empty)
+                                                    {
+                                                        listBox.Items.Add(new ListBoxItem()
+                                                        {
+                                                            Content = " "
+                                                        });
+                                                        listBox.Items.Add(new ListBoxItem()
+                                                        {
+                                                            Content = dictItem.ChineseExplanations
+                                                        });
+                                                    }
+                                                    if (dictItem.Examples != string.Empty)
+                                                    {
+                                                        listBox.Items.Add(new ListBoxItem()
+                                                        {
+                                                            Content = " "
+                                                        });
+                                                        listBox.Items.Add(new ListBoxItem()
+                                                        {
+                                                            Content = dictItem.Examples
+                                                        });
+                                                    }
+                                                    if (dictItem.FromEncyclopedia != string.Empty)
+                                                    {
+                                                        listBox.Items.Add(new ListBoxItem()
+                                                        {
+                                                            Content = " "
+                                                        });
+                                                        listBox.Items.Add(new ListBoxItem()
+                                                        {
+                                                            Content = dictItem.FromEncyclopedia
+                                                        });
+                                                    }
+
+
+                                                    tabItem.Header = string.Format("{0}({1})", dictname, 1);
+
+                                                    listBox.InvalidateArrange();
+                                                    tabItem.InvalidateArrange();
+                                                }
+                                                else
+                                                {
+                                                    tabItem.Header = string.Format("{0}({1})", dictname, 0);
+
+                                                    listBox.InvalidateArrange();
+                                                    tabItem.InvalidateArrange();
+                                                }
                                             }
-                                        }
 
 
-                                        break;
+                                            break;
 
-                                    default:
-                                        break;
+                                        default:
+                                            break;
+                                    }
+                                    #endregion
                                 }
-                               
+                            }
+                            catch (Exception)
+                            {
+                                // do nothing
                             }
                         }
                     })

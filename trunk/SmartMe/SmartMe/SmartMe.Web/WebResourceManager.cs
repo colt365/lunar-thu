@@ -41,7 +41,12 @@ namespace SmartMe.Web
         /// <summary>
         /// 是否取消过期的查询
         /// </summary>
-        private HandleDeprecateQueryOption _deprecateQueryOption = HandleDeprecateQueryOption.Reserve;
+        private HandleDeprecateQueryOption _deprecateQueryOption = HandleDeprecateQueryOption.Drop;
+
+        /// <summary>
+        /// 查询的管道
+        /// </summary>
+        private List<SearchAndReturnPipe> _searchPipeList;
         #endregion
 
         #region constructor
@@ -157,10 +162,8 @@ namespace SmartMe.Web
             {
                 lock (_result)
                 {
-                   
                     switch (result.ResultType)
                     {
-                          
                         case QueryResultItemType.SearchEngineResult:
                             _result.SearchEngineResultItems.Add( result as SearchEngineResult );
                             break;
@@ -168,7 +171,6 @@ namespace SmartMe.Web
                             _result.DictResultItems.Add(result as DictResult);
                             break;
                         case QueryResultItemType.SuggestionResult:
-                            
                             _result.SuggestionResultItems.Add(result as SuggestionResult);
                             break;
                         default:
@@ -176,15 +178,15 @@ namespace SmartMe.Web
                     }
                     
                     _handler.OnResultUpdate(_result);
+                    _pipeline.OnQueryResultReady(_result);
                     if ( (_result.SearchEngineResultItems.Count +
                         _result.SuggestionResultItems.Count +
                         _result.DictResultItems.Count) 
                         == _searchEngineList.Count)
                     {
                         _handler.OnResultCompleted(_result);
-                        _pipeline.OnQueryResultReady(_result);
+                        //_pipeline.OnQueryResultReady(_result);
                     }
-
                 }
             }
         }
@@ -194,6 +196,13 @@ namespace SmartMe.Web
             if (_deprecateQueryOption == HandleDeprecateQueryOption.Drop)
             {
                 _pipeline.OnInputTextCanceled(message);
+                lock (_searchPipeList)
+                {
+                    foreach (SearchAndReturnPipe pipe in _searchPipeList)
+                    {
+                        pipe.CancelQuery();
+                    }
+                }
             }
         }
 
@@ -217,10 +226,15 @@ namespace SmartMe.Web
                 _result = new QueryResult(query);
                 _handler.OnResultNew(_result);
 
-                // Generate new queries               
-                foreach (ISearch engine in _searchEngineList)
+                // Generate new queries
+                _searchPipeList = new List<SearchAndReturnPipe>();
+                lock (_searchPipeList)
                 {
-                    SearchAndReturnPipe pipe = new SearchAndReturnPipe(this, engine, query, _pipeline);
+                    foreach (ISearch engine in _searchEngineList)
+                    {
+                        SearchAndReturnPipe pipe = new SearchAndReturnPipe(this, engine, query, _pipeline);
+                        _searchPipeList.Add(pipe);
+                    }
                 }
             }
         }
