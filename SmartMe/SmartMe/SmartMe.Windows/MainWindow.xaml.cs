@@ -1316,11 +1316,11 @@ namespace SmartMe.Windows
             {
                 if ( e.Delta < 0 )
                 {
-                    selectedIndex = Math.Min( selectedIndex + 1, count );
+                    selectedIndex = Math.Min( selectedIndex + 2, count );
                 }
                 else
                 {
-                    selectedIndex = Math.Max( selectedIndex - 1, 0 );
+                    selectedIndex = Math.Max( selectedIndex - 2, 0 );
                 }
                 DictcnOutputListBox.SelectedIndex = selectedIndex;
             }
