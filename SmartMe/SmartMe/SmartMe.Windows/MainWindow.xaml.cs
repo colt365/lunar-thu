@@ -825,6 +825,7 @@ namespace SmartMe.Windows
                         {
                             try
                             {
+                                _parent.ClearAllListBoxes();
                                 foreach (IQueryResultItem queryResultItem in result.Items)
                                 {
                                     #region dealwithqueryitem
@@ -1198,6 +1199,22 @@ namespace SmartMe.Windows
                 return hasFound;
             }
             #endregion private
+        }
+
+        public void ClearAllListBoxes()
+        {
+            ClearListBox(GoogleOutputListBox, GoogleTabItem, "谷歌");
+            ClearListBox(BaiduOutputListBox, BaiduTabItem, "百度");
+            ClearListBox(SougouOutputListBox, SougouTabItem, "搜狗");
+            ClearListBox(WikipediaOutputListBox, WikipediaTabItem, "维基");
+            ClearListBox(DictcnOutputListBox, DictcnTabItem, "电子辞典");
+        }
+
+        private void ClearListBox(ListBox box, TabItem tab, string name)
+        {
+            box.Items.Clear();
+            box.SelectedIndex = -1;
+            tab.Header = name;
         }
 
         #endregion QueryResultHandler
