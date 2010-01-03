@@ -23,6 +23,7 @@ namespace SmartMe.Windows
         static public System.Windows.Forms.NotifyIcon notifyIcon;
         private System.Windows.Forms.ContextMenu trayContextMenu;
         private System.Windows.Forms.MenuItem trayExitMenuItem;
+        private System.Windows.Forms.MenuItem trayMiniMenuItem;
         private System.Windows.Forms.MenuItem trayViewHistorymenuItem;
 
         private MainWindow _mainWindow = new MainWindow(ref notifyIcon);
@@ -42,16 +43,21 @@ namespace SmartMe.Windows
         {
             trayContextMenu = new System.Windows.Forms.ContextMenu();
             trayExitMenuItem = new System.Windows.Forms.MenuItem();
+            trayMiniMenuItem = new System.Windows.Forms.MenuItem();
             trayViewHistorymenuItem = new System.Windows.Forms.MenuItem();
 
             trayContextMenu.MenuItems.AddRange(
-                        new System.Windows.Forms.MenuItem[] { trayViewHistorymenuItem, trayExitMenuItem });
+                        new System.Windows.Forms.MenuItem[] { trayViewHistorymenuItem, trayMiniMenuItem, trayExitMenuItem });
 
             trayViewHistorymenuItem.Index = 0;
             trayViewHistorymenuItem.Text = "查看历史记录(&H)";
             trayViewHistorymenuItem.Click += new EventHandler(TrayViewHistoryMenuItem_Click);
 
-            trayExitMenuItem.Index = 1;
+            trayMiniMenuItem.Index = 1;
+            trayMiniMenuItem.Text = "隐藏悬浮窗(&M)";
+            trayMiniMenuItem.Click += new EventHandler(TrayMiniMenuItem_Click);
+			
+            trayExitMenuItem.Index = 2;
             trayExitMenuItem.Text = "退出(&E)";
             trayExitMenuItem.Click += new EventHandler(TrayExitMenuItem_Click);
 
@@ -92,6 +98,18 @@ namespace SmartMe.Windows
         private void TrayExitMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+		
+        private void TrayMiniMenuItem_Click(object sender, EventArgs e)
+        {
+			if(this.IsVisible){
+            	this.Hide();
+				trayMiniMenuItem.Text = "显示悬浮窗(&M)";
+			} else {
+            	this.Show();
+				trayMiniMenuItem.Text = "隐藏悬浮窗(&M)";
+			}
+			
         }
 
         private void TrayViewHistoryMenuItem_Click(object sender, EventArgs e)
@@ -228,7 +246,21 @@ namespace SmartMe.Windows
             }
         }
 
-        
+        private void MiniViewHistoryMenuItem_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+			TrayViewHistoryMenuItem_Click(sender, e);
+        }
 
+        private void MiniExitMenuItem_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+        	TrayExitMenuItem_Click(sender, e);
+        }
+
+        private void MiniHideMenuItem_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+			this.Hide();
+			trayMiniMenuItem.Text = "显示悬浮窗(&M)";
+        }
+		
 	}
 }

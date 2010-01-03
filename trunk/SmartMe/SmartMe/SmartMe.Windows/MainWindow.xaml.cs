@@ -567,7 +567,7 @@ namespace SmartMe.Windows
         #endregion Functional
 
         #region 鼠标拖拽
-        private void Window_Drop(object sender, System.Windows.DragEventArgs e)
+        public void Window_Drop(object sender, System.Windows.DragEventArgs e)
 		{
 			// TODO: Add event handler implementation here.
             StringBuilder sb = new StringBuilder();
