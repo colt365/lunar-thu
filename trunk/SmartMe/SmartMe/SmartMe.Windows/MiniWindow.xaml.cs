@@ -137,7 +137,7 @@ namespace SmartMe.Windows
 			Thread.Sleep(1);
 			this.Topmost = true;
             //Thread.Sleep(1);
-			//_mainWindow.Topmost = false;
+            //_mainWindow.Topmost = false;
         }
         public void HideMainWindow()
         {
@@ -261,6 +261,22 @@ namespace SmartMe.Windows
 			this.Hide();
 			trayMiniMenuItem.Text = "显示悬浮窗(&M)";
         }
-		
+		private void MiniMinimizeMenuItem_Click(object sender, System.Windows.RoutedEventArgs e)
+		{
+			if(_mainWindow.IsVisible) {
+				HideMainWindow();
+			} else {
+                ShowMainWindow();
+			}
+		}
+
+		private void MiniGrid_MouseRightButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+		{
+			if(_mainWindow.IsVisible){
+				MiniMenuItem_Minimize.Header = "隐藏搜索窗口";
+			} else {
+				MiniMenuItem_Minimize.Header = "显示搜索窗口";
+			}
+		}
 	}
 }
