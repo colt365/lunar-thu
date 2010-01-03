@@ -127,6 +127,34 @@ namespace SmartMe.Core.Data
 
         #region methods
 
+        public bool IsEmpty()
+        {
+            
+            foreach (SearchEngineResult r in _searchEngineResultItems)
+            {
+                if(r.Results.Count!=0)
+                {
+                    return false;
+                }
+            }
+            foreach (DictResult  r in _dictResultItems)
+            {
+                if (r.Word!=string.Empty)
+                {
+                    return false;
+                }
+            }
+            foreach (SuggestionResult r in _suggestionResultItems)
+            {
+                if (r.Results.Count!=0)
+                {
+                    return false;
+                }
+            }
+            return true;
+           
+        }
+
         public override string ToString()
         {
             StringBuilder stringBuilder = new StringBuilder(_query.ToString());

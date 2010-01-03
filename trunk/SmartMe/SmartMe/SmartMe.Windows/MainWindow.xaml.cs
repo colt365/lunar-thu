@@ -1006,11 +1006,17 @@ namespace SmartMe.Windows
 
                 //MessageBox.Show("OnResultDeprecated" + result.ToString());
             }
+           
             public void OnResultCompleted(QueryResult result)
             {
                 _parent.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(
                         delegate()
                         {
+                            if (result.IsEmpty())
+                            {
+                                _parent.InputTextBox.Text = "哎呦，没有结果:(";
+                            }
+                            
                             _parent.LoadingImage.Visibility = Visibility.Hidden;
                         })
                     );
@@ -1421,5 +1427,10 @@ namespace SmartMe.Windows
         }
 
         #endregion
+
+        private void InputTextBox_TextChanged ( object sender, TextChangedEventArgs e )
+        {
+
+        }
     }
 }
