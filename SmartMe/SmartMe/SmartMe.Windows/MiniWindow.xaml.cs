@@ -18,18 +18,96 @@ namespace SmartMe.Windows
 	/// </summary>
 	public partial class MiniWindow : Window
 	{
-		private MainWindow _mainWindow = new MainWindow();
+        // NotifyIcon
+        static public System.Windows.Forms.NotifyIcon notifyIcon;
+        private System.Windows.Forms.ContextMenu trayContextMenu;
+        private System.Windows.Forms.MenuItem trayExitMenuItem;
+        private System.Windows.Forms.MenuItem trayViewHistorymenuItem;
+
+        private MainWindow _mainWindow = new MainWindow(ref notifyIcon);
+
         public MiniWindow()
 		{
 			this.InitializeComponent();
-			
+
+            InitNotifyIcon();
 			// Insert code required on object creation below this point.
             HideMainWindow();
 		}
+
+        #region MinimizeToIcon
+        // private bool firstShowTip = true;
+        private void InitNotifyIcon()
+        {
+            trayContextMenu = new System.Windows.Forms.ContextMenu();
+            trayExitMenuItem = new System.Windows.Forms.MenuItem();
+            trayViewHistorymenuItem = new System.Windows.Forms.MenuItem();
+
+            trayContextMenu.MenuItems.AddRange(
+                        new System.Windows.Forms.MenuItem[] { trayViewHistorymenuItem, trayExitMenuItem });
+
+            trayViewHistorymenuItem.Index = 0;
+            trayViewHistorymenuItem.Text = "查看历史记录(&H)";
+            trayViewHistorymenuItem.Click += new EventHandler(TrayViewHistoryMenuItem_Click);
+
+            trayExitMenuItem.Index = 1;
+            trayExitMenuItem.Text = "退出(&E)";
+            trayExitMenuItem.Click += new EventHandler(TrayExitMenuItem_Click);
+
+            notifyIcon = new System.Windows.Forms.NotifyIcon();
+            notifyIcon.BalloonTipText = "SmartMe已最小化到托盘，双击此处恢复窗口";
+            notifyIcon.BalloonTipTitle = "SmartMe";
+            notifyIcon.Text = "SmartMe";
+            notifyIcon.Icon = new System.Drawing.Icon("icon.ico");
+            notifyIcon.DoubleClick += new EventHandler(notifyIcon_DoubleClick);
+            notifyIcon.ContextMenu = this.trayContextMenu;
+            ShowTrayIcon(true);	// Always show the icon
+        }
+
+        private void notifyIcon_DoubleClick(object sender, EventArgs e)
+        {
+            if (_mainWindow.IsVisible)
+            {
+                HideMainWindow();
+                if (notifyIcon != null)// && firstShowTip)
+                {
+                    // firstShowTip = false;
+                    notifyIcon.ShowBalloonTip(500);
+                }
+            }
+            else
+            {
+                ShowMainWindow();
+            }
+        }
+
+        private void ShowTrayIcon(bool show)
+        {
+            if (notifyIcon != null)
+                notifyIcon.Visible = show;
+        }
+
+        //TrayExitMenuItem_Click
+        private void TrayExitMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void TrayViewHistoryMenuItem_Click(object sender, EventArgs e)
+        {
+            _mainWindow.ShowHistoryWindow(this.Top, this.Left);
+        }
+        #endregion MinimizeToIcon
+
 		
 		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
         	_mainWindow.Close();
+
+            if (notifyIcon != null)
+            {
+                notifyIcon.Dispose();
+            }
         }
 		
         public void ShowMainWindow()

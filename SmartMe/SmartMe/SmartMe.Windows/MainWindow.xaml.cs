@@ -71,23 +71,23 @@ namespace SmartMe.Windows
 
         // History Window
         private HistoryWindow _historyWindow = null;
-
+        
 		// NotifyIcon
         private System.Windows.Forms.NotifyIcon notifyIcon;
-        private System.Windows.Forms.ContextMenu trayContextMenu;
-        private System.Windows.Forms.MenuItem trayExitMenuItem;
-        private System.Windows.Forms.MenuItem trayViewHistorymenuItem;
-
+        //private System.Windows.Forms.ContextMenu trayContextMenu;
+        //private System.Windows.Forms.MenuItem trayExitMenuItem;
+        //private System.Windows.Forms.MenuItem trayViewHistorymenuItem;
+        
         #endregion
-		
-        public MainWindow()
+
+        public MainWindow(ref System.Windows.Forms.NotifyIcon _notifyIcon)
 		{
 			this.InitializeComponent();
-
+            notifyIcon = _notifyIcon;
          
 			// Insert code required on object creation below this point.
             CreateListeners();
-            InitNotifyIcon();
+            // InitNotifyIcon();
 			
 		}
 
@@ -101,10 +101,10 @@ namespace SmartMe.Windows
             {
                 _historyWindow.Close();
             }
-            if (notifyIcon != null)
-            {
-                notifyIcon.Dispose();
-            }
+            //if (notifyIcon != null)
+            //{
+            //   notifyIcon.Dispose();
+            //}
         }
 
         private void CreateListeners()
@@ -132,7 +132,7 @@ namespace SmartMe.Windows
                     "data", new TimeSpan(30, 0, 0, 0));
             _pipeline.QueryResultSubscriberManager.AddSubscriber(_queryResultRecordManager);            
         }
-
+/*
         private void InitNotifyIcon(){
             trayContextMenu = new System.Windows.Forms.ContextMenu();
             trayExitMenuItem = new System.Windows.Forms.MenuItem();
@@ -158,7 +158,7 @@ namespace SmartMe.Windows
             notifyIcon.ContextMenu = this.trayContextMenu;
             ShowTrayIcon(true);	// Always show the icon
         }
-        
+        */
         #region Hidden
         private void GrabButton_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
@@ -1218,31 +1218,19 @@ namespace SmartMe.Windows
         }
 		#endregion for Debug
 
-        #region MinimizeToIcon
         // private bool firstShowTip = true;
-        /*
-        private void MinimizeImage_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-
-            // TODO:here
-            Hide();
-            if (notifyIcon != null && firstShowTip)
-            {
-                firstShowTip = false;
-                notifyIcon.ShowBalloonTip(500);
-            }
-        }
-        */
-
         private void MinimizeMenuItem_Click(object sender, RoutedEventArgs e)
         {
             Hide();
-            if (notifyIcon != null )// && firstShowTip)
+            if (notifyIcon != null)// && firstShowTip)
             {
                 // firstShowTip = false;
                 notifyIcon.ShowBalloonTip(500);
             }
         }
+
+        /*
+        #region MinimizeToIcon
 
         private void notifyIcon_DoubleClick(object sender, EventArgs e)
         {
@@ -1278,6 +1266,7 @@ namespace SmartMe.Windows
             ShowHistoryWindow(this.Top, this.Left);
         }
         #endregion MinimizeToIcon
+         * */
 
         #region HistoryWindow
 
@@ -1286,7 +1275,7 @@ namespace SmartMe.Windows
             ShowHistoryWindow(this.Top, this.Left);
         }
 
-        private void ShowHistoryWindow(double top, double left)
+        public void ShowHistoryWindow(double top, double left)
         {
             if (_historyWindow != null && !_historyWindow.IsClosed) 
             {
