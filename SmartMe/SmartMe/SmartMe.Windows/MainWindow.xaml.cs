@@ -77,7 +77,7 @@ namespace SmartMe.Windows
         //private System.Windows.Forms.ContextMenu trayContextMenu;
         //private System.Windows.Forms.MenuItem trayExitMenuItem;
         //private System.Windows.Forms.MenuItem trayViewHistorymenuItem;
-        
+
         #endregion
 
         #region construction

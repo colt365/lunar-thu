@@ -11,10 +11,12 @@
 	</Window.Triggers>
 
 	<Grid x:Name="LayoutRoot">
-		<Grid x:Name="MiniGrid" HorizontalAlignment="Right" Margin="0,136,62,0" VerticalAlignment="Top" Width="70" Height="70" Focusable="True" PreviewDragOver="MiniGrid_PreviewDragOver" Drop="MiniGrid_Drop" MouseLeftButtonDown="MiniGrid_MouseLeftButtonDown">
+		<Grid x:Name="MiniGrid" HorizontalAlignment="Right" Margin="0,136,62,0" VerticalAlignment="Top" Width="70" Height="70" Focusable="True" PreviewDragOver="MiniGrid_PreviewDragOver" Drop="MiniGrid_Drop" MouseLeftButtonDown="MiniGrid_MouseLeftButtonDown" MouseRightButtonDown="MiniGrid_MouseRightButtonDown">
 			<Grid.ContextMenu>
 				<ContextMenu>
+					<MenuItem x:Name="MiniMenuItem_Minimize" Header="显示搜索窗口" Click="MiniMinimizeMenuItem_Click"/>
 					<MenuItem x:Name="MiniMenuItem_ViewHistory" Header="查看历史记录" Click="MiniViewHistoryMenuItem_Click"/>
+					<Separator/>
 					<MenuItem x:Name="MiniMenuItem_HideMini" Header="隐藏悬浮窗" Click="MiniHideMenuItem_Click"/>
 					<MenuItem x:Name="MiniMenuItem_Exit" Header="退出" Click="MiniExitMenuItem_Click"/>
 				</ContextMenu>
