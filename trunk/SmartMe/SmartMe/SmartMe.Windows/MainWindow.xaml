@@ -199,7 +199,7 @@
 				<RichTextBox x:Name="DetailedDescriptionRichTextBox" Margin="8,3.009,8,1.242" Grid.Column="1" Grid.Row="2" d:LayoutOverrides="Width, HorizontalMargin">
 				</RichTextBox>
 				<Button x:Name="DetailedOpenLinkButton" HorizontalAlignment="Right" Margin="0,0,8,0" VerticalAlignment="Bottom" Width="88.67" Height="22" Content="打开链接" Grid.Column="1" Grid.Row="3" d:LayoutOverrides="HorizontalAlignment" Click="DetailedOpenLinkButton_Click"/>
-				<Image x:Name="DetailedPinImageButton" HorizontalAlignment="Right" Margin="0,0.375,29.004,2.495" Width="16" Grid.Column="1" Height="16" Source="Images/button/pin.png" d:LayoutOverrides="GridBox, VerticalMargin" ToolTip="悬停" Cursor="Hand" Focusable="True"/>
+				<Image x:Name="DetailedPinImageButton" HorizontalAlignment="Right" Margin="0,0.375,29.004,2.495" Width="16" Grid.Column="1" Height="16" Source="Images/button/pin.png" d:LayoutOverrides="GridBox, VerticalMargin" ToolTip="悬停" Cursor="Hand" Focusable="True" Visibility="Collapsed"/>
 			</Grid>
 		</Grid>
 		<Grid x:Name="DicardedGrid" HorizontalAlignment="Right" Margin="0,-264,-320,0" Width="264" Grid.Column="3" VerticalAlignment="Top" Height="227.605">
