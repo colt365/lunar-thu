@@ -118,14 +118,13 @@ namespace SmartMe.Windows
 			_mainWindow.Topmost = true;
 			Thread.Sleep(1);
 			this.Topmost = true;
-            Thread.Sleep(1);
-			_mainWindow.Topmost = false;
+            //Thread.Sleep(1);
+			//_mainWindow.Topmost = false;
         }
         public void HideMainWindow()
         {
             _mainWindow.Visibility = Visibility.Collapsed;
         }
-
 
         private void MiniGrid_PreviewDragOver(object sender, System.Windows.DragEventArgs e)
         {
