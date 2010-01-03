@@ -39,25 +39,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_37F39CCDBAEBF63BFE77453EDEAAD96F"
-        "OwnerKey" = "8:_22BC50DAFA0A4925A94AF01A2E9C24CE"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_37F39CCDBAEBF63BFE77453EDEAAD96F"
-        "OwnerKey" = "8:_3B8424084D158EA0BC782DF54CAC3825"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_37F39CCDBAEBF63BFE77453EDEAAD96F"
-        "OwnerKey" = "8:_7EBC00C0CDFB007C11D22D32F637BC2B"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_3B8424084D158EA0BC782DF54CAC3825"
+        "MsmKey" = "8:_615F6B874962EE6546E28F0CC3564700"
         "OwnerKey" = "8:_22BC50DAFA0A4925A94AF01A2E9C24CE"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -69,13 +51,37 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_7782DA34D1BB5835027279E17FA52A35"
+        "OwnerKey" = "8:_22BC50DAFA0A4925A94AF01A2E9C24CE"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_7782DA34D1BB5835027279E17FA52A35"
+        "OwnerKey" = "8:_B3047BEC15CFAEE81E2B548A8FE78A2B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_7782DA34D1BB5835027279E17FA52A35"
+        "OwnerKey" = "8:_615F6B874962EE6546E28F0CC3564700"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_786AEB36F37AB61D99B7760CC704276C"
         "OwnerKey" = "8:_22BC50DAFA0A4925A94AF01A2E9C24CE"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_7EBC00C0CDFB007C11D22D32F637BC2B"
+        "MsmKey" = "8:_91198C63F63C468FAE40F13B1DA2CABD"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_B3047BEC15CFAEE81E2B548A8FE78A2B"
         "OwnerKey" = "8:_22BC50DAFA0A4925A94AF01A2E9C24CE"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -100,7 +106,7 @@
         "Entry"
         {
         "MsmKey" = "8:_FE04D691011D7468D9B8CB4346D5C5BC"
-        "OwnerKey" = "8:_3B8424084D158EA0BC782DF54CAC3825"
+        "OwnerKey" = "8:_B3047BEC15CFAEE81E2B548A8FE78A2B"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -112,7 +118,31 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_91198C63F63C468FAE40F13B1DA2CABD"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_6FC55944F9843EB8AA02E35D795BF24A"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_B3047BEC15CFAEE81E2B548A8FE78A2B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_615F6B874962EE6546E28F0CC3564700"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_7782DA34D1BB5835027279E17FA52A35"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -136,25 +166,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_3B8424084D158EA0BC782DF54CAC3825"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_FE04D691011D7468D9B8CB4346D5C5BC"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_7EBC00C0CDFB007C11D22D32F637BC2B"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_37F39CCDBAEBF63BFE77453EDEAAD96F"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -267,7 +279,7 @@
             "SourcePath" = "8:..\\SmartMe.Windows\\icon.ico"
             "TargetName" = "8:icon.ico"
             "Tag" = "8:"
-            "Folder" = "8:_E3976EFAF5D9425C97FDA4CD39701853"
+            "Folder" = "8:_7F43FB9B90114361A9EF2093D2D6DCF1"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -298,7 +310,7 @@
             "SourcePath" = "8:System.Windows.Interactivity.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_E3976EFAF5D9425C97FDA4CD39701853"
+            "Folder" = "8:_7F43FB9B90114361A9EF2093D2D6DCF1"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -313,54 +325,23 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_37F39CCDBAEBF63BFE77453EDEAAD96F"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_615F6B874962EE6546E28F0CC3564700"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:SmartMe.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:SmartMe.Input, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_37F39CCDBAEBF63BFE77453EDEAAD96F"
+                    "_615F6B874962EE6546E28F0CC3564700"
                     {
-                    "Name" = "8:SmartMe.Core.exe"
+                    "Name" = "8:SmartMe.Input.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:SmartMe.Core.exe"
+            "SourcePath" = "8:SmartMe.Input.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_E3976EFAF5D9425C97FDA4CD39701853"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_3B8424084D158EA0BC782DF54CAC3825"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:SmartMe.Web, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_3B8424084D158EA0BC782DF54CAC3825"
-                    {
-                    "Name" = "8:SmartMe.Web.exe"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:SmartMe.Web.exe"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_E3976EFAF5D9425C97FDA4CD39701853"
+            "Folder" = "8:_7F43FB9B90114361A9EF2093D2D6DCF1"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -391,7 +372,38 @@
             "SourcePath" = "8:SmartMe.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_E3976EFAF5D9425C97FDA4CD39701853"
+            "Folder" = "8:_7F43FB9B90114361A9EF2093D2D6DCF1"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_7782DA34D1BB5835027279E17FA52A35"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:SmartMe.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_7782DA34D1BB5835027279E17FA52A35"
+                    {
+                    "Name" = "8:SmartMe.Core.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:SmartMe.Core.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_7F43FB9B90114361A9EF2093D2D6DCF1"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -422,7 +434,7 @@
             "SourcePath" = "8:Microsoft.Expression.Interactions.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_E3976EFAF5D9425C97FDA4CD39701853"
+            "Folder" = "8:_7F43FB9B90114361A9EF2093D2D6DCF1"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -437,23 +449,23 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_7EBC00C0CDFB007C11D22D32F637BC2B"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_B3047BEC15CFAEE81E2B548A8FE78A2B"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:SmartMe.Input, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:SmartMe.Web, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_7EBC00C0CDFB007C11D22D32F637BC2B"
+                    "_B3047BEC15CFAEE81E2B548A8FE78A2B"
                     {
-                    "Name" = "8:SmartMe.Input.exe"
+                    "Name" = "8:SmartMe.Web.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:SmartMe.Input.exe"
+            "SourcePath" = "8:SmartMe.Web.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_E3976EFAF5D9425C97FDA4CD39701853"
+            "Folder" = "8:_7F43FB9B90114361A9EF2093D2D6DCF1"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -484,7 +496,7 @@
             "SourcePath" = "8:WPFToolkit.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_E3976EFAF5D9425C97FDA4CD39701853"
+            "Folder" = "8:_7F43FB9B90114361A9EF2093D2D6DCF1"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -515,7 +527,7 @@
             "SourcePath" = "8:HTMLparserLibDotNet20.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_E3976EFAF5D9425C97FDA4CD39701853"
+            "Folder" = "8:_7F43FB9B90114361A9EF2093D2D6DCF1"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -543,6 +555,17 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Property" = "8:DesktopFolder"
+                "Folders"
+                {
+                }
+            }
+            "{1525181F-901A-416C-8A58-119130FE478E}:_7A5D331C9FD74FC28DEA12DE27F7291F"
+            {
+            "Name" = "8:#1914"
+            "AlwaysCreate" = "11:FALSE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Property" = "8:SystemFolder"
                 "Folders"
                 {
                 }
@@ -588,17 +611,6 @@
                     "Property" = "8:_35C58D1F7A3047CE9C3AA984953C6A98"
                         "Folders"
                         {
-                            "{9EF0B969-E518-4E46-987F-47570745A589}:_E3976EFAF5D9425C97FDA4CD39701853"
-                            {
-                            "Name" = "8:Beta_100103"
-                            "AlwaysCreate" = "11:FALSE"
-                            "Condition" = "8:"
-                            "Transitive" = "11:FALSE"
-                            "Property" = "8:_8693E52801AC437C81B57DBCCD0A96FB"
-                                "Folders"
-                                {
-                                }
-                            }
                         }
                     }
                 }
@@ -620,7 +632,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:SmartMe"
         "ProductCode" = "8:{51F468DC-35D1-4119-81A0-E2F12813CD87}"
-        "PackageCode" = "8:{C1F47252-1C43-45AA-A48A-7AF90E48F8F8}"
+        "PackageCode" = "8:{EC451535-30C9-49AE-BA44-B9252C13542E}"
         "UpgradeCode" = "8:{2208C85F-1F5E-4F11-9307-BF0212666D0B}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
@@ -635,7 +647,7 @@
         "ARPCONTACT" = "8:LunaRStudio"
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:"
-        "ARPURLINFOABOUT" = "8:"
+        "ARPURLINFOABOUT" = "8:http://code.google.com/p/lunar-thu/"
         "ARPPRODUCTICON" = "8:"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
@@ -739,7 +751,35 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_4E4941E79A5D4D69899A1F3871E0DF46"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_0C9B80FFFE744F06993012125758EB83"
+            {
+            "Name" = "8:uninstall.exe"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_91198C63F63C468FAE40F13B1DA2CABD"
+            "Folder" = "8:_CBA38A6750DF40A086D37FCFE7EBC939"
+            "WorkingFolder" = "8:_7F43FB9B90114361A9EF2093D2D6DCF1"
+            "Icon" = "8:"
+            "Feature" = "8:"
+            }
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_7634D495C8C543D1BED4C11AB5864A77"
+            {
+            "Name" = "8:uninstall"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_91198C63F63C468FAE40F13B1DA2CABD"
+            "Folder" = "8:_ED9F47A8196A4A7F9DD763968E84711B"
+            "WorkingFolder" = "8:_7F43FB9B90114361A9EF2093D2D6DCF1"
+            "Icon" = "8:"
+            "Feature" = "8:"
+            }
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_79D5F486B34B489E8D284B4260D65812"
             {
             "Name" = "8:SmartMe"
             "Arguments" = "8:"
@@ -748,9 +788,9 @@
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
             "Target" = "8:_22BC50DAFA0A4925A94AF01A2E9C24CE"
-            "Folder" = "8:_CBA38A6750DF40A086D37FCFE7EBC939"
+            "Folder" = "8:_ED9F47A8196A4A7F9DD763968E84711B"
             "WorkingFolder" = "8:_7F43FB9B90114361A9EF2093D2D6DCF1"
-            "Icon" = "8:_17ECF1F5AE42497198E5D66DDDCD0B45"
+            "Icon" = "8:"
             "Feature" = "8:"
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_BA5EE5FCDF29468DACD7D7DFB76FB018"
@@ -763,11 +803,11 @@
             "Transitive" = "11:FALSE"
             "Target" = "8:_22BC50DAFA0A4925A94AF01A2E9C24CE"
             "Folder" = "8:_3C359D4D92D34564890A3EE284A775DF"
-            "WorkingFolder" = "8:_E3976EFAF5D9425C97FDA4CD39701853"
+            "WorkingFolder" = "8:"
             "Icon" = "8:_22BC50DAFA0A4925A94AF01A2E9C24CE"
             "Feature" = "8:"
             }
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_C314866170E0407DA232FE5C7F032A4F"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_D179549FA4A24D049C0BE11F56D0B434"
             {
             "Name" = "8:SmartMe"
             "Arguments" = "8:"
@@ -776,9 +816,9 @@
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
             "Target" = "8:_22BC50DAFA0A4925A94AF01A2E9C24CE"
-            "Folder" = "8:_ED9F47A8196A4A7F9DD763968E84711B"
-            "WorkingFolder" = "8:_E3976EFAF5D9425C97FDA4CD39701853"
-            "Icon" = "8:_17ECF1F5AE42497198E5D66DDDCD0B45"
+            "Folder" = "8:_CBA38A6750DF40A086D37FCFE7EBC939"
+            "WorkingFolder" = "8:_7F43FB9B90114361A9EF2093D2D6DCF1"
+            "Icon" = "8:"
             "Feature" = "8:"
             }
         }
@@ -1185,7 +1225,7 @@
             "SourcePath" = "8:"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_E3976EFAF5D9425C97FDA4CD39701853"
+            "Folder" = "8:_7F43FB9B90114361A9EF2093D2D6DCF1"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1213,7 +1253,7 @@
             "SourcePath" = "8:"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_E3976EFAF5D9425C97FDA4CD39701853"
+            "Folder" = "8:_7F43FB9B90114361A9EF2093D2D6DCF1"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1241,7 +1281,7 @@
             "SourcePath" = "8:..\\SmartMe.Windows\\obj\\Debug\\SmartMe.Windows.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_E3976EFAF5D9425C97FDA4CD39701853"
+            "Folder" = "8:_7F43FB9B90114361A9EF2093D2D6DCF1"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1264,12 +1304,40 @@
                 {
                 }
             }
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_91198C63F63C468FAE40F13B1DA2CABD"
+            {
+            "SourcePath" = "8:..\\SmartMe.Uninstall\\obj\\Debug\\uninstall.exe"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_7F43FB9B90114361A9EF2093D2D6DCF1"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:Built"
+            "OutputProjectGuid" = "8:{588EDDB3-7910-4278-A166-CB2AFD5EF820}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_9FA168B1BD91405F80C19DDFF9D21AC7"
             {
             "SourcePath" = "8:"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_E3976EFAF5D9425C97FDA4CD39701853"
+            "Folder" = "8:_7F43FB9B90114361A9EF2093D2D6DCF1"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1297,7 +1365,7 @@
             "SourcePath" = "8:"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_E3976EFAF5D9425C97FDA4CD39701853"
+            "Folder" = "8:_7F43FB9B90114361A9EF2093D2D6DCF1"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1325,7 +1393,7 @@
             "SourcePath" = "8:"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_E3976EFAF5D9425C97FDA4CD39701853"
+            "Folder" = "8:_7F43FB9B90114361A9EF2093D2D6DCF1"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1353,7 +1421,7 @@
             "SourcePath" = "8:"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_E3976EFAF5D9425C97FDA4CD39701853"
+            "Folder" = "8:_7F43FB9B90114361A9EF2093D2D6DCF1"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
