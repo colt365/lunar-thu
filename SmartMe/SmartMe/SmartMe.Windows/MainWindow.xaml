@@ -177,7 +177,7 @@
 		<i:Interaction.Behaviors>
 			<il:MouseDragElementBehavior ConstrainToParentBounds="False" X="1" Y="1"/>
 		</i:Interaction.Behaviors>
-		<Grid x:Name="DetailedGrid" Margin="-216,56,10,-24.67" Grid.Row="2" Grid.RowSpan="3" d:LayoutOverrides="VerticalAlignment, GridBox" Height="187.727" Visibility="Hidden">
+		<Grid x:Name="DetailedGrid" Margin="-216,56,10,-24.67" Grid.Row="2" Grid.RowSpan="3" d:LayoutOverrides="VerticalAlignment, GridBox" Height="187.727">
 			<Rectangle x:Name="DetailedBackgroundRectangle" Fill="Black" Stroke="Black" RadiusX="8" RadiusY="8" Margin="-2,-2,-2,0" d:LayoutOverrides="HorizontalAlignment" Opacity="0.6" VerticalAlignment="Top" Height="189.727"/>
 			<Grid Margin="2,2,2,6">
 				<Grid.RowDefinitions>
@@ -193,7 +193,7 @@
 					<ColumnDefinition Width="0*"/>
 				</Grid.ColumnDefinitions>
 				<TextBlock Margin="2,2.742,114.67,4.235" Foreground="White" TextWrapping="Wrap" Grid.Column="1" d:LayoutOverrides="VerticalAlignment"><Run Text="详细"/><Run Text="信息"/><Run Text="："/></TextBlock>
-				<Image x:Name="DetailedCloseImageButton" HorizontalAlignment="Right" Margin="0,0.375,8.004,2.495" Width="16" Grid.Column="1" d:LayoutOverrides="GridBox, VerticalMargin" Height="16" Source="Images/button/x_red.png" ToolTip="关闭" Cursor="Hand" Focusable="True" 
+				<Image x:Name="DetailedCloseImageButton" HorizontalAlignment="Right" Margin="0,0.375,8.004,2.495" Width="16" Grid.Column="1" d:LayoutOverrides="GridBox" Height="16" Source="Images/button/x_red.png" ToolTip="关闭" Cursor="Hand" Focusable="True" 
                      MouseLeftButtonDown="onMouseLeftButtonDown"  />
 				<TextBox x:Name="DetailedTitleTextBox" Margin="8,0.771,8,1.772" Grid.Column="1" Grid.Row="1" TextWrapping="Wrap" d:LayoutOverrides="Width, HorizontalMargin"/>
 				<RichTextBox x:Name="DetailedDescriptionRichTextBox" Margin="8,3.009,8,1.242" Grid.Column="1" Grid.Row="2" d:LayoutOverrides="Width, HorizontalMargin">
