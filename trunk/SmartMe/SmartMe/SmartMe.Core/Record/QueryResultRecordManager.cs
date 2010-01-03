@@ -103,10 +103,13 @@ namespace SmartMe.Core.Record
                     int i = resultList.IndexOf(existResult);
                     //resultList.RemoveAt(i);
                     //resultList.Insert(i, result);
-                    if (existResult.Items.Count <= result.Items.Count)
+                    //if (existResult.Items.Count <= result.Items.Count)
+                    if (existResult.LastUpdateTime < result.LastUpdateTime)
                     {
-                        existResult.Items.Clear();
-                        existResult.Items.AddRange(result.Items);
+                        //existResult.Items.Clear();
+                        //existResult.Items.AddRange(result.Items);
+                        resultList.Remove(existResult);
+                        resultList.Add(result);
                         SetResultList(date, resultList);
                     }
                     return;
@@ -285,7 +288,10 @@ namespace SmartMe.Core.Record
                 {
                     return;
                 }
-                UpdateRecord(result);
+                lock (_fileManager)
+                {
+                    UpdateRecord(result);
+                }
             }
         }
 

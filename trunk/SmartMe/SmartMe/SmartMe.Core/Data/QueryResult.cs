@@ -49,7 +49,8 @@ namespace SmartMe.Core.Data
                 _query = value;
             }
         }
-    
+
+        [XmlIgnore]
         public List<IQueryResultItem> Items
         {
             get {
@@ -101,6 +102,12 @@ namespace SmartMe.Core.Data
             {
                 return _dictResultItems;
             }
+        }
+
+        public DateTime LastUpdateTime
+        {
+            get;
+            set;
         }
 
 
