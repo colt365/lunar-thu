@@ -80,6 +80,8 @@ namespace SmartMe.Windows
         
         #endregion
 
+        #region construction
+
         public MainWindow(ref System.Windows.Forms.NotifyIcon _notifyIcon)
 		{
 			this.InitializeComponent();
@@ -132,33 +134,36 @@ namespace SmartMe.Windows
                     "data", new TimeSpan(30, 0, 0, 0));
             _pipeline.QueryResultSubscriberManager.AddSubscriber(_queryResultRecordManager);            
         }
-/*
-        private void InitNotifyIcon(){
-            trayContextMenu = new System.Windows.Forms.ContextMenu();
-            trayExitMenuItem = new System.Windows.Forms.MenuItem();
-            trayViewHistorymenuItem = new System.Windows.Forms.MenuItem();
+        /*
+                private void InitNotifyIcon(){
+                    trayContextMenu = new System.Windows.Forms.ContextMenu();
+                    trayExitMenuItem = new System.Windows.Forms.MenuItem();
+                    trayViewHistorymenuItem = new System.Windows.Forms.MenuItem();
 
-            trayContextMenu.MenuItems.AddRange(
-                        new System.Windows.Forms.MenuItem[] { trayViewHistorymenuItem, trayExitMenuItem });
+                    trayContextMenu.MenuItems.AddRange(
+                                new System.Windows.Forms.MenuItem[] { trayViewHistorymenuItem, trayExitMenuItem });
 
-            trayViewHistorymenuItem.Index = 0;
-            trayViewHistorymenuItem.Text = "查看历史记录(&H)";
-            trayViewHistorymenuItem.Click += new EventHandler(TrayViewHistoryMenuItem_Click);
+                    trayViewHistorymenuItem.Index = 0;
+                    trayViewHistorymenuItem.Text = "查看历史记录(&H)";
+                    trayViewHistorymenuItem.Click += new EventHandler(TrayViewHistoryMenuItem_Click);
 
-            trayExitMenuItem.Index = 1;
-            trayExitMenuItem.Text = "退出(&E)";
-            trayExitMenuItem.Click += new EventHandler(TrayExitMenuItem_Click);
+                    trayExitMenuItem.Index = 1;
+                    trayExitMenuItem.Text = "退出(&E)";
+                    trayExitMenuItem.Click += new EventHandler(TrayExitMenuItem_Click);
 
-            notifyIcon = new System.Windows.Forms.NotifyIcon();
-            notifyIcon.BalloonTipText = "SmartMe已最小化到托盘，双击此处恢复窗口";
-            notifyIcon.BalloonTipTitle = "SmartMe";
-            notifyIcon.Text = "SmartMe";
-            notifyIcon.Icon = new System.Drawing.Icon("icon.ico");
-            notifyIcon.DoubleClick += new EventHandler(notifyIcon_DoubleClick);
-            notifyIcon.ContextMenu = this.trayContextMenu;
-            ShowTrayIcon(true);	// Always show the icon
-        }
-        */
+                    notifyIcon = new System.Windows.Forms.NotifyIcon();
+                    notifyIcon.BalloonTipText = "SmartMe已最小化到托盘，双击此处恢复窗口";
+                    notifyIcon.BalloonTipTitle = "SmartMe";
+                    notifyIcon.Text = "SmartMe";
+                    notifyIcon.Icon = new System.Drawing.Icon("icon.ico");
+                    notifyIcon.DoubleClick += new EventHandler(notifyIcon_DoubleClick);
+                    notifyIcon.ContextMenu = this.trayContextMenu;
+                    ShowTrayIcon(true);	// Always show the icon
+                }
+                */
+
+        #endregion
+
         #region Hidden
         private void GrabButton_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
@@ -1218,6 +1223,8 @@ namespace SmartMe.Windows
         }
 		#endregion for Debug
 
+        #region MinimizeToIcon
+
         // private bool firstShowTip = true;
         private void MinimizeMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -1230,8 +1237,6 @@ namespace SmartMe.Windows
         }
 
         /*
-        #region MinimizeToIcon
-
         private void notifyIcon_DoubleClick(object sender, EventArgs e)
         {
             if (IsVisible)
@@ -1265,8 +1270,9 @@ namespace SmartMe.Windows
         {
             ShowHistoryWindow(this.Top, this.Left);
         }
-        #endregion MinimizeToIcon
          * */
+
+        #endregion MinimizeToIcon
 
         #region HistoryWindow
 
@@ -1300,6 +1306,8 @@ namespace SmartMe.Windows
         }
 
         #endregion
+
+        #region CallBack
 
         private void ExitMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -1394,5 +1402,7 @@ namespace SmartMe.Windows
             }
             listBox.SelectedIndex = -1;
         }
+
+        #endregion
     }
 }
