@@ -620,7 +620,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:SmartMe"
         "ProductCode" = "8:{51F468DC-35D1-4119-81A0-E2F12813CD87}"
-        "PackageCode" = "8:{7C7D7AF7-0A81-4B84-B836-01C4E99D755F}"
+        "PackageCode" = "8:{C1F47252-1C43-45AA-A48A-7AF90E48F8F8}"
         "UpgradeCode" = "8:{2208C85F-1F5E-4F11-9307-BF0212666D0B}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
@@ -755,7 +755,7 @@
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_BA5EE5FCDF29468DACD7D7DFB76FB018"
             {
-            "Name" = "8:SmartMe.exe"
+            "Name" = "8:SmartMe"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
