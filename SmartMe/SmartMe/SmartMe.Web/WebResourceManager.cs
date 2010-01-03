@@ -176,7 +176,7 @@ namespace SmartMe.Web
                         default:
                             break;
                     }
-                    
+                    _result.LastUpdateTime = DateTime.Now;
                     _handler.OnResultUpdate(_result);
                     _pipeline.OnQueryResultReady(_result);
                     if ( (_result.SearchEngineResultItems.Count +
