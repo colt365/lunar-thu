@@ -13,5 +13,5 @@ SmartMe是一款小巧的搜索引擎综合软件。通过SmartMe，您可以非
 让您获得“信息尽在指间”的享受！
 
 [http://lunar-thu.googlecode.com/svn/tags/Publish/logo.png]
-
+----
 LunaR团队奉上
