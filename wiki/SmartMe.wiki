@@ -1,13 +1,9 @@
-#summary One-sentence summary of this page.
+#summary 什么是SmartMe？
 
 = 介绍 =
 
-Add your content here.
+SmartMe是一款小巧的搜索引擎综合软件。
 
+通过SmartMe，您只需要输入您所需要查询的关键字，就能同时获取google，百度，搜狗等流行搜索引擎的结果。此外，对于一些词条您还可以获取来自维基百科专业的词条解释和相关链接。而对于英文单词，我们还提供来自Dict.CN的解释。
 
-= 详细 =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+让您获得“信息尽在指间”的享受！
