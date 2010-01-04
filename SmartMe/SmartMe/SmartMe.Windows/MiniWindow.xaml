@@ -5,7 +5,7 @@
 	mc:Ignorable="d" xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" xmlns:il="clr-namespace:Microsoft.Expression.Interactivity.Layout;assembly=Microsoft.Expression.Interactions"
 	x:Class="SmartMe.Windows.MiniWindow"
 	x:Name="Window"
-	Title="MiniWindow" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Padding="0" WindowStyle="None" AllowsTransparency="True" Grid.IsSharedSizeScope="True" ScrollViewer.CanContentScroll="True" Margin="0" Topmost="True" AllowDrop="True" BorderThickness="0" Background="{x:Null}" WindowState="Maximized" d:DesignHeight="600" Closing="Window_Closing" ShowInTaskbar="False">
+	Title="MiniWindow" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Padding="0" WindowStyle="None" AllowsTransparency="True" Grid.IsSharedSizeScope="True" ScrollViewer.CanContentScroll="True" Margin="0" Topmost="True" AllowDrop="True" BorderThickness="0" Background="{x:Null}" WindowState="Maximized" d:DesignHeight="600" Closing="Window_Closing" ShowInTaskbar="False" ToolTip="">
 	<Window.Resources>
 		<Storyboard x:Key="DragEnterStoryboard">
 			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="MiniGrid" Storyboard.TargetProperty="(UIElement.Opacity)">
@@ -29,7 +29,7 @@
 		</EventTrigger>
 	</Window.Triggers>
 
-	<Grid x:Name="LayoutRoot">
+	<Grid x:Name="LayoutRoot" ToolTip="拖拽至此进行搜索，双击可打开搜索结果">
 		<Grid x:Name="MiniGrid" HorizontalAlignment="Right" Margin="0,136,62,0" VerticalAlignment="Top" Width="70" Height="70" Focusable="True" PreviewDragOver="MiniGrid_PreviewDragOver" Drop="MiniGrid_Drop" MouseLeftButtonDown="MiniGrid_MouseLeftButtonDown" MouseRightButtonDown="MiniGrid_MouseRightButtonDown">
 			<Grid.ContextMenu>
 				<ContextMenu>
