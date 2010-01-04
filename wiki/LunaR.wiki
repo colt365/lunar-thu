@@ -11,4 +11,4 @@ LuarR团队目前由清华大学计算机系软件科学实验班的五名同学
 == 关于 ==
 我们的blog：http://lunarthu.spaces.live.com
 
-我们的Email：smartMe.THU@gmail.com
+我们的Email：[mailto:SmartMe.THU@gmail.com SmartMe.THU@gmail.com]
