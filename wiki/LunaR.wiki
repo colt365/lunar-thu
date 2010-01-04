@@ -1,4 +1,4 @@
-﻿#summary 关于开发团队LuarR
+﻿#summary 关于开发团队LunaR
 
 == 介绍 ==
 
