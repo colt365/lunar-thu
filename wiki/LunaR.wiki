@@ -2,6 +2,7 @@
 
 = 介绍 =
 
-LuarR团队目前由清华大学计算机系软件科学实验班的五名同学组成，为致力于实现Web资源整合解决方案的开发团队，目前成员有：
-{bolitt, hollydonkey, wuhaotsh, colt365, jiangye06}@gmail.com
+LuarR团队目前由清华大学计算机系软件科学实验班的五名同学组成，为致力于实现Web资源整合解决方案的开发团队。
 
+目前成员有：
+{bolitt, hollydonkey, wuhaotsh, colt365, jiangye06}@gmail.com
