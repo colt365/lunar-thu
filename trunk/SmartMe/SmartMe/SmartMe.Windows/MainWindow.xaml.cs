@@ -74,18 +74,15 @@ namespace SmartMe.Windows
         
 		// NotifyIcon
         private System.Windows.Forms.NotifyIcon notifyIcon;
-        //private System.Windows.Forms.ContextMenu trayContextMenu;
-        //private System.Windows.Forms.MenuItem trayExitMenuItem;
-        //private System.Windows.Forms.MenuItem trayViewHistorymenuItem;
 
         #endregion
 
         #region construction
 
-        public MainWindow(ref System.Windows.Forms.NotifyIcon _notifyIcon)
+        public MainWindow(System.Windows.Forms.NotifyIcon notifyIcon)
 		{
 			this.InitializeComponent();
-            notifyIcon = _notifyIcon;
+            this.notifyIcon = notifyIcon;
          
 			// Insert code required on object creation below this point.
             CreateListeners();
@@ -103,10 +100,12 @@ namespace SmartMe.Windows
             {
                 _historyWindow.Close();
             }
-            //if (notifyIcon != null)
-            //{
-            //   notifyIcon.Dispose();
-            //}
+
+            Properties.Settings setting = this.Window.Resources["SettingsDataSource"] as Properties.Settings;
+            if (setting != null)
+            {
+                setting.Save();
+            }
         }
 
         private void CreateListeners()
@@ -164,92 +163,9 @@ namespace SmartMe.Windows
 
         #endregion
 
-        #region Hidden
-        private void GrabButton_Click(object sender, System.Windows.RoutedEventArgs e)
-		{
-			// TODO: Add event handler implementation here.
-			//ShowScreenWindowAction action = new ShowScreenWindowAction();
-            ScreenWindow screenWindow = new ScreenWindow();
-            bool? isActived = screenWindow.ShowDialog();
-            
-            if (screenWindow.IsScreenRegionSelected)
-            {
-                Point p0 = screenWindow.P0;
-                Point p1 = screenWindow.P1;
-                this.ResultTextBox.Text = string.Format("SelectionRegion: ({0}, {1}), ({2}, {3})", new object[] { p0.X, p0.Y, p1.X, p1.Y });
-            }
-            else
-            {
-                this.ResultTextBox.Text = string.Format("No SelectionRegion");
-            }
-            screenWindow.Close();
-        }
-        #endregion Hidden
+        
 
         #region DetailedInfoWindow
-        private Point GetDetailedInfoScreenPosition(MouseEventArgs e)
-        {
-            Point mouseWindowPosition = e.GetPosition(this);
-            double mainWindowLeft = this.Left;
-            double mainWindowTop = this.Top;
-
-            Point detailedInfoScreenPostion = new Point();
-            detailedInfoScreenPostion.X = mainWindowLeft - _detailedInfoWindow.Width;
-            detailedInfoScreenPostion.Y = mainWindowTop + mouseWindowPosition.Y;
-
-            return detailedInfoScreenPostion;
-        }
-		/*
-        private void ToggleDetailedInfoWindow(MouseEventArgs e)
-        {
-            Point p = GetDetailedInfoScreenPosition(e);
-            ShowDetailedInfoWindow((int)p.X, (int)p.Y);
-        }
-		*/
-
-        /*
-        private void ShowDetailedInfoWindow(int left,
-                                            int top,
-                                            string title,
-                                            string description,
-                                            string uri)
-        {
-            if (_detailedInfoWindow != null && !_detailedInfoWindow.IsClosed)
-            {
-                // do nothing
-                //return;
-            }
-            else
-            {
-                _detailedInfoWindow = new DetailedInfoWindow();
-                _detailedInfoWindow.Left = left;
-                _detailedInfoWindow.Top = top;
-            }
-            _detailedInfoWindow.Title = title;
-            _detailedInfoWindow.Desciprtion = description;
-            _detailedInfoWindow.LinkedUrl = uri;
-            
-            this.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Render, new Action(
-                delegate()
-                {
-                    _detailedInfoWindow.Topmost = true;
-                    _detailedInfoWindow.Show();
-                    _detailedInfoWindow.Topmost = false;
-                })
-            );
-        }
-
-        private void HideDetailedInfoWindow()
-        {
-            this.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Render, new Action(
-                delegate()
-                {
-                    _detailedInfoWindow.Hide();
-                })
-            );
-        }
-        */
-
         private void ShowDetailedGrid(string title, string description, string url)
         {
             //Title
@@ -276,8 +192,7 @@ namespace SmartMe.Windows
 
         #endregion DetailedInfoWindow
 
-        #region 打开 Detailed Window
-
+        #region open Detailed Window
         private void GoogleOutputListBox_PreviewMouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
         {
             int count = GoogleOutputListBox.Items.Count;
@@ -566,7 +481,7 @@ namespace SmartMe.Windows
         }
         #endregion Functional
 
-        #region 鼠标拖拽
+        #region Mouse Drag and Drop
         public void Window_Drop(object sender, System.Windows.DragEventArgs e)
 		{
 			// TODO: Add event handler implementation here.
@@ -665,9 +580,9 @@ namespace SmartMe.Windows
             ResultTextBox.IsEnabled = true;
             InputTextBox.IsEnabled = true;
         }
-        #endregion 鼠标拖拽
+        #endregion Mouse Drag and Drop
 
-        #region 搜索栏
+        #region Search Bar
 		private string GetSearchTextBoxQuery()
 		{
 			string text = InputTextBox.Text;
@@ -725,9 +640,9 @@ namespace SmartMe.Windows
 			}
 			InputTextBox.Opacity = 1.0;
         }
-        #endregion 搜索栏
+        #endregion Search Bar
 
-        #region 结果栏
+        #region Result Control
         private void GoogleOutputListBox_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -1225,80 +1140,7 @@ namespace SmartMe.Windows
 
         #endregion QueryResultHandler
 
-        #region for Debug
-        public enum Level
-        {
-            Normal,
-            Warning,
-            Error,
-            Fatal
-        }
-
-        public void MessageDebug(object o)
-        {
-            MessageDebug(o, Level.Normal);
-        }
-		
-        public void MessageDebug(object o, Level level)
-        {
-            string str = o.ToString();
-			App.Logger.Message(str);
-        }
-		#endregion for Debug
-
-        #region MinimizeToIcon
-
-        // private bool firstShowTip = true;
-        private void MinimizeMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            Hide();
-            if (notifyIcon != null)// && firstShowTip)
-            {
-                // firstShowTip = false;
-                notifyIcon.ShowBalloonTip(500);
-            }
-        }
-
-        /*
-        private void notifyIcon_DoubleClick(object sender, EventArgs e)
-        {
-            if (IsVisible)
-            {
-                Hide();
-                if (notifyIcon != null )// && firstShowTip)
-                {
-                    // firstShowTip = false;
-                    notifyIcon.ShowBalloonTip(500);
-                }
-            }
-            else
-            {
-                Show();
-            }
-        }
-
-        private void ShowTrayIcon(bool show)
-        {
-            if (notifyIcon != null)
-                notifyIcon.Visible = show;
-        }
-
-        //TrayExitMenuItem_Click
-        private void TrayExitMenuItem_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void TrayViewHistoryMenuItem_Click(object sender, EventArgs e)
-        {
-            ShowHistoryWindow(this.Top, this.Left);
-        }
-         * */
-
-        #endregion MinimizeToIcon
-
         #region HistoryWindow
-
         private void ShowHistoryWindowMenuItem_Click(object sender, RoutedEventArgs e)
         {
             ShowHistoryWindow(this.Top, this.Left);
@@ -1327,15 +1169,10 @@ namespace SmartMe.Windows
                 })
             );
         }
-
         #endregion
 
         #region CallBack
 
-        private void ExitMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
 
         public void ChangeInputText(string text)
         {
@@ -1402,11 +1239,9 @@ namespace SmartMe.Windows
                 //SearchEngineResult result = _resultHandler.GetSearchEngineResult( sender );
                 if ( result != null && ((index & 1 )==0))
                 {
-                    
-                        string uri = string.Format( "{0}", result.SearchUrl );
-                        Shell shell = new Shell();
-                        shell.DoOpenWebBrowser( uri );
-                 
+                    string uri = string.Format( "{0}", result.SearchUrl );
+                    Shell shell = new Shell();
+                    shell.DoOpenWebBrowser( uri );
                 }
             }
         }
@@ -1425,12 +1260,7 @@ namespace SmartMe.Windows
             }
             listBox.SelectedIndex = -1;
         }
-
+        
         #endregion
-
-        private void InputTextBox_TextChanged ( object sender, TextChangedEventArgs e )
-        {
-
-        }
     }
 }

@@ -29,8 +29,8 @@
 		</EventTrigger>
 	</Window.Triggers>
 
-	<Grid x:Name="LayoutRoot" ToolTip="拖拽至此进行搜索，双击可打开搜索结果">
-		<Grid x:Name="MiniGrid" HorizontalAlignment="Right" Margin="0,136,62,0" VerticalAlignment="Top" Width="70" Height="70" Focusable="True" PreviewDragOver="MiniGrid_PreviewDragOver" Drop="MiniGrid_Drop" MouseLeftButtonDown="MiniGrid_MouseLeftButtonDown" MouseRightButtonDown="MiniGrid_MouseRightButtonDown">
+	<Grid x:Name="LayoutRoot" ToolTip="">
+		<Grid x:Name="MiniGrid" HorizontalAlignment="Right" Margin="0,136,62,0" VerticalAlignment="Top" Width="70" Height="70" Focusable="True" PreviewDragOver="MiniGrid_PreviewDragOver" Drop="MiniGrid_Drop" MouseLeftButtonDown="MiniGrid_MouseLeftButtonDown" MouseRightButtonDown="MiniGrid_MouseRightButtonDown" ToolTip="请将关键字拖拽到这里">
 			<Grid.ContextMenu>
 				<ContextMenu>
 					<MenuItem x:Name="MiniMenuItem_Minimize" Header="显示搜索窗口" Click="MiniMinimizeMenuItem_Click"/>
@@ -43,7 +43,7 @@
 			<i:Interaction.Behaviors>
 				<il:MouseDragElementBehavior/>
 			</i:Interaction.Behaviors>
-			<Rectangle x:Name="MiniGridBackgroundRectangle" Opacity="0.6" RadiusX="8" RadiusY="8">
+			<Rectangle x:Name="MiniGridBackgroundRectangle" Opacity="0.7" RadiusX="8" RadiusY="8">
 				<Rectangle.Stroke>
 					<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" MappingMode="RelativeToBoundingBox">
 						<GradientStop Color="Black" Offset="0.047"/>
