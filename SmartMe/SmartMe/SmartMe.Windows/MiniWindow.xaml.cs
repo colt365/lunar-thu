@@ -26,7 +26,7 @@ namespace SmartMe.Windows
         private System.Windows.Forms.MenuItem trayMiniMenuItem;
         private System.Windows.Forms.MenuItem trayViewHistorymenuItem;
 
-        private MainWindow _mainWindow = new MainWindow(ref notifyIcon);
+        private MainWindow _mainWindow = new MainWindow(notifyIcon);
 
         public MiniWindow()
 		{
@@ -76,14 +76,14 @@ namespace SmartMe.Windows
             if (_mainWindow.IsVisible)
             {
                 HideMainWindow();
-                if (notifyIcon != null)// && firstShowTip)
+                if (notifyIcon != null)
                 {
-                    // firstShowTip = false;
                     notifyIcon.ShowBalloonTip(500);
                 }
             }
             else
             {
+				this.Visibility = Visibility.Visible;
                 ShowMainWindow();
             }
         }
@@ -136,8 +136,6 @@ namespace SmartMe.Windows
 			_mainWindow.Topmost = true;
 			Thread.Sleep(1);
 			this.Topmost = true;
-            //Thread.Sleep(1);
-            //_mainWindow.Topmost = false;
         }
         public void HideMainWindow()
         {
