@@ -87,8 +87,6 @@ namespace SmartMe.Windows
          
 			// Insert code required on object creation below this point.
             CreateListeners();
-            // InitNotifyIcon();
-			
 		}
 
 		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
