@@ -13,11 +13,10 @@ namespace SmartMe.Uninstall
             string msiexcPath = System.IO.Path.Combine(systemRoot, "msiexec");
             
             // History ProductionID List:
-            //       string productionIDBeta100 = "{51F468DC-35D1-4119-81A0-E2F12813CD87}"; 
-
-            string productionIDBeta101 = "{705C251F-D7B1-4D94-A81D-1529B1EA10AF}";
-
-            string arguments = string.Format("/x {0} /qr", productionIDBeta101);
+            //       string productionIDBeta1_0 = "{51F468DC-35D1-4119-81A0-E2F12813CD87}"; 
+            //       string productionIDBeta1_1 = "{705C251F-D7B1-4D94-A81D-1529B1EA10AF}";
+            string productionIDBeta1_2 = "{982A5C87-A039-4C7E-8836-AFBD8B1BBB0D}";
+            string arguments = string.Format("/x {0} /qr", productionIDBeta1_2);
             System.Diagnostics.Process.Start(msiexcPath, arguments);
         }
     }
