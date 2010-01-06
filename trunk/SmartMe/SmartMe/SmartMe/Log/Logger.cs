@@ -9,7 +9,8 @@ namespace SmartMe.Log
 {
     public class Logger
     {
-        private string _logFileName = null;
+        private string _logFilePath = null;
+        private string _logDir = "log";
         private bool _isInitialized = false;
 
         public enum Level
@@ -21,7 +22,7 @@ namespace SmartMe.Log
 
         public Logger()
         {
-            _logFileName = CreateLogFileString();
+            _logFilePath = CreateLogFilePath();
         }
 
         public void Message(string str)
@@ -69,9 +70,13 @@ namespace SmartMe.Log
 
         private void Save(string str)
         {
-            if (File.Exists(_logFileName))
+            if ( !Directory.Exists(_logDir))
             {
-                using (FileStream fs = new FileStream(_logFileName, FileMode.Append))
+                Directory.CreateDirectory(_logDir);
+            }
+            if (File.Exists(_logFilePath))
+            {
+                using (FileStream fs = new FileStream(_logFilePath, FileMode.Append))
                 {
                     using (BinaryWriter bw = new BinaryWriter(fs, Encoding.UTF8))
                     {
@@ -88,7 +93,7 @@ namespace SmartMe.Log
             }
             else
             {
-                using (FileStream fs = new FileStream(_logFileName, FileMode.OpenOrCreate))
+                using (FileStream fs = new FileStream(_logFilePath, FileMode.OpenOrCreate))
                 {
                     using (BinaryWriter bw = new BinaryWriter(fs, Encoding.UTF8))
                     {
@@ -105,11 +110,12 @@ namespace SmartMe.Log
             }
         }
 
-        private string CreateLogFileString()
+        private string CreateLogFilePath()
         {
             string dateTimeNowToString = DateTime.Now.ToString("yy-MM-dd");
             string logFileName = "[SmartMe_Log]" + dateTimeNowToString + ".txt";
-            return logFileName;
+            string path = Path.Combine(_logDir, logFileName);
+            return path;
         }
 
         

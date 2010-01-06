@@ -35,6 +35,8 @@ namespace SmartMe.Windows
             InitNotifyIcon();
 			// Insert code required on object creation below this point.
             HideMainWindow();
+
+            App.Logger.Message("SmartMe Start!");
 		}
 
         #region MinimizeToIcon
