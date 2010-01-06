@@ -298,36 +298,6 @@
     <Resource Include="Images\logo\nav_logo7.png" />
   </ItemGroup>
   <ItemGroup>
-    <BlendEmbeddedFont Include="Fonts\segoeui.ttf">
-      <IsSystemFont>True</IsSystemFont>
-      <All>True</All>
-      <AutoFill>True</AutoFill>
-    </BlendEmbeddedFont>
-    <BlendEmbeddedFont Include="Fonts\segoeuib.ttf">
-      <IsSystemFont>True</IsSystemFont>
-      <All>True</All>
-      <AutoFill>True</AutoFill>
-    </BlendEmbeddedFont>
-    <BlendEmbeddedFont Include="Fonts\segoeuii.ttf">
-      <IsSystemFont>True</IsSystemFont>
-      <All>True</All>
-      <AutoFill>True</AutoFill>
-    </BlendEmbeddedFont>
-    <BlendEmbeddedFont Include="Fonts\segoeuil.ttf">
-      <IsSystemFont>True</IsSystemFont>
-      <All>True</All>
-      <AutoFill>True</AutoFill>
-    </BlendEmbeddedFont>
-    <BlendEmbeddedFont Include="Fonts\segoeuiz.ttf">
-      <IsSystemFont>True</IsSystemFont>
-      <All>True</All>
-      <AutoFill>True</AutoFill>
-    </BlendEmbeddedFont>
-    <BlendEmbeddedFont Include="Fonts\seguisb.ttf">
-      <IsSystemFont>True</IsSystemFont>
-      <All>True</All>
-      <AutoFill>True</AutoFill>
-    </BlendEmbeddedFont>
     <Resource Include="Images\button\add_green.png" />
     <Resource Include="Images\button\minus_yellow.png" />
     <Resource Include="Images\button\search.png" />

@@ -8,6 +8,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Diagnostics;
@@ -132,6 +133,7 @@ namespace SmartMe.Windows
                 new QueryResultRecordManager(
                     "data", new TimeSpan(30, 0, 0, 0));
             _pipeline.QueryResultSubscriberManager.AddSubscriber(_queryResultRecordManager);            
+
         }
         /*
                 private void InitNotifyIcon(){
@@ -723,6 +725,11 @@ namespace SmartMe.Windows
                     delegate()
                     {
                         _parent.LoadingImage.Visibility = Visibility.Visible;
+                        Storyboard searchingStoryboard = _parent.Window.Resources["SearchingStoryboard"] as Storyboard;
+                        if (searchingStoryboard != null)
+                        {
+                            searchingStoryboard.Begin();
+                        }
                     })
                 );
             }
@@ -933,6 +940,11 @@ namespace SmartMe.Windows
                             }
                             
                             _parent.LoadingImage.Visibility = Visibility.Hidden;
+                            Storyboard searchingStoryboard = _parent.Window.Resources["SearchingStoryboard"] as Storyboard;
+                            if (searchingStoryboard != null)
+                            {
+                                searchingStoryboard.Resume();
+                            }
                         })
                     );
             }

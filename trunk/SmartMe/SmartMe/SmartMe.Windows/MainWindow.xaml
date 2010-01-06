@@ -20,8 +20,8 @@
 			</DoubleAnimationUsingKeyFrames>
 			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="InputTextBox" Storyboard.TargetProperty="(UIElement.Opacity)">
 				<SplineDoubleKeyFrame KeyTime="00:00:00" Value="0"/>
-				<SplineDoubleKeyFrame KeyTime="00:00:00.7000000" Value="0"/>
-				<SplineDoubleKeyFrame KeyTime="00:00:01.7000000" Value="1"/>
+				<SplineDoubleKeyFrame KeyTime="00:00:00.6000000" Value="0"/>
+				<SplineDoubleKeyFrame KeyTime="00:00:01.2000000" Value="1"/>
 			</DoubleAnimationUsingKeyFrames>
 		</Storyboard>
 		<Storyboard x:Key="DragEnterStoryboard">
@@ -137,11 +137,11 @@
 				</DiscreteObjectKeyFrame>
 			</ObjectAnimationUsingKeyFrames>
 		</Storyboard>
-		<Storyboard x:Key="SearchingStoryboard">
+		<Storyboard x:Key="SearchingStoryboard" RepeatBehavior="Forever">
 			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="LoadingImage" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)">
 				<SplineDoubleKeyFrame KeyTime="00:00:00" Value="0"/>
-				<SplineDoubleKeyFrame KeyTime="00:00:00.5000000" Value="180"/>
-				<SplineDoubleKeyFrame KeyTime="00:00:01" Value="360"/>
+				<SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="180"/>
+				<SplineDoubleKeyFrame KeyTime="00:00:00.6000000" Value="360"/>
 			</DoubleAnimationUsingKeyFrames>
 		</Storyboard>
 	</Window.Resources>
@@ -238,7 +238,7 @@
 							</Button.Background>
 							<Image x:Name="SearchImage" Source="Images/button/search.png" RenderTransformOrigin="2.074,0.157" HorizontalAlignment="Right" VerticalAlignment="Top" ToolTip="开始搜索！"/>
 						</Button>
-						<Image x:Name="LoadingImage" HorizontalAlignment="Right" Margin="0,20.479,41,6" Width="26" Grid.Column="1" Source="Images/loading/big.gif" Stretch="Fill" ToolTip="正在搜索中" Height="26" RenderTransformOrigin="0.5,0.5">
+						<Image x:Name="LoadingImage" HorizontalAlignment="Right" Margin="0,20.479,41,6" Width="26" Grid.Column="1" Source="Images/loading/small.gif" Stretch="Fill" ToolTip="正在搜索中" Height="26" RenderTransformOrigin="0.5,0.5" Visibility="Hidden">
 							<Image.RenderTransform>
 								<TransformGroup>
 									<ScaleTransform/>
