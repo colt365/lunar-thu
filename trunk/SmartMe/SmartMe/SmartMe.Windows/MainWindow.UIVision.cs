@@ -31,46 +31,42 @@ namespace SmartMe.Windows
 		bool _isFontSizeSliderLoaded = false;
         private void FontSizeSlider_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
-        	Properties.Settings setting = this.Window.Resources["SettingsDataSource"] as Properties.Settings;
-            if (setting != null)
+            if (!_isFontSizeSliderLoaded)
             {
-               	FontSizeSlider.Value = setting.fontSize;
-				_isFontSizeSliderLoaded = true;
+                Properties.Settings setting = App.Current.Resources["SettingsDataSource"] as Properties.Settings;
+                if (setting != null)
+                {
+                    FontSizeSlider.Value = setting.fontSize;
+                    _isFontSizeSliderLoaded = true;
+                }
             }
         }
 
 		
         private void FontSizeSlider_ValueChanged(object sender, System.Windows.RoutedPropertyChangedEventArgs<double> e)
         {
-			double fontSize = FontSizeSlider.Value;
 			if (_isFontSizeSliderLoaded) 
 			{
-        		SetActualFront(fontSize);
+                double fontSize = FontSizeSlider.Value;
+                Properties.Settings setting = App.Current.Resources["SettingsDataSource"] as Properties.Settings;
+                if (setting != null)
+                {
+                    setting.fontSize = fontSize;
+                    this.UpdateLayout();
+                }
 			}
-        }
-		
-        private void SetActualFront(double fontSize)
-        {
-            Properties.Settings setting = this.Window.Resources["SettingsDataSource"] as Properties.Settings;
-            if (setting != null)
-            {
-                setting.fontSize = fontSize;
-                this.UpdateLayout();
-            }
         }
         #endregion Font
 
-        #region background color
-        bool _isBackgoundColorLoaded = false;
-        
+        #region background color        
 		private void BackgroundColorMenuItem_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            Properties.Settings setting = this.Window.Resources["SettingsDataSource"] as Properties.Settings;
+            Properties.Settings setting = App.Current.Resources["SettingsDataSource"] as Properties.Settings;
             
             Microsoft.Samples.CustomControls.ColorPickerDialog dialog = new Microsoft.Samples.CustomControls.ColorPickerDialog();
             if (setting != null)
             {
-                dialog.StartingColor = setting.backgroundColor;
+                dialog.StartingColor = setting.backgroundColor.Color;
             }
 
             dialog.ShowDialog();
@@ -79,13 +75,41 @@ namespace SmartMe.Windows
             {
                 if (setting != null)
                 {
-                    MessageBox.Show(dialog.SelectedColor.ToString());
-                    setting.backgroundColor = dialog.SelectedColor;
+                    setting.backgroundColor = new SolidColorBrush(dialog.SelectedColor);
                     this.UpdateLayout();
                 }
             }
         }
         #endregion background color
 		
+		#region opacity 
+        bool _isOpacitySliderLoaded = false;
+		private void OpacitySlider_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (! _isOpacitySliderLoaded)
+            {
+                Properties.Settings setting = App.Current.Resources["SettingsDataSource"] as Properties.Settings;
+                if (setting != null)
+                {
+                    double opacity = (double)setting.opacity * Convert.ToDouble(OpacitySlider.Maximum);
+                    OpacitySlider.Value = opacity;
+                    _isFontSizeSliderLoaded = true;
+                }
+            }
+        }
+
+        private void OpacitySlider_ValueChanged(object sender, System.Windows.RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (_isFontSizeSliderLoaded)
+            {
+                Properties.Settings setting = App.Current.Resources["SettingsDataSource"] as Properties.Settings;
+                if (setting != null)
+                {
+                    double opacity = (double)OpacitySlider.Value / OpacitySlider.Maximum;
+                    setting.opacity = opacity;
+                }
+            }
+        }
+		#endregion opacity
     }
 }

@@ -38,12 +38,24 @@ namespace SmartMe.Windows.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("#FF000000")]
-        public global::System.Windows.Media.Color backgroundColor {
+        public global::System.Windows.Media.SolidColorBrush backgroundColor {
             get {
-                return ((global::System.Windows.Media.Color)(this["backgroundColor"]));
+                return ((global::System.Windows.Media.SolidColorBrush)(this["backgroundColor"]));
             }
             set {
                 this["backgroundColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.8")]
+        public double opacity {
+            get {
+                return ((double)(this["opacity"]));
+            }
+            set {
+                this["opacity"] = value;
             }
         }
     }
