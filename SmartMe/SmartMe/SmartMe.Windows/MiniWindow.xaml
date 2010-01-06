@@ -29,7 +29,7 @@
 		</EventTrigger>
 	</Window.Triggers>
 
-	<Grid x:Name="LayoutRoot" ToolTip="">
+	<Grid x:Name="LayoutRoot" ToolTip="" DataContext="{Binding Source={StaticResource SettingsDataSource}}">
 		<Grid x:Name="MiniGrid" HorizontalAlignment="Right" Margin="0,136,62,0" VerticalAlignment="Top" Width="70" Height="70" Focusable="True" PreviewDragOver="MiniGrid_PreviewDragOver" Drop="MiniGrid_Drop" MouseLeftButtonDown="MiniGrid_MouseLeftButtonDown" MouseRightButtonDown="MiniGrid_MouseRightButtonDown" ToolTip="请将关键字拖拽到这里">
 			<Grid.ContextMenu>
 				<ContextMenu>
@@ -43,28 +43,16 @@
 			<i:Interaction.Behaviors>
 				<il:MouseDragElementBehavior/>
 			</i:Interaction.Behaviors>
-			<Rectangle x:Name="MiniGridBackgroundRectangle" Opacity="0.7" RadiusX="8" RadiusY="8">
+			<Rectangle x:Name="MiniGridBackgroundRectangle" Opacity="{Binding opacity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" RadiusX="8" RadiusY="8" Fill="{Binding backgroundColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 				<Rectangle.Stroke>
 					<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" MappingMode="RelativeToBoundingBox">
-						<GradientStop Color="Black" Offset="0.047"/>
-						<GradientStop Color="#FF391965" Offset="0.791"/>
-						<GradientStop Color="#FF262667" Offset="0.55"/>
-						<GradientStop Color="#FFCBBDBD" Offset="0.221"/>
-						<GradientStop Color="#FF2E2A32" Offset="0.986"/>
+						<GradientStop Color="#CA000000" Offset="0.047"/>
+						<GradientStop Color="#CC454445" Offset="0.791"/>
+						<GradientStop Color="#CC000000" Offset="0.559"/>
+						<GradientStop Color="#CAD8D8D8" Offset="0.221"/>
+						<GradientStop Color="#CC3B3B3B" Offset="0.986"/>
 					</LinearGradientBrush>
 				</Rectangle.Stroke>
-				<Rectangle.Fill>
-					<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-						<GradientStop Color="#FFCFD3D5"/>
-						<GradientStop Color="#FF454646" Offset="0.921"/>
-						<GradientStop Color="Black" Offset="0.296"/>
-						<GradientStop Color="Black" Offset="0.662"/>
-						<GradientStop Color="Black" Offset="0.45"/>
-						<GradientStop Color="Black" Offset="0.154"/>
-						<GradientStop Color="#FF3E4040" Offset="0.988"/>
-						<GradientStop Color="#FFD1D1D1" Offset="0.021"/>
-					</LinearGradientBrush>
-				</Rectangle.Fill>
 			</Rectangle>
 			<Image x:Name="MiniGridImage" Margin="2" Source="Images/SmartMeLogo/logo_mini.png"/>
 		</Grid>

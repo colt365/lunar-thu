@@ -5,8 +5,11 @@
     <Setting Name="fontSize" Type="System.Double" Scope="User">
       <Value Profile="(Default)">13</Value>
     </Setting>
-    <Setting Name="backgroundColor" Type="System.Windows.Media.Color" Scope="User">
+    <Setting Name="backgroundColor" Type="System.Windows.Media.SolidColorBrush" Scope="User">
       <Value Profile="(Default)">#FF000000</Value>
+    </Setting>
+    <Setting Name="opacity" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0.8</Value>
     </Setting>
   </Settings>
 </SettingsFile>

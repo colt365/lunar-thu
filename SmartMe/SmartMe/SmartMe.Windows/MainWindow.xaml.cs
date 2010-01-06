@@ -101,7 +101,7 @@ namespace SmartMe.Windows
                 _historyWindow.Close();
             }
 
-            Properties.Settings setting = this.Window.Resources["SettingsDataSource"] as Properties.Settings;
+            Properties.Settings setting = App.Current.Resources["SettingsDataSource"] as Properties.Settings;
             if (setting != null)
             {
                 setting.Save();
@@ -1260,6 +1260,8 @@ namespace SmartMe.Windows
             }
             listBox.SelectedIndex = -1;
         }
+
+
         
         #endregion
     }
