@@ -66,32 +66,36 @@ namespace SmartMe.Windows
             notifyIcon.BalloonTipTitle = "SmartMe";
             notifyIcon.Text = "SmartMe";
             notifyIcon.Icon = new System.Drawing.Icon("icon.ico");
-            notifyIcon.DoubleClick += new EventHandler(notifyIcon_DoubleClick);
+            notifyIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(notifyIcon_Click);
             notifyIcon.ContextMenu = this.trayContextMenu;
             ShowTrayIcon(true);	// Always show the icon
         }
 
-        private void notifyIcon_DoubleClick(object sender, EventArgs e)
+        private void notifyIcon_Click(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            if (_mainWindow.IsVisible)
+            if (e.Button == System.Windows.Forms.MouseButtons.Left)
             {
-                HideMainWindow();
-                if (notifyIcon != null)
+                if (_mainWindow.IsVisible)
                 {
-                    notifyIcon.ShowBalloonTip(500);
+                    HideMainWindow();
+                    if (notifyIcon != null)
+                    {
+                        notifyIcon.ShowBalloonTip(500);
+                    }
                 }
-            }
-            else
-            {
-				this.Visibility = Visibility.Visible;
-                ShowMainWindow();
+                else
+                {
+                    ShowMainWindow();
+                }
             }
         }
 
         private void ShowTrayIcon(bool show)
         {
             if (notifyIcon != null)
+            {
                 notifyIcon.Visible = show;
+            }
         }
 
         //TrayExitMenuItem_Click
