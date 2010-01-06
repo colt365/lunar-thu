@@ -137,12 +137,21 @@
 				</DiscreteObjectKeyFrame>
 			</ObjectAnimationUsingKeyFrames>
 		</Storyboard>
+		<Storyboard x:Key="SearchingStoryboard">
+			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="LoadingImage" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)">
+				<SplineDoubleKeyFrame KeyTime="00:00:00" Value="0"/>
+				<SplineDoubleKeyFrame KeyTime="00:00:00.5000000" Value="180"/>
+				<SplineDoubleKeyFrame KeyTime="00:00:01" Value="360"/>
+			</DoubleAnimationUsingKeyFrames>
+		</Storyboard>
 	</Window.Resources>
 	<Window.Triggers>
 		<EventTrigger RoutedEvent="DragDrop.PreviewDragEnter">
 			<BeginStoryboard x:Name="DragEnterStoryboard_BeginStoryboard" Storyboard="{StaticResource DragEnterStoryboard}"/>
 		</EventTrigger>
-		<EventTrigger RoutedEvent="FrameworkElement.Loaded"/>
+		<EventTrigger RoutedEvent="FrameworkElement.Loaded">
+			<BeginStoryboard Storyboard="{StaticResource SearchingStoryboard}"/>
+		</EventTrigger>
 	</Window.Triggers>
 
 	<Grid x:Name="LayoutRoot" ToolTip="将文本拖拽到这里" DataContext="{Binding Source={StaticResource SettingsDataSource}}" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -218,10 +227,27 @@
 							<ColumnDefinition/>
 						</Grid.ColumnDefinitions>
 						<TextBox x:Name="InputTextBox" Text="搜索栏" GotKeyboardFocus="InputTextBox_GotKeyboardFocus" Background="White" Margin="3,20,8,6" LostKeyboardFocus="InputTextBox_LostKeyboardFocus" PreviewKeyUp="InputTextBox_PreviewKeyUp" Grid.Column="1" ToolTip="请输入搜索内容" Width="480" MaxLines="1" FontSize="{Binding fontSize, Mode=Default}" AutoWordSelection="True"/>
-						<Button x:Name="SearchButton" Margin="0,18.334,10,8.708" Grid.Column="1" d:LayoutOverrides="GridBox" BorderBrush="{x:Null}" Foreground="{x:Null}" Width="25" Height="25" ClickMode="Press" Click="SearchButton_Click" HorizontalAlignment="Right" RenderTransformOrigin="0.24,0.468">
-							<Image x:Name="SearchImage" Source="Images/button/search.png" RenderTransformOrigin="2.074,0.157" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+						<Button x:Name="SearchButton" Margin="0,19.813,10,6" Grid.Column="1" d:LayoutOverrides="GridBox" BorderBrush="{x:Null}" Foreground="{x:Null}" Width="29.187" ClickMode="Press" Click="SearchButton_Click" HorizontalAlignment="Right" RenderTransformOrigin="0.24,0.468">
+							<Button.Background>
+								<LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+									<GradientStop Color="#FFF3F3F3" Offset="0"/>
+									<GradientStop Color="#FFEBEBEB" Offset="0.5"/>
+									<GradientStop Color="#FFDDDDDD" Offset="0.5"/>
+									<GradientStop Color="#FF5D5D5D" Offset="1"/>
+								</LinearGradientBrush>
+							</Button.Background>
+							<Image x:Name="SearchImage" Source="Images/button/search.png" RenderTransformOrigin="2.074,0.157" HorizontalAlignment="Right" VerticalAlignment="Top" ToolTip="开始搜索！"/>
 						</Button>
-						<Image x:Name="LoadingImage" HorizontalAlignment="Right" Margin="0,19,35,9.042" Width="24" Height="24" Grid.Column="1" Source="Images/loading/big.gif" Stretch="Fill" Visibility="Hidden"/>
+						<Image x:Name="LoadingImage" HorizontalAlignment="Right" Margin="0,20.479,41,6" Width="26" Grid.Column="1" Source="Images/loading/big.gif" Stretch="Fill" ToolTip="正在搜索中" Height="26" RenderTransformOrigin="0.5,0.5">
+							<Image.RenderTransform>
+								<TransformGroup>
+									<ScaleTransform/>
+									<SkewTransform/>
+									<RotateTransform/>
+									<TranslateTransform/>
+								</TransformGroup>
+							</Image.RenderTransform>
+						</Image>
 						<Menu x:Name="OptionMenu" Margin="0,0,0.333,0" VerticalAlignment="Top" Height="14.334" Grid.Column="1" HorizontalAlignment="Right" Width="81.7" Background="{x:Null}" d:LayoutOverrides="GridBox">
 							<MenuItem x:Name="OptionMenuItem" Margin="0,0,0,-0.966000000000001" Width="25"  ToolTip="选项">
 								<MenuItem.Icon>
