@@ -111,6 +111,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_D17F67F054E7432FA0E11462287DADB3"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_E0B77FC98CD7466E98B0C476A77FC379"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -575,6 +581,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D17F67F054E7432FA0E11462287DADB3"
+            {
+            "SourcePath" = "8:..\\SmartMe.Windows\\Images\\loading\\small.gif"
+            "TargetName" = "8:small.gif"
+            "Tag" = "8:"
+            "Folder" = "8:_CBA38A6750DF40A086D37FCFE7EBC939"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_FA40ECF41CF9CBF19BCD56BBB81C1C21"
             {
             "AssemblyRegister" = "3:1"
@@ -727,7 +753,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:SmartMe"
         "ProductCode" = "8:{705C251F-D7B1-4D94-A81D-1529B1EA10AF}"
-        "PackageCode" = "8:{4A129595-F0DB-413F-995F-15A367910734}"
+        "PackageCode" = "8:{0AC2BD41-1EDA-4E23-99D3-45C02E35A9BE}"
         "UpgradeCode" = "8:{2208C85F-1F5E-4F11-9307-BF0212666D0B}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"

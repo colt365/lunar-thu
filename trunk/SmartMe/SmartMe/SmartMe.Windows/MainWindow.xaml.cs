@@ -724,12 +724,7 @@ namespace SmartMe.Windows
                 _parent.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(
                     delegate()
                     {
-                        _parent.LoadingImage.Visibility = Visibility.Visible;
-                        Storyboard searchingStoryboard = _parent.Window.Resources["SearchingStoryboard"] as Storyboard;
-                        if (searchingStoryboard != null)
-                        {
-                            searchingStoryboard.Begin();
-                        }
+                        _parent.SearchingStateGrid.Visibility = Visibility.Visible;
                     })
                 );
             }
@@ -939,12 +934,8 @@ namespace SmartMe.Windows
                                 _parent.InputTextBox.Text = "哎呦，没有结果:(";
                             }
                             
-                            _parent.LoadingImage.Visibility = Visibility.Hidden;
-                            Storyboard searchingStoryboard = _parent.Window.Resources["SearchingStoryboard"] as Storyboard;
-                            if (searchingStoryboard != null)
-                            {
-                                searchingStoryboard.Resume();
-                            }
+                            _parent.SearchingStateGrid.Visibility = Visibility.Hidden;
+
                         })
                     );
             }
@@ -1017,7 +1008,6 @@ namespace SmartMe.Windows
                 dictResult = null;
                 if ( queryResult != null )
                 {
-
                     if ( queryResult.DictResultItems != null )
                     {
 
