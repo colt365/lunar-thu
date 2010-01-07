@@ -72,7 +72,10 @@ namespace SmartMe.Core.Pipeline
             List<Pipe> newPipes =
                 _inputTextSubscriberManager.NotifyAll(text);
             // Assert(newPipes != null)
-            _inputTextPipes.AddRange(newPipes);
+            lock (_inputTextPipes)
+            {
+                _inputTextPipes.AddRange(newPipes);
+            }
         }
 
         public void OnQueryResultReady(QueryResult result)
@@ -80,7 +83,10 @@ namespace SmartMe.Core.Pipeline
             List<Pipe> newPipes =
                 _queryResultSubscriberManager.NotifyAll(result);
             //Assert(newPipes != null)
-            _queryResultPipes.AddRange(newPipes);
+            lock (_queryResultPipes)
+            {
+                _queryResultPipes.AddRange(newPipes);
+            }
         }
 
         public void OnQueryResultItemReady(IQueryResultItem item)
@@ -88,38 +94,50 @@ namespace SmartMe.Core.Pipeline
             List<Pipe> newPipes =
                 _queryResultItemSubscriberManager.NotifyAll(item);
             // Assert(newPipes != null)
-            _queryResultItemPipes.AddRange(newPipes);
+            lock (_queryResultItemPipes)
+            {
+                _queryResultItemPipes.AddRange(newPipes);
+            }
         }
 
         public void OnInputTextCanceled(InputQuery text)
         {
-            foreach (Pipe pipe in _inputTextPipes)
+            lock (_inputTextPipes)
             {
-                if (pipe.Message == text)
+                foreach (Pipe pipe in _inputTextPipes)
                 {
-                    pipe.CancelMessage();
+                    if (pipe.Message == text)
+                    {
+                        pipe.CancelMessage();
+                    }
                 }
             }
         }
 
         public void OnQueryResultCanceled(QueryResult result)
         {
-            foreach (Pipe pipe in _queryResultPipes)
+            lock (_queryResultPipes)
             {
-                if (pipe.Message == result)
+                foreach (Pipe pipe in _queryResultPipes)
                 {
-                    pipe.CancelMessage();
+                    if (pipe.Message == result)
+                    {
+                        pipe.CancelMessage();
+                    }
                 }
             }
         }
 
         public void OnQueryResultItemCanceled(IQueryResultItem item)
         {
-            foreach (Pipe pipe in _queryResultItemPipes)
+            lock (_queryResultItemPipes)
             {
-                if (pipe.Message == item)
+                foreach (Pipe pipe in _queryResultItemPipes)
                 {
-                    pipe.CancelMessage();
+                    if (pipe.Message == item)
+                    {
+                        pipe.CancelMessage();
+                    }
                 }
             }
         }
