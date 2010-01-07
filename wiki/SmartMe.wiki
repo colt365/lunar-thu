@@ -1,4 +1,5 @@
 #summary 什么是SmartMe？
+#labels Featured,Phase-QA,Phase-Support
 
 = 介绍 =
 
