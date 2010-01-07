@@ -124,7 +124,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="DragablePanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="HistoryWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ImageWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -148,6 +156,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Simple Styles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Window1.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -165,7 +177,13 @@
     <Compile Include="ConfigDialog.xaml.cs">
       <DependentUpon>ConfigDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DragablePanel.xaml.cs">
+      <DependentUpon>DragablePanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Externel\DragArgDispatcher.cs" />
+    <Compile Include="ImageWindow.xaml.cs">
+      <DependentUpon>ImageWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.UIVision.cs" />
     <Compile Include="MainWindow.Hidden.cs" />
     <Compile Include="MainWindow.Debug.cs" />
