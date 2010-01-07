@@ -169,56 +169,14 @@ namespace SmartMe.Windows
             _mainWindow.ResultTextBox.Text = sb.ToString();
             sb = new StringBuilder();
 
-            if (e.Data.GetDataPresent("Text", true))
+            Externel.DragArgDispatcher dispatcher = new Externel.DragArgDispatcher();
+            string text = string.Empty;
+            InputQueryType type = new InputQueryType();
+            bool isOK = dispatcher.TryGetQuery(e, ref text, ref type);
+            if (isOK)
             {
-                sb.AppendLine("Text:" + e.Data.GetData("Text", true));
-                string text = e.Data.GetData("Text", true).ToString();
                 _mainWindow.InputTextBox.Text = text;
-                _mainWindow.DoDirectQuery(text, InputQueryType.Text);
-            }
-            if (e.Data.GetDataPresent("text/html", true))
-            {
-                sb.AppendLine("text/html:" + e.Data.GetData("text/html", true));
-            }
-            if (e.Data.GetDataPresent("text/x-moz-url", true))
-            {
-                sb.AppendLine("text/x-moz-url:" + e.Data.GetData("text/x-moz-url", true));
-            }
-            if (e.Data.GetDataPresent("text/html", true))
-            {
-                sb.AppendLine("text/html:" + e.Data.GetData("text/html", true));
-            }
-            if (e.Data.GetDataPresent("HTML Format", true))
-            {
-                sb.AppendLine("HTML Format:" + e.Data.GetData("HTML Format", true));
-            }
-            if (e.Data.GetDataPresent("UniformText", true))
-            {
-                sb.AppendLine("UniformText:" + e.Data.GetData("UniformText", true));
-            }
-            if (e.Data.GetDataPresent("FileName", true))
-            {
-                sb.AppendLine("FileName:" + e.Data.GetData("FileName", true));
-            }
-            if (e.Data.GetDataPresent("FileNameW", true))
-            {
-                sb.AppendLine("FileNameW:" + e.Data.GetData("FileNameW", true));
-            }
-            if (e.Data.GetDataPresent("FileName", true))
-            {
-                sb.AppendLine("FileName:" + string.Join("; ", (String[])e.Data.GetData("FileName", true)));
-            }
-            if (e.Data.GetDataPresent("FileNameW", true))
-            {
-                sb.AppendLine("FileNameW:" + string.Join("; ", (String[])e.Data.GetData("FileNameW", true)));
-            }
-            if (e.Data.GetDataPresent("UniformResourceLocator", true))
-            {
-                sb.AppendLine("UniformResourceLocator:" + e.Data.GetData("UniformResourceLocator", true));
-            }
-            if (e.Data.GetDataPresent("UniformResourceLocatorW", true))
-            {
-                sb.AppendLine("UniformResourceLocatorW:" + e.Data.GetData("UniformResourceLocatorW", true));
+                _mainWindow.DoDirectQuery(text, type);
             }
 
             _mainWindow.ResultTextBox.Text += sb.ToString();
