@@ -554,7 +554,7 @@ namespace SmartMe.Windows
 		private void InputTextBox_PreviewKeyUp(object sender, System.Windows.Input.KeyEventArgs e)
         {
 			string query = GetSearchTextBoxQuery(); 
-            if (e.Key == Key.Return)
+            if (e.Key == Key.Enter)
             {
                 DoDirectQuery(query, InputQueryType.Text);
             }
