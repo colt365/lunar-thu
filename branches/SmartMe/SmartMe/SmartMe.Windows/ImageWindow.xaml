@@ -1,0 +1,29 @@
+﻿<Window
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" xmlns:il="clr-namespace:Microsoft.Expression.Interactivity.Layout;assembly=Microsoft.Expression.Interactions" xmlns:local="clr-namespace:SmartMe.Windows"
+	x:Class="SmartMe.Windows.ImageWindow"
+	x:Name="Window"
+	Title="ImageWindow"
+	Width="640" Height="480" Background="{x:Null}">
+
+	<Grid x:Name="LayoutRoot" Background="White">
+		<Grid HorizontalAlignment="Left" Margin="64,43,0,0" VerticalAlignment="Top" Width="100" Height="100" Opacity="0.5" Background="#FFBFBFBF">
+			<i:Interaction.Behaviors>
+				<il:MouseDragElementBehavior/>
+			</i:Interaction.Behaviors>
+			<Image x:Name="MyImage"/>
+		</Grid>
+		<Grid Margin="208,43,0,0" VerticalAlignment="Top" Height="100" Opacity="0.5" Background="#FFBFBFBF" HorizontalAlignment="Left" Width="100">
+			<i:Interaction.Behaviors>
+				<il:MouseDragElementBehavior/>
+			</i:Interaction.Behaviors>
+			<Image x:Name="MyImage1"/>
+		</Grid>
+		<Button Margin="248,0,301,34" VerticalAlignment="Bottom" Content="Button"/>
+		<Button HorizontalAlignment="Right" Margin="0,0,181,34" VerticalAlignment="Bottom" Width="75" Content="Button"/>
+		<local:DragablePanel HorizontalAlignment="Left" Margin="64,208,0,134" Width="100"/>
+		<local:DragablePanel Margin="208,208,0,134" HorizontalAlignment="Left" Width="100"/>
+		<RepeatButton HorizontalAlignment="Left" Margin="112,0,0,68.04" VerticalAlignment="Bottom" Content="RepeatButton"/>
+	</Grid>
+</Window>
