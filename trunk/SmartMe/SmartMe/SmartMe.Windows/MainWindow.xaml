@@ -133,6 +133,9 @@
 	</Window.Triggers>
 
 	<Grid x:Name="LayoutRoot" ToolTip="将文本拖拽到这里" DataContext="{Binding Source={StaticResource SettingsDataSource}}" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+		<i:Interaction.Behaviors>
+			<il:MouseDragElementBehavior ConstrainToParentBounds="False" X="1" Y="1"/>
+		</i:Interaction.Behaviors>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="0*"/>
 			<RowDefinition Height="0*"/>
@@ -155,9 +158,6 @@
 		<VisualStateManager.CustomVisualStateManager>
 			<ic:ExtendedVisualStateManager/>
 		</VisualStateManager.CustomVisualStateManager>
-		<i:Interaction.Behaviors>
-			<il:MouseDragElementBehavior ConstrainToParentBounds="False" X="1" Y="1"/>
-		</i:Interaction.Behaviors>
 		<Grid x:Name="DetailedGrid" Margin="-367,0,103,-250.395" Grid.Row="4" VerticalAlignment="Bottom" Height="247.822" d:LayoutOverrides="VerticalAlignment" Width="264" Visibility="Hidden">
 			<Rectangle x:Name="DetailedBackgroundRectangle" Fill="{Binding backgroundColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, FallbackValue=#000000}" Stroke="Black" RadiusX="8" RadiusY="8" Margin="-2" d:LayoutOverrides="HorizontalAlignment" Opacity="{Binding opacity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 			<DockPanel Margin="2">
