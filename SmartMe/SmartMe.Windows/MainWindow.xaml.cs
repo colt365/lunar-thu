@@ -64,15 +64,11 @@ namespace SmartMe.Windows
             set;
         }
 
-        // Detailed Window
-        private DetailedInfoWindow _detailedInfoWindow = null;
-        private string _selectedItemUri = string.Empty;
-
         // History Window
         private HistoryWindow _historyWindow = null;
         
 		// NotifyIcon
-        private System.Windows.Forms.NotifyIcon notifyIcon;
+        private System.Windows.Forms.NotifyIcon notifyIcon = null;
 
         #endregion
 
@@ -89,10 +85,6 @@ namespace SmartMe.Windows
 
 		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (_detailedInfoWindow != null)
-            {
-                _detailedInfoWindow.Close();
-            }
             if (_historyWindow != null)
             {
                 _historyWindow.Close();
@@ -128,70 +120,30 @@ namespace SmartMe.Windows
             _queryResultRecordManager =
                 new QueryResultRecordManager(
                     "data", new TimeSpan(30, 0, 0, 0));
-            _pipeline.QueryResultSubscriberManager.AddSubscriber(_queryResultRecordManager);            
-
+            _pipeline.QueryResultSubscriberManager.AddSubscriber(_queryResultRecordManager);
         }
-        /*
-                private void InitNotifyIcon(){
-                    trayContextMenu = new System.Windows.Forms.ContextMenu();
-                    trayExitMenuItem = new System.Windows.Forms.MenuItem();
-                    trayViewHistorymenuItem = new System.Windows.Forms.MenuItem();
-
-                    trayContextMenu.MenuItems.AddRange(
-                                new System.Windows.Forms.MenuItem[] { trayViewHistorymenuItem, trayExitMenuItem });
-
-                    trayViewHistorymenuItem.Index = 0;
-                    trayViewHistorymenuItem.Text = "查看历史记录(&H)";
-                    trayViewHistorymenuItem.Click += new EventHandler(TrayViewHistoryMenuItem_Click);
-
-                    trayExitMenuItem.Index = 1;
-                    trayExitMenuItem.Text = "退出(&E)";
-                    trayExitMenuItem.Click += new EventHandler(TrayExitMenuItem_Click);
-
-                    notifyIcon = new System.Windows.Forms.NotifyIcon();
-                    notifyIcon.BalloonTipText = "SmartMe已最小化到托盘，双击此处恢复窗口";
-                    notifyIcon.BalloonTipTitle = "SmartMe";
-                    notifyIcon.Text = "SmartMe";
-                    notifyIcon.Icon = new System.Drawing.Icon("icon.ico");
-                    notifyIcon.DoubleClick += new EventHandler(notifyIcon_DoubleClick);
-                    notifyIcon.ContextMenu = this.trayContextMenu;
-                    ShowTrayIcon(true);	// Always show the icon
-                }
-                */
-
+        
         #endregion
 
-        
 
         #region DetailedInfoWindow
         private void ShowDetailedGrid(string title, string description, string url)
         {
-            //Title
-            DetailedTitleTextBox.Text = title;
-
-            //Description
-            DetailedDescriptionRichTextBox.Document.Blocks.Clear();
-            Paragraph paragraph = new Paragraph();
-            paragraph.Inlines.Add(description);
-            DetailedDescriptionRichTextBox.Document.Blocks.Add(paragraph);
-
-            //Url
-            _selectedItemUri = url;
-
-            //Show Detail Grid
-            DetailedGrid.Visibility = Visibility.Visible;
+            DetailedControl.Title = title;
+            DetailedControl.Description = description;
+            DetailedControl.Link = url;
+            DetailedControl.Show();
         }
 
         private void HideDetailedGrid()
         {
-            DetailedGrid.Visibility = Visibility.Hidden;
-            _selectedItemUri = string.Empty;
+            DetailedControl.Hide();
         }
 
         #endregion DetailedInfoWindow
 
         #region open Detailed Window
-        private void GoogleOutputListBox_PreviewMouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
+        private void GoogleOutputListBox_PreviewMouseWheel( object sender, System.Windows.Input.MouseWheelEventArgs e)
         {
             int count = GoogleOutputListBox.Items.Count;
             int selectedIndex = GoogleOutputListBox.SelectedIndex;
@@ -259,36 +211,6 @@ namespace SmartMe.Windows
                 WikipediaOutputListBox.SelectedIndex = selectedIndex;
             }
         }
-        /*
-        private void GoogleOutputListBox_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            int index = GoogleOutputListBox.SelectedIndex;
-            if (index >= 0)
-            {
-                MessageBox.Show("index:" + index);
-                SearchEngineResult result = _resultHandler.GetSearchEngineResult(sender);
-                if (result != null)
-                {
-                    if (0 <= index && index < result.Results.Count)
-                    {
-                        string title = string.Format("{0}", result.Results[index].Title);
-                        string uri = string.Format("{0}", result.Results[index].Url);
-                        string description = string.Format("{0}", result.Results[index].Description);
-                        string cachedUri = string.Format("{0}", result.Results[index].CacheUrl);
-                        string similarUri = string.Format("{0}", result.Results[index].SimilarUrl);
-                        _detailedInfoWindow.TitleTextBlock.Text = title;
-                        _detailedInfoWindow.DescriptionTextBlock.Text = description;
-                        Point p = GetDetailedInfoScreenPosition(e);
-                        ShowDetailedInfoWindow((int)p.X, (int)p.Y);
-                    }
-                }
-            }
-            else
-            {
-                HideDetailedInfoWindow();
-            }
-        }
-        */
 
         private void GoogleOutputListBox_SelectionChanged(object sender, 
                                         System.Windows.Controls.SelectionChangedEventArgs e)
@@ -296,7 +218,6 @@ namespace SmartMe.Windows
             int index = GoogleOutputListBox.SelectedIndex;
             DispalySearchEngineResultDetailedGrid(sender, index);
         }
-
 
         private void BaiduOutputListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -362,36 +283,6 @@ namespace SmartMe.Windows
                 DispalySearchEngineResultDetailedGrid(WikipediaOutputListBox, index);
             }
         }
-
-        //private void GoogleOutputListBox_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
-        //{
-        //    HideDetailedInfoWindow();
-        //}
-        /*
-        private void GoogleOutputListBox_PreviewMouseRightButtonDown(object sender, 
-                                            System.Windows.Input.MouseButtonEventArgs e)
-        {
-            int index = GoogleOutputListBox.SelectedIndex;
-            if (index >= 0)
-            {
-                SearchEngineResult result = _resultHandler.GetSearchEngineResult(sender);
-                if (result != null)
-                {
-                    if (0 <= index && index < result.Results.Count)
-                    {
-                        string title = string.Format("{0}", result.Results[index].Title);
-                        string uri = string.Format("{0}", result.Results[index].Url);
-                        string description = string.Format("{0}", result.Results[index].Description);
-                        string cachedUri = string.Format("{0}", result.Results[index].CacheUrl);
-                        string similarUri = string.Format("{0}", result.Results[index].SimilarUrl);
-                        _detailedInfoWindow.TitleTextBlock.Text = title;
-                        _detailedInfoWindow.DescriptionTextBlock.Text = description;
-                        // ToggleDetailedInfoWindow(e);
-                    }
-                }
-            }
-        }
-        */
 
         #endregion
 
@@ -492,8 +383,7 @@ namespace SmartMe.Windows
             sb.AppendLine("e.OriginalSource.GetType:" + e.OriginalSource.GetType());
             sb.AppendLine("e.OriginalSource.ToString:" + e.OriginalSource.ToString());
             sb.AppendLine("-- convert e.Data : --");
-            ResultTextBox.Text = sb.ToString();
-			sb = new StringBuilder();
+            Debug(sb.ToString());
 
             Externel.DragArgDispatcher dispatcher = new Externel.DragArgDispatcher();
             string text = string.Empty;
@@ -506,7 +396,6 @@ namespace SmartMe.Windows
             }
 
             EnableKeyBoardInput();
-            ResultTextBox.Text += sb.ToString();
 		}
 		
 		private void Window_PreviewDrop(object sender, System.Windows.DragEventArgs e)
@@ -527,12 +416,10 @@ namespace SmartMe.Windows
         }
 		private void DisableKeyBoardInput()
 		{
-            ResultTextBox.IsEnabled = false;
             InputTextBox.IsEnabled = false;
 		}
         private void EnableKeyBoardInput()
         {
-            ResultTextBox.IsEnabled = true;
             InputTextBox.IsEnabled = true;
         }
         #endregion Mouse Drag and Drop
@@ -650,7 +537,7 @@ namespace SmartMe.Windows
         class QueryResultHandler : IQueryResultHandler
         {
             private QueryResult _currentQueryResult = null;
-            public SmartMe.Core.Data.QueryResult CurrentQueryResult
+            public QueryResult CurrentQueryResult
             {
                 get { return _currentQueryResult; }
                 set { _currentQueryResult = value; }
@@ -1133,25 +1020,6 @@ namespace SmartMe.Windows
             }
         }
 
-        private void DetailedOpenLinkButton_Click(object sender, RoutedEventArgs e)
-        {
-            string uri = string.Format("{0}", _selectedItemUri);
-            Shell shell = new Shell();
-            if (_selectedItemUri != null && _selectedItemUri != string.Empty)
-            {
-                shell.DoOpenWebBrowser(uri);
-            }
-        }     
-
-        private void DetailedCloseImageButton_ImageFailed ( object sender, ExceptionRoutedEventArgs e )
-        {
-            
-        }
-
-        private void onMouseLeftButtonDown ( object sender, MouseButtonEventArgs e )
-        {
-            DetailedGrid.Visibility = Visibility.Hidden;
-        }
 
         private void Window_Loaded ( object sender, RoutedEventArgs e )
         {
@@ -1207,8 +1075,6 @@ namespace SmartMe.Windows
             listBox.SelectedIndex = -1;
         }
 
-
-        
         #endregion
     }
 }

@@ -50,12 +50,12 @@ namespace SmartMe.Windows.Externel
                     App.Logger.Error(e.Message + "\n" + "when:" + info.ToString() + "\n" + e.StackTrace);
                     return;
                 }
-            }            
+            }
         }
 
         public bool DoOpenWebBrowser(string uri)
         {
-            Debug.Assert(uri != null && uri != string.Empty, "uri should not be null or empty!");
+            Debug.Assert(string.IsNullOrEmpty(uri), "uri should not be null or empty!");
 
             System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo();
 

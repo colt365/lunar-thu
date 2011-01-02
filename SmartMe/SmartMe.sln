@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartMe", "SmartMe\SmartMe.csproj", "{A6F28E48-2294-4670-A6D2-F561CFA1447E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartMe.Input", "SmartMe.Input\SmartMe.Input.csproj", "{899F499A-87A1-4958-A3E1-F435887DA95F}"

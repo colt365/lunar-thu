@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Forms;
 using System.Threading;
 using SmartMe.Core.Data;
 
@@ -20,7 +21,7 @@ namespace SmartMe.Windows
 	public partial class MiniWindow : Window
 	{
         // NotifyIcon
-        static public System.Windows.Forms.NotifyIcon notifyIcon;
+        static public NotifyIcon notifyIcon;
         private System.Windows.Forms.ContextMenu trayContextMenu;
         private System.Windows.Forms.MenuItem trayExitMenuItem;
         private System.Windows.Forms.MenuItem trayMiniMenuItem;
@@ -32,7 +33,7 @@ namespace SmartMe.Windows
 		{
 			this.InitializeComponent();
 
-            InitNotifyIcon();
+            InitializeNotifyIcon();
 			// Insert code required on object creation below this point.
             HideMainWindow();
 
@@ -40,8 +41,7 @@ namespace SmartMe.Windows
 		}
 
         #region MinimizeToIcon
-        // private bool firstShowTip = true;
-        private void InitNotifyIcon()
+        private void InitializeNotifyIcon()
         {
             trayContextMenu = new System.Windows.Forms.ContextMenu();
             trayExitMenuItem = new System.Windows.Forms.MenuItem();
@@ -150,12 +150,12 @@ namespace SmartMe.Windows
 
         private void MiniGrid_PreviewDragOver(object sender, System.Windows.DragEventArgs e)
         {
-        	//MessageBox.Show("MiniGrid_PreviewDragOver! TODO: Please Add animation storyboard to shrink window -- TT!");
+        	// MessageBox.Show("MiniGrid_PreviewDragOver! TODO: Please Add animation storyboard to shrink window -- TT!");
         }
 
         private void MiniGrid_Drop(object sender, System.Windows.DragEventArgs e)
         {
-        	//MessageBox.Show("MiniGrid_Drop! TODO: Please do query -- TT!");
+        	// MessageBox.Show("MiniGrid_Drop! TODO: Please do query -- TT!");
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("Window_Drop:" + DateTime.Now.ToUniversalTime());
             sb.AppendLine("sender:" + sender.ToString());
@@ -166,8 +166,7 @@ namespace SmartMe.Windows
             sb.AppendLine("e.OriginalSource.GetType:" + e.OriginalSource.GetType());
             sb.AppendLine("e.OriginalSource.ToString:" + e.OriginalSource.ToString());
             sb.AppendLine("-- convert e.Data : --");
-            _mainWindow.ResultTextBox.Text = sb.ToString();
-            sb = new StringBuilder();
+            _mainWindow.Debug(sb.ToString());
 
             Externel.DragArgDispatcher dispatcher = new Externel.DragArgDispatcher();
             string text = string.Empty;
@@ -179,7 +178,6 @@ namespace SmartMe.Windows
                 _mainWindow.DoDirectQuery(text, type);
             }
 
-            _mainWindow.ResultTextBox.Text += sb.ToString();
             if (!_mainWindow.IsVisible)
             {
                 ShowMainWindow();

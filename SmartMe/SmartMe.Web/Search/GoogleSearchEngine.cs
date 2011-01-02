@@ -16,7 +16,7 @@ namespace SmartMe.Web.Search
 		{
             SmartMe.Core.Data.SearchEngineResult emptyResult = new SmartMe.Core.Data.SearchEngineResult();
             emptyResult.SearchEngineType = SmartMe.Core.Data.SearchEngineType.Google;
-            string url = "http://www.google.cn/search?q=" + HttpUtility.UrlEncode(query.Text, Encoding.UTF8);
+            string url = "http://www.google.com/search?q=" + HttpUtility.UrlEncode(query.Text, Encoding.UTF8);
             emptyResult.SearchUrl=url;
 			if(query == null || query.QueryType!= SmartMe.Core.Data.InputQueryType.Text|| query.Text==null || query.Text=="")
 			{

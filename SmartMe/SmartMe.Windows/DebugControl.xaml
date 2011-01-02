@@ -1,0 +1,23 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d"
+	x:Class="SmartMe.Windows.DebugControl"
+	x:Name="UserControl"
+	d:DesignWidth="0" d:DesignHeight="0">
+
+	<Grid x:Name="LayoutRoot">
+		<TextBox x:Name="ResultTextBox" TextWrapping="Wrap" Background="#FFFEFEFE" SpellCheck.IsEnabled="True" FontSize="10.667" RenderTransformOrigin="0.5,0.5" Margin="0" HorizontalAlignment="Left" Height="0" VerticalAlignment="Top" Width="0">
+			<TextBox.RenderTransform>
+				<TransformGroup>
+					<ScaleTransform/>
+					<SkewTransform/>
+					<RotateTransform/>
+					<TranslateTransform/>
+				</TransformGroup>
+			</TextBox.RenderTransform>
+		</TextBox>
+	</Grid>
+</UserControl>
