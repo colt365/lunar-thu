@@ -1,0 +1,20 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d"
+	x:Class="SmartMe.Windows.SuggestionControl"
+	x:Name="UserControl"
+	d:DesignWidth="800" d:DesignHeight="600">
+
+	<Grid x:Name="LayoutRoot">
+		<Rectangle x:Name="BackgroundRectangle" Fill="{Binding backgroundColor, FallbackValue=#000000, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Stroke="Black" RadiusX="8" RadiusY="8" Opacity="{Binding opacity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" d:LayoutOverrides="HorizontalAlignment, VerticalAlignment"/>
+		<Grid x:Name="MainPanel" Margin="4,0,0,0" Height="2">
+			<TextBlock x:Name="Label" VerticalAlignment="Top" Height="20" Foreground="White" Text="搜索建议：" TextWrapping="Wrap" d:LayoutOverrides="VerticalAlignment"/>
+			<ListBox x:Name="ListBox" Margin="6.5,20,6.5,0" Width="120" d:LayoutOverrides="Height"/>
+			<Image x:Name="PinImageButton" HorizontalAlignment="Left" Margin="93.167,2.001,0,0" Width="16" Height="16" Source="Images/button/pin.png" VerticalAlignment="Top" ToolTip="悬停" Cursor="Hand" Focusable="True"/>
+			<Image x:Name="CloseImageButton" HorizontalAlignment="Right" Margin="0,2.335,2.834,0" Width="16" Height="16" Source="Images/button/x_red.png" VerticalAlignment="Top" ToolTip="关闭" Cursor="Hand" Focusable="True"/>
+		</Grid>
+	</Grid>
+</UserControl>

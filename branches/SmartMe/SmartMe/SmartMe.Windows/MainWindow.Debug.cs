@@ -43,11 +43,19 @@ namespace SmartMe.Windows
 
         public void MessageDebug(object o, Level level)
         {
-            string str = o.ToString();
+            string str = string.Format("{0}: {1}", level, o);
             App.Logger.Message(str);
         }
         #endregion for Debug
+        
+        public void Debug(object o)
+        {
+            this.DebugControl.Debug(o);
+        }
 
-       
+        public void DebugClear()
+        {
+            this.DebugControl.DebugClear();
+        }
     }
 }

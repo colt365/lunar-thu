@@ -31,12 +31,12 @@ namespace SmartMe.Windows
 
         private void MinimizeMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            Hide();
+            this.Hide();
         }
 
         private void CloseMenuItem_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            Hide();
+            this.Hide();
             if (notifyIcon != null)
             {
                 notifyIcon.ShowBalloonTip(500);

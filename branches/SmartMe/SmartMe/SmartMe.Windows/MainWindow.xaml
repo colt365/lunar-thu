@@ -2,11 +2,13 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	mc:Ignorable="d" xmlns:ic="clr-namespace:Microsoft.Expression.Interactivity.Core;assembly=Microsoft.Expression.Interactions"
+	xmlns:ic="clr-namespace:Microsoft.Expression.Interactivity.Core;assembly=Microsoft.Expression.Interactions"
 	
 	xmlns:SmartMe_Core_Data="clr-namespace:SmartMe.Core.Data;assembly=SmartMe.Core"
 	xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" xmlns:il="clr-namespace:Microsoft.Expression.Interactivity.Layout;assembly=Microsoft.Expression.Interactions"
 	xmlns:SmartMe_Windows_Properties="clr-namespace:SmartMe.Windows.Properties"
+	xmlns:local="clr-namespace:SmartMe.Windows"
+	mc:Ignorable="d"
 	x:Class="SmartMe.Windows.MainWindow"
 	x:Name="Window"
 	Title="MainWindow" WindowStartupLocation="Manual" ResizeMode="NoResize" AllowDrop="True" Drop="Window_Drop" PreviewDragEnter="Window_PreviewDragEnter" PreviewDrop="Window_PreviewDrop" PreviewDragLeave="Window_PreviewDragLeave" PreviewDragOver="Window_PreviewDragOver" Closing="Window_Closing" WindowStyle="None" Background="{x:Null}" Foreground="{x:Null}" AllowsTransparency="True" HorizontalAlignment="Center" VerticalAlignment="Center" WindowState="Maximized" ShowInTaskbar="False" Loaded="Window_Loaded">
@@ -132,23 +134,10 @@
 		</EventTrigger>
 	</Window.Triggers>
 
-	<Grid x:Name="LayoutRoot" ToolTip="将文本拖拽到这里" DataContext="{Binding Source={StaticResource SettingsDataSource}}" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+	<Grid x:Name="LayoutRoot" ToolTip="将文本拖拽到这里" DataContext="{Binding Source={StaticResource SettingsDataSource}}" Margin="0">
 		<i:Interaction.Behaviors>
-			<il:MouseDragElementBehavior ConstrainToParentBounds="False" X="1" Y="1"/>
+			<il:MouseDragElementBehavior X="1" Y="1"/>
 		</i:Interaction.Behaviors>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="0*"/>
-			<RowDefinition Height="0*"/>
-			<RowDefinition Height="0.005*"/>
-			<RowDefinition Height="0*"/>
-			<RowDefinition Height="0.995*"/>
-		</Grid.RowDefinitions>
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="0*"/>
-			<ColumnDefinition Width="0.007*"/>
-			<ColumnDefinition Width="0*"/>
-			<ColumnDefinition Width="0.993*"/>
-		</Grid.ColumnDefinitions>
 		<VisualStateManager.VisualStateGroups>
 			<VisualStateGroup x:Name="LoadingImageVisualStateGroup">
 				<VisualState x:Name="Loading"/>
@@ -158,39 +147,14 @@
 		<VisualStateManager.CustomVisualStateManager>
 			<ic:ExtendedVisualStateManager/>
 		</VisualStateManager.CustomVisualStateManager>
-		<Grid x:Name="DetailedGrid" Margin="-367,0,103,-250.395" Grid.Row="4" VerticalAlignment="Bottom" Height="247.822" d:LayoutOverrides="VerticalAlignment" Width="264" Visibility="Hidden">
-			<Rectangle x:Name="DetailedBackgroundRectangle" Fill="{Binding backgroundColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, FallbackValue=#000000}" Stroke="Black" RadiusX="8" RadiusY="8" Margin="-2" d:LayoutOverrides="HorizontalAlignment" Opacity="{Binding opacity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-			<DockPanel Margin="2">
-				<Grid DockPanel.Dock="Top">
-					<TextBlock Margin="6,2.742,156.312,219.59" Foreground="White" TextWrapping="Wrap"><Run Text="详细"/><Run Text="信息"/><Run Text="："/></TextBlock>
-					<Image x:Name="DetailedCloseImageButton" HorizontalAlignment="Right" Margin="0,1.742,10,0" Width="20" Height="20" Source="Images/button/x_red.png" ToolTip="关闭" Cursor="Hand" Focusable="True" 
-						MouseLeftButtonDown="onMouseLeftButtonDown" VerticalAlignment="Top"  />
-					<TextBox x:Name="DetailedTitleTextBox" Margin="8,0,10,185.354" TextWrapping="Wrap" FontSize="{Binding FontSize, ElementName=FontActualMenuItem, Mode=Default}" VerticalAlignment="Bottom" Height="33.236" HorizontalScrollBarVisibility="Auto"/>
-					<RichTextBox x:Name="DetailedDescriptionRichTextBox" Margin="8,67.468,10,33.679" FontSize="{Binding FontSize, ElementName=FontActualMenuItem, Mode=Default}" VerticalScrollBarVisibility="Auto"/>
-					<Button x:Name="DetailedOpenLinkButton" HorizontalAlignment="Right" Margin="0,0,10,7" VerticalAlignment="Bottom" Width="88.67" Height="22" Content="打开链接" Click="DetailedOpenLinkButton_Click" d:LayoutOverrides="HorizontalAlignment, VerticalAlignment"/>
-					<Image x:Name="DetailedPinImageButton" HorizontalAlignment="Right" Margin="0,3.742,41,0" Width="16" Height="16" Source="Images/button/pin.png" d:LayoutOverrides="Height" ToolTip="悬停" Cursor="Hand" Focusable="True" VerticalAlignment="Top" Visibility="Collapsed"/>
-				</Grid>
-			</DockPanel>
+		<Grid x:Name="DetailedGrid" Margin="-492,268,0,0" VerticalAlignment="Center" Height="247.822" Width="264" HorizontalAlignment="Center" d:LayoutOverrides="GridBox">
+            <local:DetailedControl x:Name="DetailedControl" Visibility="Hidden" Margin="-2"/>
 		</Grid>
-		<Grid x:Name="DicardedGrid" HorizontalAlignment="Right" Margin="0,-264,-540,0" Width="264" Grid.Column="3" VerticalAlignment="Top" Height="227.605">
-			<ScrollViewer x:Name="ScrollViewer" Visibility="Collapsed" d:LayoutOverrides="HorizontalAlignment, GridBox">
-				<TextBox x:Name="ResultTextBox" TextWrapping="Wrap" Background="#FFFEFEFE" SpellCheck.IsEnabled="True" FontSize="10.667" RenderTransformOrigin="0.5,0.5">
-					<TextBox.RenderTransform>
-						<TransformGroup>
-							<ScaleTransform/>
-							<SkewTransform/>
-							<RotateTransform/>
-							<TranslateTransform/>
-						</TransformGroup>
-					</TextBox.RenderTransform>
-				</TextBox>
-			</ScrollViewer>
-			<Grid x:Name="GrabGrid" Margin="0,25,232,202.605" Visibility="Hidden" d:LayoutOverrides="GridBox">
-				<Button x:Name="GrabButton" Margin="0,8,0,0" Content="Grab Screen" ClickMode="Press" Click="GrabButton_Click" Foreground="Black" RenderTransformOrigin="0.5,0.5" Visibility="Collapsed" d:IsHidden="True" d:LayoutOverrides="GridBox"/>
-			</Grid>
+		<Grid x:Name="DebugGrid" Margin="40,8,0,0" Height="210.605" VerticalAlignment="Top" d:LayoutOverrides="GridBox" HorizontalAlignment="Left" Width="241">
+			<local:DebugControl x:Name="DebugControl" Margin="0"/>
 		</Grid>
-		<Grid x:Name="LayoutGrid" Margin="-96,-32.395,-373.168,-252.395" Width="493" Height="302" Grid.ColumnSpan="4" Grid.RowSpan="5">
-			<Rectangle x:Name="LayoutBackgroundRectangle" RadiusX="8" RadiusY="8" Opacity="{Binding opacity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" d:LayoutOverrides="HorizontalAlignment" Margin="-2,-2,-2,0" Fill="{Binding backgroundColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, FallbackValue=#000000}"/>
+		<Grid x:Name="LayoutGrid" Margin="-96,-32.395,-373.168,-252.395" Width="493" Height="302" Grid.ColumnSpan="4" Grid.RowSpan="5" HorizontalAlignment="Center" VerticalAlignment="Center">
+			<Rectangle x:Name="LayoutBackgroundRectangle" RadiusX="8" RadiusY="8" Opacity="{Binding opacity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" d:LayoutOverrides="HorizontalAlignment" Margin="-2,-2,-2,0" Fill="{Binding backgroundColor, FallbackValue=#000000, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 			<DockPanel x:Name="LayoutDockPanel" HorizontalAlignment="Right" Margin="0,2,2,0" d:LayoutOverrides="Height" ContextMenu="{Binding Items, ElementName=OptionMenuItem, Mode=OneWay}">
 				<DockPanel x:Name="MainDockPanel" Margin="0">
 					<Grid x:Name="InputGrid" VerticalAlignment="Top" Height="55" DockPanel.Dock="Top" Width="491" d:LayoutOverrides="Width">
@@ -253,7 +217,7 @@
 							</MenuItem>
 						</Menu>
 					</Grid>
-					<TabControl x:Name="OutputTabControl" Margin="0" DockPanel.Dock="Bottom" Background="{x:Null}" BorderBrush="{x:Null}" FontSize="{Binding FontSize, ElementName=FontActualMenuItem, Mode=Default}" d:IsLocked="True">
+					<TabControl x:Name="OutputTabControl" Margin="0" DockPanel.Dock="Bottom" Background="{x:Null}" BorderBrush="{x:Null}" FontSize="{Binding FontSize, ElementName=FontActualMenuItem, Mode=Default}">
 						<TabItem x:Name="GoogleTabItem" Header="谷歌" Width="90" Height="28">
 							<Grid x:Name="GoogleOutputGrid" Width="480" Height="205">
 								<Grid.ColumnDefinitions>
@@ -303,14 +267,8 @@
 			</DockPanel>
 			<Image x:Name="LogoImage" HorizontalAlignment="Left" Margin="4,1,0,0" VerticalAlignment="Top" Width="104" Height="32" Source="Images/SmartMeLogo/logo_title.png"/>
 		</Grid>
-		<Grid x:Name="SuggestionGrid" Margin="-147,-82,10,-22" Grid.RowSpan="5" Visibility="Collapsed">
-			<Rectangle x:Name="SuggestionBackgroundRectangle" Fill="{Binding backgroundColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, FallbackValue=#000000}" Stroke="Black" Margin="-2,-2,-2,-4" RadiusX="8" RadiusY="8" Opacity="{Binding opacity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-			<Grid x:Name="SuggestionPanel" Margin="2" d:LayoutOverrides="HorizontalAlignment, VerticalAlignment">
-				<TextBlock x:Name="SuggestionLabel" VerticalAlignment="Top" Height="20" Foreground="White" Text="搜索建议：" TextWrapping="Wrap" d:LayoutOverrides="VerticalAlignment"/>
-				<ListBox x:Name="SuggestionListBox" Margin="6.5,20,6.5,0" Width="120" d:LayoutOverrides="Height"/>
-				<Image x:Name="SuggestionPinImageButton" HorizontalAlignment="Left" Margin="93.167,2.001,0,0" Width="16" Height="16" Source="Images\button\pin.png" VerticalAlignment="Top" ToolTip="悬停" Cursor="Hand" Focusable="True"/>
-				<Image x:Name="SuggestionCloseImageButton" HorizontalAlignment="Right" Margin="0,2.335,2.834,0" Width="16" Height="16" Source="Images/button/x_red.png" VerticalAlignment="Top" ToolTip="关闭" Cursor="Hand" Focusable="True"/>
-			</Grid>
+		<Grid x:Name="SuggestionGrid" Margin="0" Visibility="Collapsed">
+			<local:SuggestionControl x:Name="SuggestionControl" Margin="-2,-2,135,117.21"/>
 		</Grid>
 	</Grid>
 </Window>
