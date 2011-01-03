@@ -30,7 +30,7 @@ namespace SmartMe.Core.Test
             item.SimilarUrl = "http://www.g.com/ddd";
             item.CacheUrl = "http://www.g.com/cache";
             item.Description = "Who cares?";
-            resultItem.Results.Add(item);
+            resultItem.Items.Add(item);
 
             SuggestionResult resultItem1 = new SuggestionResult();
             resultItem1.SuggestionType = SuggestionType.Google;
@@ -39,7 +39,7 @@ namespace SmartMe.Core.Test
             item1.Index = "1";
             item1.Number = "2";
             item1.Suggestion = "haha";
-            resultItem1.Results.Add( item1 );
+            resultItem1.Items.Add( item1 );
 
             result.SearchEngineResultItems.Add(resultItem);
             result.SuggestionResultItems.Add(resultItem1);
@@ -75,7 +75,7 @@ namespace SmartMe.Core.Test
             item.SimilarUrl = "http://www.g.com/ddd";
             item.CacheUrl = "http://www.g.com/cache";
             item.Description = "Who cares?";
-            resultItem.Results.Add(item);
+            resultItem.Items.Add(item);
 
             result.Items.Add(resultItem);
 

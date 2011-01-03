@@ -55,7 +55,7 @@ namespace SmartMe.Windows.Externel
 
         public bool DoOpenWebBrowser(string uri)
         {
-            Debug.Assert(string.IsNullOrEmpty(uri), "uri should not be null or empty!");
+            Debug.Assert( !string.IsNullOrEmpty(uri), "uri should not be null or empty!");
 
             System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo();
 

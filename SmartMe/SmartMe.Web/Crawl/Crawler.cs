@@ -11,10 +11,10 @@ namespace SmartMe.Web.Crawl
 {
 	public class Crawler
 	{
-		public static string Crawl(string query,Encoding encoding)
+		public static string Crawl(string query, Encoding encoding)
 		{
 			HttpWebRequest request = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(query);
-			request.Timeout = 5000;
+			request.Timeout = 8000;
 			request.UserAgent = "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; .NET CLR 2.0.50727; .NET CLR 3.0.04506.648; .NET CLR 3.5.21022)";
 
 			WebResponse response = null;
@@ -30,9 +30,8 @@ namespace SmartMe.Web.Crawl
 					sr = new System.IO.StreamReader(resStream, encoding);
 					result = sr.ReadToEnd();
 				}
-				catch (System.Exception e)
+				catch (System.Exception)
 				{
-
 					result = null;
 				}
 				finally
@@ -58,7 +57,7 @@ namespace SmartMe.Web.Crawl
 				else
 				{
 					
-					request.Timeout += 500;
+					request.Timeout += 1000;
 				}
 			}
 			return result;

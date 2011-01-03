@@ -9,7 +9,7 @@ namespace SmartMe.Core.Data
     public enum QueryResultItemType
     {
         SearchEngineResult,
-        DictionaryResult,
+        DictResult,
         SuggestionResult
     }
 
@@ -17,36 +17,25 @@ namespace SmartMe.Core.Data
     {
         #region
         internal QueryResultItemType _type;
-        MessageType _messageType= MessageType.QueryResultItem;
+        MessageType _messageType = MessageType.QueryResultItem;
         #endregion
 
         #region properties
         public QueryResultItemType ResultType 
         { 
-            get
-        {
-            return _type;
-        }
-            set
-            {
-                _type=value;
-            }
+            get { return _type; }
+            set { _type = value; }
         }
         #endregion
-    
-#region IMessage Members
 
-public MessageType  MessageType
-{
-    get
-    {
-        return _messageType;
-    }
-    set{
-        _messageType = value;
-    }
-}
+        #region IMessage Members
 
-#endregion
-}
+        public MessageType MessageType
+        {
+            get { return _messageType; }
+            set { _messageType = value; }
+        }
+
+        #endregion
+    }
 }

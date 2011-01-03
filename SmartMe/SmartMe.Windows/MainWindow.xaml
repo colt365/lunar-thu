@@ -194,8 +194,6 @@
 								</MenuItem>
 								<MenuItem x:Name="BackgroundColorMenuItem" Click="BackgroundColorMenuItem_Click" Header="调节背景色"/>
 								<MenuItem x:Name="ShowHistoryWindowMenuItem" Click="ShowHistoryWindowMenuItem_Click" Margin="0" Header="查看历史记录"/>
-								<MenuItem x:Name="ExitMenuItem" Click="ExitMenuItem_Click" Header="退出" Visibility="Collapsed"/>
-								<MenuItem x:Name="ShowDetailWindow" Click="ShowDetailWindow_Click" Margin="0" Width="100" Height="20" Header="查看细节" Visibility="Collapsed"/>
 							</MenuItem>
 							<MenuItem x:Name="MinimizeMenuItem" Margin="0" Foreground="Silver" Header="" Width="26" Click="MinimizeMenuItem_Click" ToolTip="最小化">
 								<MenuItem.Icon>
@@ -218,49 +216,20 @@
 						</Menu>
 					</Grid>
 					<TabControl x:Name="OutputTabControl" Margin="0" DockPanel.Dock="Bottom" Background="{x:Null}" BorderBrush="{x:Null}" FontSize="{Binding FontSize, ElementName=FontActualMenuItem, Mode=Default}">
-						<TabItem x:Name="GoogleTabItem" Header="谷歌" Width="90" Height="28">
-							<Grid x:Name="GoogleOutputGrid" Width="480" Height="205">
-								<Grid.ColumnDefinitions>
-									<ColumnDefinition Width="0*"/>
-									<ColumnDefinition Width="0*"/>
-									<ColumnDefinition/>
-								</Grid.ColumnDefinitions>
-								<ListBox x:Name="GoogleOutputListBox" Background="White" Foreground="Black" IsSynchronizedWithCurrentItem="True" ItemTemplate="{DynamicResource ItemTemplate}" ItemContainerStyle="{DynamicResource ListBoxItemStyle}" VerticalAlignment="Top" Height="200" RenderTransformOrigin="0.5,0.5" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="2" PreviewMouseWheel="GoogleOutputListBox_PreviewMouseWheel" MouseDoubleClick="GoogleOutputListBox_MouseDoubleClick" BorderBrush="{x:Null}" SelectionChanged="GoogleOutputListBox_SelectionChanged" Width="480" HorizontalContentAlignment="Stretch" MouseLeftButtonDown="OutputListBox_MouseLeftButtonDown" ToolTip="双击文本打开链接，双击空白处打开搜索页" Margin="0.5,0"/>
-							</Grid>
+						<TabItem x:Name="GoogleTabItem" Header="{Binding Header, ElementName=GoogleResultControl}" Width="90" Height="28">
+                            <local:SearchEngineResultControl x:Name="GoogleResultControl" BaseHeader="谷歌" Width="480"/>
 						</TabItem>
-						<TabItem x:Name="BaiduTabItem" Header="百度" Width="90" Height="28">
-							<Grid x:Name="BaiduOutputGrid" Width="480" Height="205">
-								<ListBox x:Name="BaiduOutputListBox" Background="White" BorderBrush="Black" Foreground="Black" IsSynchronizedWithCurrentItem="True" ItemTemplate="{DynamicResource ItemTemplate}" ItemContainerStyle="{DynamicResource ListBoxItemStyle}" MouseDoubleClick="BaiduOutputListBox_MouseDoubleClick" VerticalAlignment="Top" Height="200" RenderTransformOrigin="0.5,0.5" ScrollViewer.HorizontalScrollBarVisibility="Disabled" PreviewMouseWheel="BaiduOutputListBox_PreviewMouseWheel"  ScrollViewer.VerticalScrollBarVisibility="Auto" SelectionChanged="BaiduOutputListBox_SelectionChanged" HorizontalContentAlignment="Stretch" MouseLeftButtonDown="OutputListBox_MouseLeftButtonDown" ToolTip="双击文本打开链接，双击空白处打开搜索页" Width="480"/>
-							</Grid>
-						</TabItem>
-						<TabItem x:Name="SougouTabItem" Header="搜狗" Width="90" Height="28">
-							<Grid x:Name="SougouOutputGrid" Width="480" Height="205">
-								<Grid.ColumnDefinitions>
-									<ColumnDefinition Width="0*"/>
-									<ColumnDefinition Width="0*"/>
-									<ColumnDefinition/>
-								</Grid.ColumnDefinitions>
-								<ListBox x:Name="SougouOutputListBox" Background="White" BorderBrush="Black" Foreground="Black" IsSynchronizedWithCurrentItem="True" ItemTemplate="{DynamicResource ItemTemplate}" ItemContainerStyle="{DynamicResource ListBoxItemStyle}" MouseDoubleClick="SougouOutputListBox_MouseDoubleClick" VerticalAlignment="Top" Height="200" RenderTransformOrigin="0.5,0.5" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="2" PreviewMouseWheel="SougouOutputListBox_PreviewMouseWheel"  SelectionChanged="SougouOutputListBox_SelectionChanged" HorizontalContentAlignment="Stretch" MouseLeftButtonDown="OutputListBox_MouseLeftButtonDown" ToolTip="双击文本打开链接，双击空白处打开搜索页" Width="480"/>
-							</Grid>
-						</TabItem>
-						<TabItem x:Name="WikipediaTabItem" Header="维基" Width="90" Height="28">
-							<Grid x:Name="WikipediaOutputGrid" Width="480" Height="205">
-								<Grid.ColumnDefinitions>
-									<ColumnDefinition Width="0*"/>
-									<ColumnDefinition/>
-								</Grid.ColumnDefinitions>
-								<ListBox x:Name="WikipediaOutputListBox" Background="White" BorderBrush="Black" Foreground="Black" IsSynchronizedWithCurrentItem="True" ItemTemplate="{DynamicResource ItemTemplate}" ItemContainerStyle="{DynamicResource ListBoxItemStyle}" MouseDoubleClick="WikipediaOutputListBox_MouseDoubleClick" VerticalAlignment="Top" Height="200" RenderTransformOrigin="0.5,0.5" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="1" SelectionChanged="WikipediaOutputListBox_SelectionChanged" PreviewMouseWheel="WikipediaOutputListBox_PreviewMouseWheel" HorizontalContentAlignment="Stretch" MouseLeftButtonDown="OutputListBox_MouseLeftButtonDown" ToolTip="双击文本打开链接，双击空白处打开搜索页面" Width="480"/>
-							</Grid>
-						</TabItem>
-                        <TabItem x:Name="DictcnTabItem" Header="电子辞典" Width="120" Height="28">
-                            <Grid x:Name="DictcnOutputGrid" Width="480" Height="205">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="0*"/>
-                                    <ColumnDefinition Width="0*"/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-                                <ListBox x:Name="DictcnOutputListBox" Background="White" Foreground="Black" IsSynchronizedWithCurrentItem="True" ItemTemplate="{DynamicResource ItemTemplate}"  ItemContainerStyle="{DynamicResource ListBoxItemStyle}" VerticalAlignment="Top" Height="200" RenderTransformOrigin="0.5,0.5" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="2" PreviewMouseWheel="DictcnOutputListBox_PreviewMouseWheel" MouseDoubleClick="DictcnOutputListBox_MouseDoubleClick" BorderBrush="{x:Null}" SelectionChanged="DictcnOutputListBox_SelectionChanged" HorizontalContentAlignment="Stretch" MouseLeftButtonDown="OutputListBox_MouseLeftButtonDown" Width="480"/>
-                            </Grid>
+						<TabItem x:Name="BaiduTabItem" Header="{Binding Header, ElementName=BaiduResultControl}" Width="90" Height="28">
+                            <local:SearchEngineResultControl x:Name="BaiduResultControl" BaseHeader="百度" Width="480"/>
+                        </TabItem>
+						<TabItem x:Name="SougouTabItem" Header="{Binding Header, ElementName=SougouResultControl}" Width="90" Height="28">
+                            <local:SearchEngineResultControl x:Name="SougouResultControl" BaseHeader="搜狗" Width="480"/>
+                        </TabItem>
+						<TabItem x:Name="WikipediaTabItem" Header="{Binding Header, ElementName=WikipediaResultControl}" Width="90" Height="28">
+                            <local:SearchEngineResultControl x:Name="WikipediaResultControl" BaseHeader="维基" Width="480"/>
+                        </TabItem>
+                        <TabItem x:Name="DictcnTabItem" Header="{Binding Header, ElementName=DictcnResultControl}" Width="120" Height="28">
+                            <local:DictResultControl x:Name="DictcnResultControl" BaseHeader="电子词典" Width="480"/>
                         </TabItem>
                     </TabControl>
 				</DockPanel>

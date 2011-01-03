@@ -93,7 +93,7 @@ namespace SmartMe.Web.Search
                                 }
                                 if ( success )
                                 {
-                                    finalResult.Results.Add( item );
+                                    finalResult.Items.Add( item );
                                 }
 
                             }

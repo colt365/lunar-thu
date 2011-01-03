@@ -89,7 +89,7 @@ namespace SmartMe.Core.Data
 
         #region IMessage Members
 
-        public SmartMe.Core.Pipeline.MessageType MessageType
+        public new SmartMe.Core.Pipeline.MessageType MessageType
         {
             get
             {
@@ -101,7 +101,7 @@ namespace SmartMe.Core.Data
 
 
         #region fields
-        private List<ResultItem> _results = new List<ResultItem>();
+        private List<ResultItem> _items = new List<ResultItem>();
         private string _searchUrl = string.Empty;
         private SuggestionType _suggestionType = SuggestionType.Other;
         
@@ -125,15 +125,15 @@ namespace SmartMe.Core.Data
 
         
 
-        public List<ResultItem> Results
+        public List<ResultItem> Items
         {
             get
             {
-                return _results;
+                return _items;
             }
             set
             {
-                _results = value;
+                _items = value;
             }
         }
         public string SearchUrl
@@ -154,8 +154,8 @@ namespace SmartMe.Core.Data
         #region methods
         public override string ToString ( )
         {
-            StringBuilder stringBuilder = new StringBuilder( Results.Count.ToString() );
-            foreach ( ResultItem item in Results )
+            StringBuilder stringBuilder = new StringBuilder( Items.Count.ToString() );
+            foreach ( ResultItem item in Items )
             {
                 stringBuilder.Append( "\n" + item.ToString() );
             }

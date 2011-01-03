@@ -22,6 +22,7 @@ using SmartMe.Core.Record;
 using SmartMe.Web;
 using SmartMe.Web.Search;
 using SmartMe.Windows.Externel;
+using System.Windows.Threading;
 
 
 namespace SmartMe.Windows
@@ -68,7 +69,13 @@ namespace SmartMe.Windows
         private HistoryWindow _historyWindow = null;
         
 		// NotifyIcon
-        private System.Windows.Forms.NotifyIcon notifyIcon = null;
+        private System.Windows.Forms.NotifyIcon _notifyIcon = null;
+
+        protected DisplayResultHandler _displayResultHandler = null;
+        public DisplayResultHandler DisplayResultHandler
+        {
+            get { return _displayResultHandler; }
+        }
 
         #endregion
 
@@ -77,10 +84,11 @@ namespace SmartMe.Windows
         public MainWindow(System.Windows.Forms.NotifyIcon notifyIcon)
 		{
 			this.InitializeComponent();
-            this.notifyIcon = notifyIcon;
-         
+            this._notifyIcon = notifyIcon;
+            this._displayResultHandler = new DisplayResultHandler(ShowDetailedGrid);
+
 			// Insert code required on object creation below this point.
-            CreateListeners();
+            InitializePipeline();
 		}
 
 		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -97,7 +105,7 @@ namespace SmartMe.Windows
             }
         }
 
-        private void CreateListeners()
+        private void InitializePipeline()
         {
             _pipeline = new Pipeline();
             _resultHandler = new QueryResultHandler(this);
@@ -109,24 +117,26 @@ namespace SmartMe.Windows
             _webResourceManager.AddSearchEngine(new BaiduSearchEngine());
             _webResourceManager.AddSearchEngine(new SogouSearchEngine());
             _webResourceManager.AddSearchEngine(new WikipediaSearchEngine());
-            //_webResourceManager.AddSearchEngine( new GoogleSuggestion() );
-            _webResourceManager.AddSearchEngine( new DictCn() );
+            _webResourceManager.AddSearchEngine(new DictCn());
+            // _webResourceManager.AddSearchEngine(new GoogleSuggestion());
 
             InputQueryObsoletedTime = _defaultInputQueryObsoletedTime;
             //_inputQueryRecordManager = new InputQueryRecordManager(
             //    "data\\query.xml", InputQueryObsoletedTime);
             _pipeline.InputTextSubscriberManager.AddSubscriber(_inputQueryRecordManager);
 
-            _queryResultRecordManager =
-                new QueryResultRecordManager(
+            _queryResultRecordManager = new QueryResultRecordManager(
                     "data", new TimeSpan(30, 0, 0, 0));
             _pipeline.QueryResultSubscriberManager.AddSubscriber(_queryResultRecordManager);
+
         }
-        
         #endregion
 
-
         #region DetailedInfoWindow
+        private void ShowDetailedGrid(object sender, DisplayResultEventArgs args)
+        {
+            ShowDetailedGrid(args.Title, args.Description, args.Url);
+        }
         private void ShowDetailedGrid(string title, string description, string url)
         {
             DetailedControl.Title = title;
@@ -139,152 +149,7 @@ namespace SmartMe.Windows
         {
             DetailedControl.Hide();
         }
-
         #endregion DetailedInfoWindow
-
-        #region open Detailed Window
-        private void GoogleOutputListBox_PreviewMouseWheel( object sender, System.Windows.Input.MouseWheelEventArgs e)
-        {
-            int count = GoogleOutputListBox.Items.Count;
-            int selectedIndex = GoogleOutputListBox.SelectedIndex;
-            if (0 <= selectedIndex && selectedIndex < count)
-            {
-                if (e.Delta < 0)
-                {
-                    selectedIndex = Math.Min(selectedIndex + 1, count);
-                }
-                else
-                {
-                    selectedIndex = Math.Max(selectedIndex - 1, 0);
-                }
-                GoogleOutputListBox.SelectedIndex = selectedIndex;
-            }
-        }
-        private void BaiduOutputListBox_PreviewMouseWheel ( object sender, System.Windows.Input.MouseWheelEventArgs e )
-        {
-            int count = BaiduOutputListBox.Items.Count;
-            int selectedIndex = BaiduOutputListBox.SelectedIndex;
-            if ( 0 <= selectedIndex && selectedIndex < count )
-            {
-                if ( e.Delta < 0 )
-                {
-                    selectedIndex = Math.Min( selectedIndex + 1, count );
-                }
-                else
-                {
-                    selectedIndex = Math.Max( selectedIndex - 1, 0 );
-                }
-                BaiduOutputListBox.SelectedIndex = selectedIndex;
-            }
-        }
-        private void SougouOutputListBox_PreviewMouseWheel ( object sender, System.Windows.Input.MouseWheelEventArgs e )
-        {
-            int count = SougouOutputListBox.Items.Count;
-            int selectedIndex = SougouOutputListBox.SelectedIndex;
-            if ( 0 <= selectedIndex && selectedIndex < count )
-            {
-                if ( e.Delta < 0 )
-                {
-                    selectedIndex = Math.Min( selectedIndex + 1, count );
-                }
-                else
-                {
-                    selectedIndex = Math.Max( selectedIndex - 1, 0 );
-                }
-                SougouOutputListBox.SelectedIndex = selectedIndex;
-            }
-        }
-        private void WikipediaOutputListBox_PreviewMouseWheel ( object sender, System.Windows.Input.MouseWheelEventArgs e )
-        {
-            int count = WikipediaOutputListBox.Items.Count;
-            int selectedIndex = WikipediaOutputListBox.SelectedIndex;
-            if ( 0 <= selectedIndex && selectedIndex < count )
-            {
-                if ( e.Delta < 0 )
-                {
-                    selectedIndex = Math.Min( selectedIndex + 1, count );
-                }
-                else
-                {
-                    selectedIndex = Math.Max( selectedIndex - 1, 0 );
-                }
-                WikipediaOutputListBox.SelectedIndex = selectedIndex;
-            }
-        }
-
-        private void GoogleOutputListBox_SelectionChanged(object sender, 
-                                        System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            int index = GoogleOutputListBox.SelectedIndex;
-            DispalySearchEngineResultDetailedGrid(sender, index);
-        }
-
-        private void BaiduOutputListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            int index = BaiduOutputListBox.SelectedIndex;
-            DispalySearchEngineResultDetailedGrid(sender, index);
-        }
-
-        private void SougouOutputListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            int index = SougouOutputListBox.SelectedIndex;
-            DispalySearchEngineResultDetailedGrid(sender, index);
-        }
-
-        private void WikipediaOutputListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            int index = WikipediaOutputListBox.SelectedIndex;
-            DispalySearchEngineResultDetailedGrid(sender, index);
-        }  
-
-        private void DispalySearchEngineResultDetailedGrid(object resultListBox, int index)
-        {
-            if (index >= 0)
-            {
-                SearchEngineResult result = _resultHandler.GetSearchEngineResult(resultListBox);
-                if (result != null)
-                {
-                    if (0 <= index && index < result.Results.Count)
-                    {
-                        string title = string.Format("{0}", result.Results[index].Title);
-                        string uri = string.Format("{0}", result.Results[index].Url);
-                        string description = string.Format("{0}", result.Results[index].Description);
-                        ShowDetailedGrid(title, description, uri);
-                    }
-                }
-            }
-            else
-            {
-                HideDetailedGrid();
-            }
-        }
-
-        private void ShowDetailWindow_Click(object sender, RoutedEventArgs e)
-        {
-            int index = -1;
-            if (GoogleTabItem.IsSelected)
-            {
-                index = GoogleOutputListBox.SelectedIndex;
-                DispalySearchEngineResultDetailedGrid(GoogleOutputListBox, index);
-            }
-            if (BaiduTabItem.IsSelected)
-            {
-                index = GoogleOutputListBox.SelectedIndex;
-                DispalySearchEngineResultDetailedGrid(BaiduOutputListBox, index);
-            }
-            if (SougouTabItem.IsSelected)
-            {
-                index = GoogleOutputListBox.SelectedIndex;
-                DispalySearchEngineResultDetailedGrid(SougouOutputListBox, index);
-            }
-            if (WikipediaTabItem.IsSelected)
-            {
-                index = GoogleOutputListBox.SelectedIndex;
-                DispalySearchEngineResultDetailedGrid(WikipediaOutputListBox, index);
-            }
-        }
-
-        #endregion
 
         #region Query
         private void AddQueryHistory(string queryText)
@@ -347,7 +212,7 @@ namespace SmartMe.Windows
                         _lastQueryText = text;
                         AddQueryHistory(text);
 
-                        this.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(
+                        this.Dispatcher.Invoke(DispatcherPriority.Background, new Action(
                             delegate()
                             {
                                 _pipeline.OnInputTextReady(query);
@@ -397,7 +262,6 @@ namespace SmartMe.Windows
 
             EnableKeyBoardInput();
 		}
-		
 		private void Window_PreviewDrop(object sender, System.Windows.DragEventArgs e)
         {
             DisableKeyBoardInput();
@@ -475,62 +339,6 @@ namespace SmartMe.Windows
         }
         #endregion Search Bar
 
-        #region Result Control
-        private void GoogleOutputListBox_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                int index = GoogleOutputListBox.SelectedIndex;
-                OpenSearchEngineResult(sender, index);
-            }
-        }
-		
-        private void BaiduOutputListBox_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                int index = BaiduOutputListBox.SelectedIndex;
-                OpenSearchEngineResult(sender, index);
-            }
-        }
-		private void SougouOutputListBox_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                int index = SougouOutputListBox.SelectedIndex;
-                OpenSearchEngineResult(sender, index);
-            }
-        }
-
-        private void WikipediaOutputListBox_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                int index = WikipediaOutputListBox.SelectedIndex;
-                OpenSearchEngineResult(sender, index);
-            }
-        }
-
-        private void OpenSearchEngineResult(object sender, int index)
-        {
-            SearchEngineResult result = _resultHandler.GetSearchEngineResult(sender);
-            if (result != null)
-            {
-                if (0 <= index && index < result.Results.Count)
-                {
-                    string uri = string.Format("{0}", result.Results[index].Url);
-                    Shell shell = new Shell();
-                    shell.DoOpenWebBrowser(uri);
-                }
-                else if (index == -1)
-                {
-                    string uri = string.Format("{0}", result.SearchUrl);
-                    Shell shell = new Shell();
-                    shell.DoOpenWebBrowser(uri);
-                }
-            }
-        }
-        #endregion 结果栏
 
         #region QueryResultHandler
 
@@ -544,10 +352,24 @@ namespace SmartMe.Windows
             }
 
             private MainWindow _parent;
+            Dictionary<string, IQueryResultControl> _uiDict;
 
             public QueryResultHandler(MainWindow parent)
             {
                 _parent = parent;
+
+                _uiDict = new Dictionary<string, IQueryResultControl>();
+                _uiDict.Add(SearchEngineType.Google.ToString(), _parent.GoogleResultControl);
+                _uiDict.Add(SearchEngineType.Baidu.ToString(),  _parent.BaiduResultControl);
+                _uiDict.Add(SearchEngineType.Sougou.ToString(), _parent.SougouResultControl);
+                _uiDict.Add(SearchEngineType.Wikipedia.ToString(), _parent.WikipediaResultControl);
+                _uiDict.Add(DictType.Dict_cn.ToString(), _parent.DictcnResultControl);
+
+                // Display:
+                _parent.GoogleResultControl.DisplayResult += _parent.DisplayResultHandler;
+                _parent.BaiduResultControl.DisplayResult += _parent.DisplayResultHandler;
+                _parent.SougouResultControl.DisplayResult += _parent.DisplayResultHandler;
+                _parent.WikipediaResultControl.DisplayResult += _parent.DisplayResultHandler;
             }
 
             public void OnResultNew(QueryResult result)
@@ -569,406 +391,93 @@ namespace SmartMe.Windows
                 _parent.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(
                     delegate()
                     {
-                        if (result != null && result.Items != null)
-                        {
-                            try
-                            {
-                                _parent.ClearAllListBoxes();
-                                foreach (IQueryResultItem queryResultItem in result.Items)
-                                {
-                                    #region dealwithqueryitem
-                                    switch (queryResultItem.ResultType)
-                                    {
-                                        case QueryResultItemType.SearchEngineResult:
-                                            var searchEngineItem = queryResultItem as SearchEngineResult;
-                                            if (searchEngineItem != null && searchEngineItem.Results != null) // TODO: Bug ASSERT(searchEngineItem != null)
-                                            {
-                                                ListBox listBox = null;
-                                                TabItem tabItem = null;
-                                                string engineName = null;
-                                                bool hasFound = FindUIElements(searchEngineItem, out listBox, out tabItem, out engineName);
-
-                                                if (hasFound)
-                                                {
-                                                    listBox.Items.Clear();
-                                                    foreach (SearchEngineResult.ResultItem resultItem in searchEngineItem.Results)
-                                                    {
-                                                        listBox.Items.Add(new ListBoxItem()
-                                                        {
-                                                            Content = resultItem.Title
-                                                        });
-                                                    }
-                                                    tabItem.Header = string.Format("{0}({1})", engineName, searchEngineItem.Results.Count);
-
-                                                    listBox.InvalidateArrange();
-                                                    tabItem.InvalidateArrange();
-                                                }
-                                            }
-
-                                            break;
-
-                                        case QueryResultItemType.SuggestionResult:
-                                            //SuggestionResult suggestionItem= queryResultItem as SuggestionResult;
-                                            //_parent._suggestionWindow.Show( suggestionItem );
-
-
-                                            break;
-
-                                        case QueryResultItemType.DictionaryResult:
-                                            var dictItem = queryResultItem as DictResult;
-                                            if (dictItem != null && dictItem.Word != null) // TODO: Bug ASSERT(searchEngineItem != null)
-                                            {
-
-                                                ListBox listBox = null;
-                                                TabItem tabItem = null;
-                                                string dictname = null;
-                                                bool hasFound = FindUIElements(dictItem, out listBox, out tabItem, out dictname);
-
-                                                if (hasFound && dictItem.Word != string.Empty)
-                                                {
-                                                    listBox.Items.Clear();
-                                                    /*foreach ( SearchEngineResult.ResultItem resultItem in searchEngineItem.Results )
-                                                    {
-                                                        listBox.Items.Add( new ListBoxItem()
-                                                        {
-                                                            Content = resultItem.Title
-                                                        } );
-                                                    }*/
-                                                    listBox.Items.Add(new ListBoxItem()
-                                                    {
-                                                        Content = dictItem.Word
-
-                                                    });
-                                                    if (dictItem.Pronunciation != string.Empty)
-                                                    {
-                                                        listBox.Items.Add(new ListBoxItem()
-                                                        {
-                                                            Content = " "
-                                                        });
-                                                        listBox.Items.Add(new ListBoxItem()
-                                                        {
-                                                            Content = dictItem.Pronunciation
-                                                        });
-                                                    }
-                                                    if (dictItem.Variations != string.Empty)
-                                                    {
-                                                        listBox.Items.Add(new ListBoxItem()
-                                                        {
-                                                            Content = " "
-                                                        });
-                                                        listBox.Items.Add(new ListBoxItem()
-                                                        {
-                                                            Content = dictItem.Variations
-                                                        });
-                                                    }
-                                                    if (dictItem.EnglishExplanations != string.Empty)
-                                                    {
-                                                        listBox.Items.Add(new ListBoxItem()
-                                                        {
-                                                            Content = " "
-                                                        });
-                                                        listBox.Items.Add(new ListBoxItem()
-                                                        {
-                                                            Content = dictItem.EnglishExplanations
-                                                        });
-                                                    }
-                                                    if (dictItem.ChineseExplanations != string.Empty)
-                                                    {
-                                                        listBox.Items.Add(new ListBoxItem()
-                                                        {
-                                                            Content = " "
-                                                        });
-                                                        listBox.Items.Add(new ListBoxItem()
-                                                        {
-                                                            Content = dictItem.ChineseExplanations
-                                                        });
-                                                    }
-                                                    if (dictItem.Examples != string.Empty)
-                                                    {
-                                                        listBox.Items.Add(new ListBoxItem()
-                                                        {
-                                                            Content = " "
-                                                        });
-                                                        listBox.Items.Add(new ListBoxItem()
-                                                        {
-                                                            Content = dictItem.Examples
-                                                        });
-                                                    }
-                                                    if (dictItem.FromEncyclopedia != string.Empty)
-                                                    {
-                                                        listBox.Items.Add(new ListBoxItem()
-                                                        {
-                                                            Content = " "
-                                                        });
-                                                        listBox.Items.Add(new ListBoxItem()
-                                                        {
-                                                            Content = dictItem.FromEncyclopedia
-                                                        });
-                                                    }
-
-
-                                                    tabItem.Header = string.Format("{0}({1})", dictname, 1);
-
-                                                    listBox.InvalidateArrange();
-                                                    tabItem.InvalidateArrange();
-                                                }
-                                                else
-                                                {
-                                                    tabItem.Header = string.Format("{0}({1})", dictname, 0);
-
-                                                    listBox.InvalidateArrange();
-                                                    tabItem.InvalidateArrange();
-                                                }
-                                            }
-
-
-                                            break;
-
-                                        default:
-                                            break;
-                                    }
-                                    #endregion
-                                }
-                            }
-                            catch (Exception)
-                            {
-                                // do nothing
-                            }
-                        }
+                        UpdateUIResults(result);
                     })
                 );
             }
+
+            private void UpdateUIResults(QueryResult result)
+            {
+                if (result != null && result.Items != null)
+                {
+                    ClearAllResults();
+                    foreach (IQueryResultItem r in result.Items)
+                    {
+                        if (r != null)
+                        {
+                            IQueryResultControl control = FindQueryResultControl(r);
+                            if (control != null)
+                            {
+                                control.SetResult(r);
+                            }
+                        }
+                    }
+                }
+            }
+
             public void OnResultDeprecated(QueryResult result)
             {
-                //if (_currentQueryResult == result)
-                //{
-                //    _parent.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(
-                //        delegate()
-                //        {
-                //            _parent.GoogleOutputListBox.Items.Clear();
-                //            _parent.BaiduOutputListBox.Items.Clear();
-                //        })
-                //    );
-                //    _currentQueryResult = null;
-                //}
-
-                //MessageBox.Show("OnResultDeprecated" + result.ToString());
             }
            
             public void OnResultCompleted(QueryResult result)
             {
-                _parent.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(
-                        delegate()
+                if (_currentQueryResult != result)
+                {
+                    _currentQueryResult = result;
+                }
+
+                _parent.Dispatcher.Invoke(DispatcherPriority.Normal, new Action( delegate() 
+                    {
+                        if (result.IsEmpty())
                         {
-                            if (result.IsEmpty())
-                            {
-                                _parent.InputTextBox.Text = "哎呦，没有结果:(";
-                            }
-                            
-                            _parent.SearchingStateGrid.Visibility = Visibility.Hidden;
+                            _parent.InputTextBox.Text = "哎呦，没有结果:(";
+                        }
+                        else
+                        {
+                            UpdateUIResults(result);
+                        }
 
-                        })
-                    );
+                        _parent.SearchingStateGrid.Visibility = Visibility.Hidden;
+                    })
+                );
             }
 
-            public SearchEngineResult GetSearchEngineResult(object sender)
-            {
-                SearchEngineResult searchEngineResult = null;
-                if (sender != null)
-                {
-                    bool hasFound = FindSearchEngineResult(sender, out searchEngineResult);
-                }
-                return searchEngineResult;
-            }
-            public DictResult GetDictcnResult ( object sender )
-            {
-                DictResult dictResult = null;
-                if ( sender != null )
-                {
-                    bool hasFound = FindDictcnResult( sender, out dictResult );
-                }
-                return dictResult;
-            }
 
             #region private
 
-            private bool FindDictcnResult ( object sender, out DictResult dictResult )
+            private IQueryResultControl FindQueryResultControl(IQueryResultItem resultItem)
             {
-                bool hasFound = false;
-                DictResult result = null;
-                if ( sender is ListBox )
-                {
-                    ListBox sourceListBox = sender as ListBox;
-                    hasFound = FindDictcnResult( _currentQueryResult, DictionaryType.Dict_cn, out result );
-                }
-                dictResult = result;
-                return hasFound;
-            }
-
-            private bool FindSearchEngineResult(object sender, out SearchEngineResult searchEngineResult)
-            {
-                bool hasFound = false;
-                SearchEngineResult result = null;
-                if (sender is ListBox)
-                {
-                    ListBox sourceListBox = sender as ListBox;
-                    if (sourceListBox == _parent.GoogleOutputListBox)
-                    {
-                        hasFound = FindSearchEngineResult(_currentQueryResult, SearchEngineType.Google, out result);
-                    }
-                    else if (sourceListBox == _parent.BaiduOutputListBox)
-                    {
-                        hasFound = FindSearchEngineResult(_currentQueryResult, SearchEngineType.Baidu, out result);
-                    }
-                    else if (sourceListBox == _parent.SougouOutputListBox)
-                    {
-                        hasFound = FindSearchEngineResult(_currentQueryResult, SearchEngineType.Sougou, out result);
-                    }
-                    else if (sourceListBox == _parent.WikipediaOutputListBox)
-                    {
-                        hasFound = FindSearchEngineResult(_currentQueryResult, SearchEngineType.Wikipedia, out result);
-                    }
-                }
-                searchEngineResult = result;
-                return hasFound;
-            }
-
-            private bool FindDictcnResult ( QueryResult queryResult, DictionaryType targetType, out DictResult dictResult )
-            {
-                bool hasFound = false;
-                dictResult = null;
-                if ( queryResult != null )
-                {
-                    if ( queryResult.DictResultItems != null )
-                    {
-
-                        foreach ( DictResult resultItem in queryResult.DictResultItems )
-                        {
-                            if ( resultItem != null && resultItem.DictionaryType == targetType )
-                            {
-                                dictResult = resultItem;
-                                hasFound = true;
-                                break;
-                            }
-                        }
-                    }
-                }
-                return hasFound;
-            }
-
-            private bool FindSearchEngineResult(QueryResult queryResult, SearchEngineType targetType, out SearchEngineResult searchEngineResult)
-            {
-                bool hasFound = false;
-                searchEngineResult = null;
-                if (queryResult != null)
-                {
-    
-                    if ( queryResult.SearchEngineResultItems != null )
-                    {
-
-                        foreach ( SearchEngineResult resultItem in queryResult.SearchEngineResultItems )
-                        {
-                            if (resultItem != null && resultItem.SearchEngineType == targetType)
-                            {
-                                searchEngineResult = resultItem;
-                                hasFound = true;
-                                break;
-                            }
-                        }
-                    }
-                }
-                return hasFound;
-            }
-            private bool FindUIElements(SearchEngineResult searchEngineResult, out ListBox listBox, out TabItem tabItem, out string engineName)
-            {
-                bool hasFound = false;
-                switch (searchEngineResult.SearchEngineType)
-                {
-                    case SearchEngineType.Google:
-                        {
-                            hasFound = true;
-                            listBox = _parent.GoogleOutputListBox;
-                            tabItem = _parent.GoogleTabItem;
-                            engineName = "谷歌";
-                            break;
-                        }
-                    case SearchEngineType.Baidu:
-                        {
-                            hasFound = true;
-                            listBox = _parent.BaiduOutputListBox;
-                            tabItem = _parent.BaiduTabItem;
-                            engineName = "百度";
-                            break;
-                        }
-					case SearchEngineType.Sougou:
-                        {
-                            hasFound = true;
-                            listBox = _parent.SougouOutputListBox;
-                            tabItem = _parent.SougouTabItem;
-                            engineName = "搜狗";
-                            break;
-                        }
-                    case SearchEngineType.Wikipedia:
-                        {
-                            hasFound = true;
-                            listBox = _parent.WikipediaOutputListBox;
-                            tabItem = _parent.WikipediaTabItem;
-                            engineName = "维基";
-                            break;
-                        }
+                IQueryResultControl control = null;
+                string typeKey = null;
+                switch(resultItem.ResultType) {
+                    case QueryResultItemType.SearchEngineResult:
+                        typeKey = (resultItem as SearchEngineResult).SearchEngineType.ToString();
+                        break;
+                    case QueryResultItemType.DictResult:
+                        typeKey = (resultItem as DictResult).DictType.ToString();
+                        break;
+                    case QueryResultItemType.SuggestionResult:
+                        typeKey = (resultItem as SuggestionResult).SuggestionType.ToString();
+                        break;
                     default:
-                        {
-                            hasFound = false;
-                            listBox = null;
-                            tabItem = null;
-                            engineName = "Unknown";
-                            break;
-                        }
+                        throw new NotSupportedException("Not Support ResultType:" + resultItem.ResultType);
                 }
-                return hasFound;
-            }
-            private bool FindUIElements ( DictResult dictResult, out ListBox listBox, out TabItem tabItem, out string engineName )
-            {
-                bool hasFound = false;
-                switch ( dictResult.DictionaryType )
+                
+                if (_uiDict.ContainsKey(typeKey)) 
                 {
-                    case DictionaryType.Dict_cn:
-                        {
-                            hasFound = true;
-                            listBox = _parent.DictcnOutputListBox;
-                            tabItem = _parent.DictcnTabItem;
-                            engineName = "Dictcn";
-                            break;
-                        }
-                   
-                    default:
-                        {
-                            hasFound = false;
-                            listBox = null;
-                            tabItem = null;
-                            engineName = "Unknown";
-                            break;
-                        }
+                    control = _uiDict[typeKey];
                 }
-                return hasFound;
+                return control;
+            }
+
+            public void ClearAllResults()
+            {
+                foreach (IQueryResultControl control in _uiDict.Values)
+                {
+                    control.ClearResult();
+                }
             }
             #endregion private
-        }
-
-        public void ClearAllListBoxes()
-        {
-            ClearListBox(GoogleOutputListBox, GoogleTabItem, "谷歌");
-            ClearListBox(BaiduOutputListBox, BaiduTabItem, "百度");
-            ClearListBox(SougouOutputListBox, SougouTabItem, "搜狗");
-            ClearListBox(WikipediaOutputListBox, WikipediaTabItem, "维基");
-            ClearListBox(DictcnOutputListBox, DictcnTabItem, "电子辞典");
-        }
-
-        private void ClearListBox(ListBox box, TabItem tab, string name)
-        {
-            box.Items.Clear();
-            box.SelectedIndex = -1;
-            tab.Header = name;
         }
 
         #endregion QueryResultHandler
@@ -1006,7 +515,6 @@ namespace SmartMe.Windows
 
         #region CallBack
 
-
         public void ChangeInputText(string text)
         {
             InputTextBox.Text = text;
@@ -1020,61 +528,10 @@ namespace SmartMe.Windows
             }
         }
 
-
         private void Window_Loaded ( object sender, RoutedEventArgs e )
         {
 
         }
-
-        private void DictcnOutputListBox_PreviewMouseWheel ( object sender, MouseWheelEventArgs e )
-        {
-            int count = DictcnOutputListBox.Items.Count;
-            int selectedIndex = DictcnOutputListBox.SelectedIndex;
-            if ( 0 <= selectedIndex && selectedIndex < count )
-            {
-                if ( e.Delta < 0 )
-                {
-                    selectedIndex = Math.Min( selectedIndex + 2, count );
-                }
-                else
-                {
-                    selectedIndex = Math.Max( selectedIndex - 2, 0 );
-                }
-                DictcnOutputListBox.SelectedIndex = selectedIndex;
-            }
-        }
-
-        private void DictcnOutputListBox_MouseDoubleClick ( object sender, MouseButtonEventArgs e )
-        {
-            if ( e.LeftButton == MouseButtonState.Pressed )
-            {
-                int index = DictcnOutputListBox.SelectedIndex;
-                DictResult result = _resultHandler.GetDictcnResult(sender);
-                //SearchEngineResult result = _resultHandler.GetSearchEngineResult( sender );
-                if ( result != null && ((index & 1 )==0))
-                {
-                    string uri = string.Format( "{0}", result.SearchUrl );
-                    Shell shell = new Shell();
-                    shell.DoOpenWebBrowser( uri );
-                }
-            }
-        }
-
-        private void DictcnOutputListBox_SelectionChanged ( object sender, SelectionChangedEventArgs e )
-        {
-
-        }
-
-        private void OutputListBox_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            ListBox listBox = sender as ListBox;
-            if (listBox == null)
-            {
-                // do nothing
-            }
-            listBox.SelectedIndex = -1;
-        }
-
         #endregion
     }
 }

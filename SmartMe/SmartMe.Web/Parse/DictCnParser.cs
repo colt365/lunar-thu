@@ -18,7 +18,7 @@ namespace SmartMe.Web.Parse
             dictResult = new DictResult();
             HTMLparser oP = HtmlParserFactory.GetInstance();
 
-            dictResult.DictionaryType = DictionaryType.Dict_cn;
+            dictResult.DictType = DictType.Dict_cn;
 			
 			oP.Init(encoding.GetBytes(html));
 			oP.SetEncoding(encoding);
@@ -34,12 +34,12 @@ namespace SmartMe.Web.Parse
 					case  HTMLchunkType.OpenTag:
 						HandleOpenTag(oChunk, ref state);
 
-				printParams:
+				        // printParams:
 						if (oChunk.sTag == "meta")
 						{
 							HandleMetaEncoding(oP, oChunk, ref bEncodingSet);
 						};
-					HandleParam(oChunk, ref state);
+					    HandleParam(oChunk, ref state);
 
 
 					break;

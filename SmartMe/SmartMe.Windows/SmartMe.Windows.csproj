@@ -145,6 +145,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="DictResultControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="DragablePanel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -179,6 +183,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="SearchEngineResultControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="ScreenWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -199,8 +207,15 @@
     <Compile Include="DetailedControl.xaml.cs">
       <DependentUpon>DetailedControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DictResultControl.xaml.cs">
+      <DependentUpon>DictResultControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GrabControl.xaml.cs">
       <DependentUpon>GrabControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="IQueryResultControl.cs" />
+    <Compile Include="SearchEngineResultControl.xaml.cs">
+      <DependentUpon>SearchEngineResultControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="SuggestionControl.xaml.cs">
       <DependentUpon>SuggestionControl.xaml</DependentUpon>
