@@ -8,7 +8,7 @@ using SmartMe.Core.Data;
 
 namespace SmartMe.Web.Parse
 {
-	class SogouParser : IParser
+	class SogouParser : ISearchEngineParser
 	{
 
 		#region IParser Members
@@ -18,7 +18,7 @@ namespace SmartMe.Web.Parse
 		{
 			HTMLparser oP = HtmlParserFactory.GetInstance();
 			searchResult = new SearchEngineResult();
-            searchResult.SearchEngineType = SearchEngineType.Sougou;
+            searchResult.SearchEngineType = SearchEngineType.Sogou;
 			item = new SearchEngineResult.ResultItem();
 			//item.Source = "Sogou";
 			oP.Init(encoding.GetBytes(html));

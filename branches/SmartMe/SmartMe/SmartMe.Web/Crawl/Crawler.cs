@@ -6,6 +6,7 @@ using System.IO;
 using System.Web;
 using System.Net;
 using System.Threading;
+using SmartMe.Web.Properties;
 
 namespace SmartMe.Web.Crawl
 {
@@ -14,14 +15,16 @@ namespace SmartMe.Web.Crawl
 		public static string Crawl(string query, Encoding encoding)
 		{
 			HttpWebRequest request = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(query);
-			request.Timeout = 8000;
-			request.UserAgent = "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; .NET CLR 2.0.50727; .NET CLR 3.0.04506.648; .NET CLR 3.5.21022)";
+			request.Timeout = Settings.Default.CrawlerTimeout;
+            request.UserAgent = Settings.Default.CrawlerUserAgent;
+            int retryTime = Settings.Default.CrawlerRetryTimes;
+            int timeoutInc = Settings.Default.CrawlerRetryTimeoutInc;
 
 			WebResponse response = null;
 			Stream resStream =null;
 			StreamReader sr = null;
 			string result = null;
-			for (int i = 0; i < 5; ++i)
+            for (int i = 0; i < retryTime; ++i)
 			{
 				try
 				{
@@ -56,8 +59,7 @@ namespace SmartMe.Web.Crawl
 				}
 				else
 				{
-					
-					request.Timeout += 1000;
+                    request.Timeout += timeoutInc;
 				}
 			}
 			return result;

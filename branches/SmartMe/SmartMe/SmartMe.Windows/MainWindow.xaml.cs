@@ -361,14 +361,14 @@ namespace SmartMe.Windows
                 _uiDict = new Dictionary<string, IQueryResultControl>();
                 _uiDict.Add(SearchEngineType.Google.ToString(), _parent.GoogleResultControl);
                 _uiDict.Add(SearchEngineType.Baidu.ToString(),  _parent.BaiduResultControl);
-                _uiDict.Add(SearchEngineType.Sougou.ToString(), _parent.SougouResultControl);
+                _uiDict.Add(SearchEngineType.Sogou.ToString(), _parent.SogouResultControl);
                 _uiDict.Add(SearchEngineType.Wikipedia.ToString(), _parent.WikipediaResultControl);
                 _uiDict.Add(DictType.Dict_cn.ToString(), _parent.DictcnResultControl);
 
                 // Display:
                 _parent.GoogleResultControl.DisplayResult += _parent.DisplayResultHandler;
                 _parent.BaiduResultControl.DisplayResult += _parent.DisplayResultHandler;
-                _parent.SougouResultControl.DisplayResult += _parent.DisplayResultHandler;
+                _parent.SogouResultControl.DisplayResult += _parent.DisplayResultHandler;
                 _parent.WikipediaResultControl.DisplayResult += _parent.DisplayResultHandler;
             }
 

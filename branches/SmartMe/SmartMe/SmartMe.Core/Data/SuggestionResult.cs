@@ -14,7 +14,7 @@ namespace SmartMe.Core.Data
     }
 
     [Serializable]
-    public class SuggestionResult:IQueryResultItem
+    public class SuggestionResult : IQueryResultItem
     {
         public SuggestionResult()
         {

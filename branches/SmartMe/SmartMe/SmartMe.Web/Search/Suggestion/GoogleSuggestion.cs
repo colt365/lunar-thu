@@ -8,6 +8,8 @@ using System.IO;
 using System.Runtime.Serialization.Json;
 using System.Text.RegularExpressions;
 using SmartMe.Core.Data;
+using SmartMe.Web.Properties;
+
 
 namespace SmartMe.Web.Search
 {
@@ -19,7 +21,9 @@ namespace SmartMe.Web.Search
         {
             SuggestionResult finalResult = new SuggestionResult();
             finalResult.SuggestionType = SuggestionType.Google;
-            string url = "http://suggestqueries.google.cn/complete/search?q=" + HttpUtility.UrlEncode( query.Text, Encoding.UTF8 );
+
+            string queryFormat = Settings.Default.GoogleSuggestionQueryFormat;
+            string url = string.Format(queryFormat, HttpUtility.UrlEncode(query.Text, Encoding.UTF8));
             finalResult.SearchUrl=url;
 
             if ( query == null || query.QueryType != SmartMe.Core.Data.InputQueryType.Text || query.Text == null || query.Text == "" )
@@ -43,11 +47,7 @@ namespace SmartMe.Web.Search
 
             DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer( typeof( object ) );
 
-
-
-            object rawResults = jsonSerializer.ReadObject( new MemoryStream(Encoding.UTF8.GetBytes(jsonResult)) );
-
-           
+            object rawResults = jsonSerializer.ReadObject( new MemoryStream(Encoding.UTF8.GetBytes(jsonResult)) );           
 
             if (rawResults!=null)
             {

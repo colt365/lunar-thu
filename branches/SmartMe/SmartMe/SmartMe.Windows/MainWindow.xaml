@@ -222,8 +222,8 @@
 						<TabItem x:Name="BaiduTabItem" Header="{Binding Header, ElementName=BaiduResultControl}" Width="90" Height="28">
                             <local:SearchEngineResultControl x:Name="BaiduResultControl" BaseHeader="百度" Width="480"/>
                         </TabItem>
-						<TabItem x:Name="SougouTabItem" Header="{Binding Header, ElementName=SougouResultControl}" Width="90" Height="28">
-                            <local:SearchEngineResultControl x:Name="SougouResultControl" BaseHeader="搜狗" Width="480"/>
+						<TabItem x:Name="SougouTabItem" Header="{Binding Header, ElementName=SogouResultControl}" Width="90" Height="28">
+                            <local:SearchEngineResultControl x:Name="SogouResultControl" BaseHeader="搜狗" Width="480"/>
                         </TabItem>
 						<TabItem x:Name="WikipediaTabItem" Header="{Binding Header, ElementName=WikipediaResultControl}" Width="90" Height="28">
                             <local:SearchEngineResultControl x:Name="WikipediaResultControl" BaseHeader="维基" Width="480"/>
