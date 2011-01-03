@@ -8,9 +8,8 @@ using SmartMe.Core.Data;
 
 namespace SmartMe.Web.Parse
 {
-	class GoogleParser: IParser
+	class GoogleParser: ISearchEngineParser
 	{
-
 		#region IParser Members
 
 		SearchEngineResult searchResult;

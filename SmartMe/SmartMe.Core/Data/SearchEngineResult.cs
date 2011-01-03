@@ -17,7 +17,7 @@ namespace SmartMe.Core.Data
     {
         Google,
         Baidu,
-        Sougou,
+        Sogou,
         Wikipedia,
         Other
     }

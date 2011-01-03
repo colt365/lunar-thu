@@ -1,0 +1,54 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="SmartMe.Web.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="CrawlerTimeout" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">5000</Value>
+    </Setting>
+    <Setting Name="CrawlerUserAgent" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; .NET CLR 2.0.50727; .NET CLR 3.0.04506.648; .NET CLR 3.5.21022)</Value>
+    </Setting>
+    <Setting Name="CrawlerRetryTimes" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">5</Value>
+    </Setting>
+    <Setting Name="CrawlerRetryTimeoutInc" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">2000</Value>
+    </Setting>
+    <Setting Name="GoogleSearchEngineQueryFormat" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://www.google.com/search?q={0}</Value>
+    </Setting>
+    <Setting Name="GoogleSearchEngineEncoding" Type="System.String" Scope="User">
+      <Value Profile="(Default)">utf-8</Value>
+    </Setting>
+    <Setting Name="BaiduSearchEngineQueryFormat" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://www.baidu.com/s?wd={0}</Value>
+    </Setting>
+    <Setting Name="BaiduSearchEngineEncoding" Type="System.String" Scope="User">
+      <Value Profile="(Default)">gb2312</Value>
+    </Setting>
+    <Setting Name="SogouSearchEngineQueryFormat" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://www.sogou.com/web?query={0}</Value>
+    </Setting>
+    <Setting Name="SogouSearchEngineEncoding" Type="System.String" Scope="User">
+      <Value Profile="(Default)">gb2312</Value>
+    </Setting>
+    <Setting Name="WikipediaSearchEngineQueryFormat" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://en.wikipedia.org/w/index.php?title=Special:Search&amp;fulltext=Search&amp;search={0}</Value>
+    </Setting>
+    <Setting Name="WikipediaSearchEngineEncoding" Type="System.String" Scope="User">
+      <Value Profile="(Default)">utf-8</Value>
+    </Setting>
+    <Setting Name="DictCnQueryFormat" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://dict.cn/search?q={0}</Value>
+    </Setting>
+    <Setting Name="DictCnEncoding" Type="System.String" Scope="User">
+      <Value Profile="(Default)">gb2312</Value>
+    </Setting>
+    <Setting Name="GoogleSuggestionQueryFormat" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://suggestqueries.google.cn/complete/search?q={0}</Value>
+    </Setting>
+    <Setting Name="BaiduSuggestionQueryFormat" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://suggestion.baidu.com/su?action=opensearch&amp;ie=gb2312&amp;from=ie8&amp;wd={0}"</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

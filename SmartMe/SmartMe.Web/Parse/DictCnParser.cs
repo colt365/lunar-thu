@@ -7,7 +7,7 @@ using SmartMe.Core.Data;
 
 namespace SmartMe.Web.Parse
 {
-    class DictCnParser
+    class DictCnParser : IDictParser
     {
 
         #region IParser Members

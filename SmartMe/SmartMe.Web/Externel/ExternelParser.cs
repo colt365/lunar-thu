@@ -10,7 +10,7 @@ using SmartMe.Web.Parse;
 
 namespace SmartMe.Web.Externel
 {
-    public class ExternelParser : IParser
+    public class ExternelParser : ISearchEngineParser
     {
         #region fields
         WebBrowser _webBrowser;

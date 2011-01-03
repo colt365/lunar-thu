@@ -8,9 +8,8 @@ using SmartMe.Core.Data;
 
 namespace SmartMe.Web.Parse
 {
-	class BaiduParser : IParser
+	class BaiduParser : ISearchEngineParser
 	{
-
 		#region IParser Members
 		SearchEngineResult searchResult;
 		SearchEngineResult.ResultItem item;

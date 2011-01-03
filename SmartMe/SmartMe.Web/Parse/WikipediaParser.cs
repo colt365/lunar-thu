@@ -7,7 +7,7 @@ using SmartMe.Core.Data;
 
 namespace SmartMe.Web.Parse
 {
-    class WikipediaParser:IParser
+    class WikipediaParser:ISearchEngineParser
     {
         #region IParser Members
 

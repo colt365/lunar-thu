@@ -8,6 +8,7 @@ using System.IO;
 using System.Runtime.Serialization.Json;
 using System.Text.RegularExpressions;
 using SmartMe.Core.Data;
+using SmartMe.Web.Properties;
 
 namespace SmartMe.Web.Search
 {
@@ -22,16 +23,18 @@ namespace SmartMe.Web.Search
             Encoding gb2312 = Encoding.GetEncoding( "gb2312" );
             Encoding utf8 = Encoding.UTF8;
 
-            string url = "http://suggestion.baidu.com/su?wd=" + HttpUtility.UrlEncode( query.Text, gb2312 ) + "&action=opensearch&ie=gb2312&from=ie8";
+            string queryFormat = Settings.Default.BaiduSuggestionQueryFormat;
+            string url = string.Format(queryFormat, HttpUtility.UrlEncode(query.Text, gb2312));
+
             finalResult.SearchUrl = url;
 
-            if ( query == null || query.QueryType != SmartMe.Core.Data.InputQueryType.Text || query.Text == null || query.Text == "" )
+            if ( query == null || query.QueryType != SmartMe.Core.Data.InputQueryType.Text || string.IsNullOrEmpty(query.Text) )
             {
                 return finalResult;
             }
 
             string html = SmartMe.Web.Crawl.Crawler.Crawl( url, gb2312 );
-            if ( html == null || html == "" )
+            if ( string.IsNullOrEmpty(html) )
             {
                 return finalResult;
             }
