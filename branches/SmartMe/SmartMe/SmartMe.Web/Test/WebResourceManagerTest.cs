@@ -23,7 +23,7 @@ namespace SmartMe.Web.Test
            // manager.SearchEngineList.Add(new SearchEngine(1000));
             manager.SearchEngineList.Add(new GoogleSearchEngine());
             manager.SearchEngineList.Add(new BaiduSearchEngine());
-            manager.SearchEngineList.Add( new GoogleSuggestion() );
+            manager.SearchEngineList.Add(new GoogleSuggestion());
             manager.SearchEngineList.Add(new DictCn());
             manager.Handle(query);
             Thread.Sleep(8000);
@@ -49,7 +49,7 @@ namespace SmartMe.Web.Test
                 item1.Description = query + " " + _count + " Done.";
                 item1.SimilarUrl = "http://similar.www.com/";
                 item1.Url = "http://info.tsinghua.edu.cn";
-                result.Results.Add(item1);
+                result.Items.Add(item1);
                 _count++;
                 Thread.Sleep(_waitTime);
                 return result;
@@ -88,12 +88,12 @@ namespace SmartMe.Web.Test
                     {
                         case QueryResultItemType.SearchEngineResult:
                             var searchEngineItem = item as SearchEngineResult;
-                            if ( searchEngineItem != null && searchEngineItem.Results != null ) // TODO: Bug ASSERT(searchEngineItem != null)
+                            if ( searchEngineItem != null && searchEngineItem.Items != null ) // TODO: Bug ASSERT(searchEngineItem != null)
                             {
                                 Console.WriteLine( searchEngineItem.ToString() );
                             }
                             break;
-                        case QueryResultItemType.DictionaryResult:
+                        case QueryResultItemType.DictResult:
                             var dictItem = item as DictResult;
                             if ( dictItem != null && dictItem.SearchUrl != null ) // TODO: Bug ASSERT(searchEngineItem != null)
                             {
@@ -102,7 +102,7 @@ namespace SmartMe.Web.Test
                             break;
                         case QueryResultItemType.SuggestionResult:
                             var suggestionItem = item as SuggestionResult;
-                            if ( suggestionItem != null && suggestionItem.Results != null ) // TODO: Bug ASSERT(searchEngineItem != null)
+                            if ( suggestionItem != null && suggestionItem.Items != null ) // TODO: Bug ASSERT(searchEngineItem != null)
                             {
                                 Console.WriteLine( suggestionItem.ToString() );
                             }

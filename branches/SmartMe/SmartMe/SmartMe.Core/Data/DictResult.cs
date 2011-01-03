@@ -7,7 +7,7 @@ using SmartMe.Core.Pipeline;
 namespace SmartMe.Core.Data
 {
 
-    public enum DictionaryType
+    public enum DictType
     {
         Dict_cn,
         Other
@@ -15,19 +15,18 @@ namespace SmartMe.Core.Data
     [Serializable]
     public class DictResult:IQueryResultItem
     {
-
         public DictResult()
         {
-            _type = QueryResultItemType.DictionaryResult;
+            _type = QueryResultItemType.DictResult;
         }
 
         #region IQueryResultItem Members
 
-        public QueryResultItemType ResultType
+        public new QueryResultItemType ResultType
         {
             get
             {
-                return QueryResultItemType.DictionaryResult;
+                return QueryResultItemType.DictResult;
             }
             set
             {
@@ -48,7 +47,7 @@ namespace SmartMe.Core.Data
 
         #region IMessage Members
 
-        public MessageType MessageType
+        public new MessageType MessageType
         {
             get
             {
@@ -65,7 +64,7 @@ namespace SmartMe.Core.Data
 
         #region fields
         private string _searchUrl;
-        private DictionaryType _dictionary;
+        private DictType _dictionary;
 
        
         private string _word="";
@@ -80,7 +79,7 @@ namespace SmartMe.Core.Data
         #endregion
 
         #region properties
-        public DictionaryType DictionaryType
+        public DictType DictType
         {
             get
             {

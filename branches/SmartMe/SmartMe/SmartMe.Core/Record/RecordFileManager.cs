@@ -75,11 +75,11 @@ namespace SmartMe.Core.Record
                 catch (InvalidOperationException e)
                 {
                     Console.WriteLine(e);
-                    throw;
+                    throw e;
                 }
                 catch (Exception e)
                 {
-                    throw;
+                    throw e;
                 }
                 finally
                 {
@@ -98,7 +98,7 @@ namespace SmartMe.Core.Record
             {
                 return null;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }

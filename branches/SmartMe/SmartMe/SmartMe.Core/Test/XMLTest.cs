@@ -32,14 +32,14 @@ namespace SmartMe.Core.Test
             item1.Description = "LinTian" + " " + 1 + " Done.";
             item1.SimilarUrl = "http://similar.www.com/";
             item1.Url = "http://info.tsinghua.edu.cn";
-            result.Results.Add(item1);
+            result.Items.Add(item1);
             SearchEngineResult.ResultItem item2 = new SearchEngineResult.ResultItem();
             item2.Title = "INFO2";
             item2.CacheUrl = "http://aaa.www.com22222/";
             item2.Description = "LunaR" + " " + 2 + " Done2.";
             item2.SimilarUrl = "http://similar.www.com2222/";
             item2.Url = "http://info.tsinghua.edu.cn2";
-            result.Results.Add(item2);
+            result.Items.Add(item2);
             return result;
         }
     }

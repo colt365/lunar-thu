@@ -59,7 +59,6 @@ namespace SmartMe.Core.Data
                 {
                     _items.Add( item );
                 }
-
                 
                 foreach ( IQueryResultItem item in _suggestionResultItems )
                 {
@@ -73,8 +72,6 @@ namespace SmartMe.Core.Data
                 }
 
                 return _items;
-
-                
             }
         }
 
@@ -132,7 +129,7 @@ namespace SmartMe.Core.Data
             
             foreach (SearchEngineResult r in _searchEngineResultItems)
             {
-                if(r.Results.Count!=0)
+                if(r.Items.Count!=0)
                 {
                     return false;
                 }
@@ -146,7 +143,7 @@ namespace SmartMe.Core.Data
             }
             foreach (SuggestionResult r in _suggestionResultItems)
             {
-                if (r.Results.Count!=0)
+                if (r.Items.Count!=0)
                 {
                     return false;
                 }

@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Net;
 using System.Web;
+using SmartMe.Core.Data;
+using SmartMe.Web.Crawl;
+using SmartMe.Web.Parse;
 
 namespace SmartMe.Web.Search
 {
@@ -12,24 +15,24 @@ namespace SmartMe.Web.Search
 		#region ISearch Members
 
 
-        public SmartMe.Core.Data.IQueryResultItem Search ( SmartMe.Core.Data.InputQuery query )
+        public IQueryResultItem Search ( InputQuery query )
 		{
-            SmartMe.Core.Data.SearchEngineResult emptyResult = new SmartMe.Core.Data.SearchEngineResult();
-            emptyResult.SearchEngineType = SmartMe.Core.Data.SearchEngineType.Google;
+            SearchEngineResult emptyResult = new SearchEngineResult();
+            emptyResult.SearchEngineType = SearchEngineType.Google;
             string url = "http://www.google.com/search?q=" + HttpUtility.UrlEncode(query.Text, Encoding.UTF8);
             emptyResult.SearchUrl=url;
-			if(query == null || query.QueryType!= SmartMe.Core.Data.InputQueryType.Text|| query.Text==null || query.Text=="")
+			if(query == null || query.QueryType!= InputQueryType.Text|| string.IsNullOrEmpty(query.Text))
 			{
                 return emptyResult;
 			}
 			
 			string html=SmartMe.Web.Crawl.Crawler.Crawl(url,Encoding.UTF8);
-			if(html==null || html=="")
+			if ( string.IsNullOrEmpty(html) )
 			{
                 return emptyResult;
 			}
-			SmartMe.Web.Parse.GoogleParser parser= new SmartMe.Web.Parse.GoogleParser();
-			SmartMe.Core.Data.SearchEngineResult result=parser.Parse(html,Encoding.UTF8);
+			GoogleParser parser= new GoogleParser();
+			SearchEngineResult result=parser.Parse(html,Encoding.UTF8);
             result.SearchUrl = url;
             return result;
 		}

@@ -36,12 +36,12 @@ namespace SmartMe.Web.Parse
                     case HTMLchunkType.OpenTag:
                         HandleOpenTag(oChunk, ref state);
 
-                    printParams:
+                        // printParams:
                         if (oChunk.sTag == "meta")
                         {
                             HandleMetaEncoding(oP, oChunk, ref bEncodingSet);
                         };
-                    HandleParam(oChunk, ref state);
+                        HandleParam(oChunk, ref state);
 
 
                     break;
@@ -141,7 +141,7 @@ namespace SmartMe.Web.Parse
                 state = 4;
                 if (item.Url != null && item.Url != "")
                 {
-                    searchResult.Results.Add(item);
+                    searchResult.Items.Add(item);
                     item = new SearchEngineResult.ResultItem();
                 }
 

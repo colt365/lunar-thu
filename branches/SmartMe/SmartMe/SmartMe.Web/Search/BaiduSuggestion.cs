@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 using System.Net;
 using System.Web;
 using System.IO;
@@ -63,7 +62,7 @@ namespace SmartMe.Web.Search
                             {
                                 item.Suggestion = temp;
                                 //Console.WriteLine( temp );
-                                finalResult.Results.Add( item );
+                                finalResult.Items.Add( item );
                             }
                         }
                     }

@@ -28,14 +28,13 @@ namespace SmartMe.Core.Data
     [Serializable]
     public class SearchEngineResult : IQueryResultItem, IXMLSerializable
     {
-
         public SearchEngineResult()
         {
             _type = QueryResultItemType.SearchEngineResult;
         }
 
         #region fields
-        private List<ResultItem> _results = new List<ResultItem>();
+        private List<ResultItem> _items = new List<ResultItem>();
         private string _searchUrl = string.Empty;
         private SearchEngineType _searchEngine = SearchEngineType.Other;
         private QueryResultItemType _resultType;
@@ -104,7 +103,7 @@ namespace SmartMe.Core.Data
         #endregion
 
         #region properties
-        public QueryResultItemType ResultType
+        public new QueryResultItemType ResultType
         {
             get 
             {
@@ -116,7 +115,7 @@ namespace SmartMe.Core.Data
             }
         }
 
-        public MessageType MessageType
+        public new MessageType MessageType
         {
             get
             {
@@ -139,15 +138,15 @@ namespace SmartMe.Core.Data
             }
         }
 
-        public List<ResultItem> Results
+        public List<ResultItem> Items
         {
             get 
             {
-                return _results;
+                return _items;
             }
             set 
             { 
-                _results = value;
+                _items = value;
             }
         }
         public string SearchUrl
@@ -167,8 +166,8 @@ namespace SmartMe.Core.Data
         #region methods
         public override string ToString()
         {
-            StringBuilder stringBuilder = new StringBuilder(Results.Count.ToString());
-            foreach (ResultItem item in Results)
+            StringBuilder stringBuilder = new StringBuilder(Items.Count.ToString());
+            foreach (ResultItem item in Items)
             {
                 stringBuilder.Append("\n" + item.ToString());
             }
@@ -205,7 +204,7 @@ namespace SmartMe.Core.Data
             SearchEngineResult result = GetSearchEngineResultFromXMLObject(xmlObject);
             this._searchEngine = result._searchEngine;
             this._searchUrl = result._searchUrl;
-            this._results = result._results;
+            this._items = result._items;
         }
 
         #endregion

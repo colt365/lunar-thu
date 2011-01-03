@@ -37,16 +37,12 @@ namespace SmartMe.Windows
         private void CloseMenuItem_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             this.Hide();
-            if (notifyIcon != null)
+            if (_notifyIcon != null)
             {
-                notifyIcon.ShowBalloonTip(500);
+                _notifyIcon.ShowBalloonTip(500);
             }
         }
 
-        private void ExitMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
         #endregion MinimizeToIcon
     }
 }

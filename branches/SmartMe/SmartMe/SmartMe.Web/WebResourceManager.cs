@@ -167,7 +167,7 @@ namespace SmartMe.Web
                         case QueryResultItemType.SearchEngineResult:
                             _result.SearchEngineResultItems.Add( result as SearchEngineResult );
                             break;
-                        case QueryResultItemType.DictionaryResult:
+                        case QueryResultItemType.DictResult:
                             _result.DictResultItems.Add(result as DictResult);
                             break;
                         case QueryResultItemType.SuggestionResult:
