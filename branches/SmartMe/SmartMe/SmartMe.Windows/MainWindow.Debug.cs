@@ -27,27 +27,6 @@ namespace SmartMe.Windows
 {
     partial class MainWindow : Window
     {
-        #region for Debug
-        public enum Level
-        {
-            Normal,
-            Warning,
-            Error,
-            Fatal
-        }
-
-        public void MessageDebug(object o)
-        {
-            MessageDebug(o, Level.Normal);
-        }
-
-        public void MessageDebug(object o, Level level)
-        {
-            string str = string.Format("{0}: {1}", level, o);
-            App.Logger.Message(str);
-        }
-        #endregion for Debug
-        
         public void Debug(object o)
         {
             this.DebugControl.Debug(o);

@@ -17,7 +17,8 @@ namespace SmartMe.Log
         {
             Normal,
             Warning,
-            Error
+            Error,
+            Fatal
         }
 
         public Logger()
@@ -39,33 +40,24 @@ namespace SmartMe.Log
         {
             Message(str, Level.Error);
         }
+        public void Fatal(string str)
+        {
+            Message(str, Level.Fatal);
+        }
 
         public void Message(string str, Level level)
         {
-            string message = string.Format("{0}", str);
-            switch (level)
+            string message = null;
+            if (level == Level.Normal)
             {
-                case Level.Normal: 
-                {
-                    System.Console.WriteLine(message);
-                    Save(message);
-                    break;
-                }
-                case Level.Warning:
-                {
-                    message = "[Warn]" + message;
-                    System.Console.WriteLine(message);
-                    Save(message);
-                    break;
-                }
-                case Level.Error:
-                {
-                    message = "[Error]" + message;
-                    System.Console.WriteLine(message);
-                    Save(message);
-                    break;
-                }
+                message = string.Format("{0}", str);
             }
+            else 
+            {
+                message = string.Format("[{0}]:{1}", level, str);
+            }
+            System.Console.WriteLine(message);
+            Save(message);
         }
 
         private void Save(string str)
